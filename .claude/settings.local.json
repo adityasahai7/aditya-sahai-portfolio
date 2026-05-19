@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\")",
+      "PowerShell(Get-Process -Name \"node\")",
+      "PowerShell(Get-NetTCPConnection -LocalPort 3000 -State Listen)",
+      "PowerShell($packages = @\\(\"@studio-freight/lenis\", \"framer-motion\", \"gsap\", \"react-hook-form\", \"@hookform/resolvers\"\\); foreach \\($pkg in $packages\\) { $path = \"c:\\\\Users\\\\Lenovo\\\\Desktop\\\\my portfolio 2.0\\\\node_modules\\\\$pkg\\\\package.json\"; if \\(Test-Path $path\\) { $v = \\(Get-Content $path | ConvertFrom-Json\\).version; Write-Output \"$pkg@$v\" } else { Write-Output \"MISSING: $pkg\" } })",
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://127.0.0.1:3000/_next/static/chunks/app/page.js\" -TimeoutSec 10 -UseBasicParsing; Write-Output \"Page chunk loaded OK: $\\($r.StatusCode\\)\" } catch { Write-Output \"Page chunk error: $_\" }; try { $r2 = Invoke-WebRequest -Uri \"http://127.0.0.1:3000\" -TimeoutSec 10 -UseBasicParsing; Write-Output \"Root page: $\\($r2.StatusCode\\) \\($\\($r2.Content.Length\\) bytes\\)\"; if \\($r2.Content -match \"Something went wrong\"\\) { Write-Output \"ERROR BOUNDARY TRIGGERED IN SSR\" } else { Write-Output \"No error in SSR HTML\" } } catch { Write-Output \"Error: $_\" })",
+      "PowerShell($r = Invoke-WebRequest -Uri \"http://127.0.0.1:3000\" -TimeoutSec 15 -UseBasicParsing; $content = $r.Content; $idx = $content.IndexOf\\(\"__next_f\"\\); $content.Substring\\($idx, [Math]::Min\\(3000, $content.Length - $idx\\)\\) | Select-String -Pattern \"error|Error|throw|Error boundary\" -AllMatches | Select-Object -First 20)",
+      "Bash(npx tsc *)",
+      "Bash(Get-Process -Name \"node\" -ErrorAction SilentlyContinue)",
+      "Bash(Stop-Process -Force)",
+      "Bash(Start-Sleep -Seconds 1)",
+      "PowerShell(Get-Process -Name \"node\" -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Force)",
+      "Bash(npm run *)",
+      "Bash(Get-Content \"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-Lenovo-Desktop-my-portfolio-2-0\\\\cb962cf6-31e5-43ed-b2ef-c53110464278\\\\tasks\\\\b26pdn719.output\")",
+      "Bash(Select-Object -Last 10)",
+      "Bash(npx next *)",
+      "Bash(ls public/)",
+      "Bash(dir public *)",
+      "Bash(ls -la)",
+      "Bash(dir /a)"
+    ]
+  }
+}

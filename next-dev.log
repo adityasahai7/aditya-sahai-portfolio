@@ -1,0 +1,20 @@
+
+> aditya-sahai-portfolio@0.1.0 dev
+> next dev -p 3000
+
+  ▲ Next.js 14.2.29
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 3.9s
+ ○ Compiling / ...
+ ✓ Compiled / in 11.6s (1379 modules)
+ GET / 200 in 12214ms
+ ✓ Compiled in 913ms (683 modules)
+ GET / 200 in 341ms
+ GET / 200 in 97ms
+ GET / 200 in 209ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 6.8s (1355 modules)
+ GET / 404 in 9081ms
+ GET /_next/static/css/app/layout.css?v=1778940070484 404 in 38ms
