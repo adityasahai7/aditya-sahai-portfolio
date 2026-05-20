@@ -214,7 +214,7 @@ export default function Hero({ loaded }: HeroProps) {
 
             <MagneticButton onClick={() => document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" })}>
               <span className="btn-ghost">
-                See What I Build
+                See What I Can Build
               </span>
             </MagneticButton>
           </motion.div>

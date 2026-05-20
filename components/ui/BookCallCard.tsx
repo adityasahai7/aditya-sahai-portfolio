@@ -86,7 +86,7 @@ export default function BookCallCard() {
           <div className="my-6 h-px bg-ink/15" />
 
           {/* Social links */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <span className="font-mono text-[10px] text-ink/45 tracking-[0.12em] uppercase mr-2">
               Find me on
             </span>
@@ -97,11 +97,21 @@ export default function BookCallCard() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="w-8 h-8 flex items-center justify-center rounded-full text-ink/45 hover:text-accent transition-colors"
-                whileHover={{ scale: 1.25, rotate: -8 }}
+                className="w-9 h-9 flex items-center justify-center rounded-full"
+                style={{
+                  background: "linear-gradient(135deg, rgba(110,158,255,0.18), rgba(196,168,255,0.12))",
+                  border: "1px solid rgba(110,158,255,0.25)",
+                  color: "rgba(238,238,245,0.85)",
+                }}
+                whileHover={{
+                  scale: 1.2,
+                  rotate: -8,
+                  background: "linear-gradient(135deg, rgba(110,158,255,0.4), rgba(196,168,255,0.3))",
+                  color: "#fff",
+                }}
                 transition={{ type: "spring", stiffness: 400, damping: 14 }}
               >
-                <Icon size={16} strokeWidth={1.5} />
+                <Icon size={15} strokeWidth={1.5} />
               </motion.a>
             ))}
           </div>

@@ -156,19 +156,19 @@ export default function Navbar() {
           >
             <div
               style={{
-                width: 30,
-                height: 30,
+                width: 38,
+                height: 38,
                 borderRadius: "50%",
                 overflow: "hidden",
                 flexShrink: 0,
-                border: "1px solid rgba(110,158,255,0.25)",
+                border: "1px solid rgba(110,158,255,0.35)",
               }}
             >
               <Image
                 src="/aditya.jpg.webp"
                 alt="Aditya Sahai"
-                width={30}
-                height={30}
+                width={38}
+                height={38}
                 style={{ objectFit: "cover", objectPosition: "top", width: "100%", height: "100%" }}
                 priority
               />

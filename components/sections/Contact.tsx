@@ -79,7 +79,7 @@ export default function Contact() {
             animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 14 }}
             transition={{ duration: 0.7, ease: EXPO, delay: 0.3 }}
           >
-            Tell me what you&apos;re building. I&apos;ll tell you exactly how AI can supercharge it. Reply in under 12 hours.
+            Tell me what you&apos;re building. I&apos;ll tell you exactly how AI can supercharge it. Reply within 12 hours.
           </motion.p>
         </div>
 

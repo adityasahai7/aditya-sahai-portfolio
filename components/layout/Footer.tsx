@@ -101,7 +101,7 @@ export default function Footer() {
               Taking new projects
             </div>
             {/* Socials */}
-            <div className="flex gap-3 mt-1">
+            <div className="flex gap-2 mt-1 flex-wrap">
               {SOCIALS.map(({ Icon, href, label }) => (
                 <motion.a
                   key={label}
@@ -109,11 +109,20 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="text-ink/35 hover:text-accent transition-colors"
-                  whileHover={{ scale: 1.2 }}
+                  className="w-9 h-9 flex items-center justify-center rounded-full"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(110,158,255,0.15), rgba(196,168,255,0.10))",
+                    border: "1px solid rgba(110,158,255,0.22)",
+                    color: "rgba(238,238,245,0.75)",
+                  }}
+                  whileHover={{
+                    scale: 1.2,
+                    background: "linear-gradient(135deg, rgba(110,158,255,0.38), rgba(196,168,255,0.28))",
+                    color: "#fff",
+                  }}
                   transition={{ type: "spring", stiffness: 400, damping: 14 }}
                 >
-                  <Icon size={16} strokeWidth={1.5} />
+                  <Icon size={15} strokeWidth={1.5} />
                 </motion.a>
               ))}
             </div>
