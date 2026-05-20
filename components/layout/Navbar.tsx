@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 
 const LINKS = [
@@ -115,7 +116,7 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        className="fixed top-5 left-1/2 -translate-x-1/2 z-[100]"
+        className="fixed top-8 left-1/2 -translate-x-1/2 z-[100]"
         style={{ width: "calc(100% - 40px)", maxWidth: "1240px" }}
         animate={{ y: hidden ? -90 : 0 }}
         transition={{ duration: 0.42, ease: EASE }}
@@ -151,11 +152,34 @@ export default function Navbar() {
           {/* Name / Monogram */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="font-display font-semibold text-ink leading-none hover:opacity-65 transition-opacity duration-200"
-            style={{ fontSize: "17px", letterSpacing: "-0.03em" }}
+            className="flex items-center gap-2.5 hover:opacity-75 transition-opacity duration-200"
           >
-            <span className="hidden md:inline">Aditya Sahai</span>
-            <span className="md:hidden">AS</span>
+            <div
+              style={{
+                width: 30,
+                height: 30,
+                borderRadius: "50%",
+                overflow: "hidden",
+                flexShrink: 0,
+                border: "1px solid rgba(110,158,255,0.25)",
+              }}
+            >
+              <Image
+                src="/aditya.jpg.webp"
+                alt="Aditya Sahai"
+                width={30}
+                height={30}
+                style={{ objectFit: "cover", objectPosition: "top", width: "100%", height: "100%" }}
+                priority
+              />
+            </div>
+            <span
+              className="font-display font-semibold text-ink leading-none"
+              style={{ fontSize: "17px", letterSpacing: "-0.03em" }}
+            >
+              <span className="hidden md:inline">Aditya Sahai</span>
+              <span className="md:hidden">AS</span>
+            </span>
           </button>
 
           {/* Desktop nav */}

@@ -156,7 +156,7 @@ export default function Hero({ loaded }: HeroProps) {
             <div className="overflow-hidden">
               <motion.h1
                 className="font-display font-bold text-ink leading-[0.87] headline-breathe"
-                style={{ fontSize: "clamp(52px, 7.5vw, 118px)", letterSpacing: "-0.04em" }}
+                style={{ fontSize: "clamp(52px, 7.5vw, 110px)", letterSpacing: "-0.04em", paddingRight: "0.05em" }}
                 initial={{ y: "110%", opacity: 0 }}
                 animate={{ y: phase >= 2 ? "0%" : "110%", opacity: phase >= 2 ? 1 : 0 }}
                 transition={{ duration: 1.1, ease: EASE }}
@@ -164,13 +164,14 @@ export default function Hero({ loaded }: HeroProps) {
                 Your Brand.
               </motion.h1>
             </div>
-            <div className="overflow-hidden">
+            <div className="overflow-hidden" style={{ paddingRight: "0.08em" }}>
               <motion.div
                 className="font-display font-bold leading-[0.87] gradient-text-cycle"
                 style={{
-                  fontSize: "clamp(52px, 7.5vw, 118px)",
+                  fontSize: "clamp(52px, 7.5vw, 110px)",
                   letterSpacing: "-0.04em",
                   filter: "drop-shadow(0 0 80px rgba(77,255,223,0.3))",
+                  paddingRight: "0.08em",
                 }}
                 initial={{ y: "110%", opacity: 0 }}
                 animate={{ y: phase >= 2 ? "0%" : "110%", opacity: phase >= 2 ? 1 : 0 }}
@@ -189,7 +190,7 @@ export default function Hero({ loaded }: HeroProps) {
             animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : 18 }}
             transition={{ duration: 0.75, ease: EASE }}
           >
-            Agency-quality brand systems — built with AI, delivered in days, not months. No agency markup. Just results.
+            I am an AI operator. I help brands find AI solutions and build leverage using AI.
           </motion.p>
 
           {/* CTAs */}
