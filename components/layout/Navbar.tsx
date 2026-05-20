@@ -177,8 +177,7 @@ export default function Navbar() {
               className="font-display font-semibold text-ink leading-none"
               style={{ fontSize: "17px", letterSpacing: "-0.03em" }}
             >
-              <span className="hidden md:inline">Aditya Sahai</span>
-              <span className="md:hidden">AS</span>
+              Aditya Sahai
             </span>
           </button>
 

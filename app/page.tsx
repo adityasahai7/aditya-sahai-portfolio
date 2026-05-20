@@ -42,7 +42,7 @@ export default function Home() {
           text="★ AI OPERATOR ✦ BRAND SYSTEMS THAT SCALE ★ OUTCOMES IN DAYS ✦ NOT AN AGENCY ✦ BETTER THAN ONE ✦ "
           bgColor="rgba(110, 158, 255, 0.05)"
           textColor="rgba(242, 242, 244, 0.55)"
-          speed={34}
+          speed={18}
           sectionId="marquee1"
         />
 
@@ -57,7 +57,7 @@ export default function Home() {
           text="✦ AI IS LEVERAGE, NOT A SHORTCUT ★ THINKING BEYOND THE BRIEF ✦ BRAND SYSTEMS ✦ BUILT TO CONVERT ✦ "
           bgColor="rgba(110, 158, 255, 0.03)"
           textColor="rgba(242, 242, 244, 0.50)"
-          speed={28}
+          speed={15}
           sectionId="marquee2"
         />
 
@@ -69,7 +69,7 @@ export default function Home() {
           text="✦ D2C BRANDS ★ SOLOPRENEURS ★ COACHES ✦ AGENCIES ✦ MSME ✦ INDIA & GLOBAL ✦ "
           bgColor="rgba(110, 158, 255, 0.05)"
           textColor="rgba(242, 242, 244, 0.55)"
-          speed={30}
+          speed={16}
           sectionId="marquee3"
         />
 

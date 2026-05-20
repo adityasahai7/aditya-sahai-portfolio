@@ -153,10 +153,10 @@ export default function Hero({ loaded }: HeroProps) {
 
           {/* Headline */}
           <div className="mb-8">
-            <div className="overflow-hidden">
+            <div className="overflow-visible">
               <motion.h1
                 className="font-display font-bold text-ink leading-[0.87] headline-breathe"
-                style={{ fontSize: "clamp(52px, 7.5vw, 110px)", letterSpacing: "-0.04em", paddingRight: "0.05em" }}
+                style={{ fontSize: "clamp(52px, 7.2vw, 108px)", letterSpacing: "-0.04em", paddingRight: "0.05em", display: "inline-block" }}
                 initial={{ y: "110%", opacity: 0 }}
                 animate={{ y: phase >= 2 ? "0%" : "110%", opacity: phase >= 2 ? 1 : 0 }}
                 transition={{ duration: 1.1, ease: EASE }}
@@ -164,14 +164,15 @@ export default function Hero({ loaded }: HeroProps) {
                 Your Brand.
               </motion.h1>
             </div>
-            <div className="overflow-hidden" style={{ paddingRight: "0.08em" }}>
+            <div className="overflow-visible" style={{ paddingRight: "0.12em" }}>
               <motion.div
                 className="font-display font-bold leading-[0.87] gradient-text-cycle"
                 style={{
-                  fontSize: "clamp(52px, 7.5vw, 110px)",
+                  fontSize: "clamp(52px, 7.2vw, 108px)",
                   letterSpacing: "-0.04em",
                   filter: "drop-shadow(0 0 80px rgba(77,255,223,0.3))",
-                  paddingRight: "0.08em",
+                  paddingRight: "0.12em",
+                  display: "inline-block",
                 }}
                 initial={{ y: "110%", opacity: 0 }}
                 animate={{ y: phase >= 2 ? "0%" : "110%", opacity: phase >= 2 ? 1 : 0 }}
