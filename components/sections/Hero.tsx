@@ -191,7 +191,7 @@ export default function Hero({ loaded }: HeroProps) {
             animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : 18 }}
             transition={{ duration: 0.75, ease: EASE }}
           >
-            I am an AI operator. I help brands find AI solutions and build leverage using AI.
+            Helping brands build AI solutions and find leverage using AI. Creative AI Operator building modern systems for brands through AI, storytelling, automation, content ecosystems, and digital leverage.
           </motion.p>
 
           {/* CTAs */}
