@@ -3,7 +3,6 @@ import { Cormorant, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import GrainOverlay from "@/components/ui/GrainOverlay";
-import AmbientBackground from "@/components/ui/AmbientBackground";
 import LenisProvider from "@/components/layout/LenisProvider";
 
 const display = localFont({
@@ -46,19 +45,19 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aditya Sahai — AI Operator & Brand Strategist",
+  title: "Aditya Sahai — Creative AI Operator",
   description:
-    "I build AI-powered brand systems that help solopreneurs, D2C brands, and agencies move faster, look premium, and grow — without the agency price tag. India-based. Global thinking.",
-  keywords: ["AI Operator", "AI Brand Identity", "AI Content Systems", "UGC Ads", "Brand Strategy", "India", "Aditya Sahai", "Thinking Beyond"],
+    "AI Operator helping brands identify useful AI solutions, build smarter systems, and grow with leverage in the AI era.",
+  keywords: ["AI Operator", "Creative AI Operator", "AI Solutions", "AI Workflows", "Brand Systems", "India", "Aditya Sahai", "Thinking Beyond"],
   openGraph: {
-    title: "Aditya Sahai — AI Operator & Brand Strategist",
-    description: "Agency-quality AI brand systems. Priced for startups.",
+    title: "Aditya Sahai — Creative AI Operator",
+    description: "Identify the opportunity. Build the system. Grow with leverage.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aditya Sahai — AI Operator & Brand Strategist",
-    description: "Agency-quality AI brand systems. Priced for startups.",
+    title: "Aditya Sahai — Creative AI Operator",
+    description: "Identify the opportunity. Build the system. Grow with leverage.",
   },
 };
 
@@ -72,7 +71,6 @@ export default function RootLayout({
     >
       <body className="grain antialiased">
         <LenisProvider>
-          <AmbientBackground />
           <GrainOverlay />
           {children}
         </LenisProvider>
@@ -80,4 +78,3 @@ export default function RootLayout({
     </html>
   );
 }
-

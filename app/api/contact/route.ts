@@ -14,7 +14,6 @@ function sanitize(input: unknown): string {
 }
 
 export async function POST(request: Request) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     const body = await request.json();
     const name        = sanitize(body.name);
@@ -31,7 +30,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
     }
 
-    await resend.emails.send({
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.error("Email send error: RESEND_API_KEY is not configured");
+      return NextResponse.json({ error: "Email service is not configured" }, { status: 503 });
+    }
+
+    const resend = new Resend(apiKey);
+    const { error } = await resend.emails.send({
       from:     "Portfolio <onboarding@resend.dev>",
       to:       "adityasahai037@gmail.com",
       reply_to: email,
@@ -69,6 +75,7 @@ export async function POST(request: Request) {
         </div>
       `,
     });
+    if (error) throw error;
 
     return NextResponse.json({ success: true });
   } catch (error) {
