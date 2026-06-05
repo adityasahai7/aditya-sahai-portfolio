@@ -33,22 +33,22 @@ const socials = [
 ];
 
 const services = [
-  ["01", "AI Opportunity Audits", "Find where AI can multiply your brand's output.", Search, "cyan"],
-  ["02", "AI Workflows", "Build smarter systems for repeatable execution.", Workflow, "mint"],
-  ["03", "Content Systems", "Turn ideas into consistent brand output.", PlaySquare, "coral"],
-  ["04", "Brand Systems", "Create a sharper, scalable identity.", Layers3, "yellow"],
-  ["05", "Creative Production", "Ship campaigns faster with AI-assisted execution.", Film, "pink"],
-  ["06", "Growth Strategy", "Find the next useful move in the AI era.", Compass, "cyan"],
+  ["01", "AI Opportunity Audits", "Find the one place AI actually pays off for you — before you spend on it.", Search, "cyan"],
+  ["02", "AI Workflows", "Turn your repetitive work into systems that run without you.", Workflow, "mint"],
+  ["03", "Content Systems", "One good idea becomes a month of on-brand content.", PlaySquare, "coral"],
+  ["04", "Brand Systems", "A sharper identity that holds up as your output scales.", Layers3, "yellow"],
+  ["05", "Creative Production", "Ship campaigns in days, not weeks — without dropping the bar.", Film, "pink"],
+  ["06", "Growth Strategy", "Find your next real move, not the trendy one.", Compass, "cyan"],
 ];
 
 const process = [
-  ["01", "Identify", "Find the AI opportunities that matter for your brand.", Search, "coral"],
-  ["02", "Build", "Turn the right opportunities into useful systems.", BrainCircuit, "mint"],
-  ["03", "Grow", "Use AI leverage to move faster in the AI era.", Rocket, "cyan"],
+  ["01", "Identify", "Find the AI moves that actually matter for your brand.", Search, "coral"],
+  ["02", "Build", "Turn the right ones into systems that run.", BrainCircuit, "mint"],
+  ["03", "Grow", "Ship faster, keep the brand intact.", Rocket, "cyan"],
 ];
 
 const ideas = [
-  ["AI Opportunity Map", "Where is your highest-leverage first move?", "mint"],
+  ["AI Opportunity Map", "Where's the first AI move actually worth making?", "mint"],
   ["Content Engine", "How can one good idea become a month of output?", "cyan"],
   ["Creative Workflow", "Where can your team ship faster without lowering the bar?", "pink"],
   ["Brand System", "How can your identity stay sharp while your output scales?", "yellow"],
@@ -203,7 +203,7 @@ function Navbar() {
 }
 
 function Marquee() {
-  const text = " AI OPERATOR ✦ PRACTICAL AI ✦ BRAND SYSTEMS ✦ CONTENT ENGINES ✦ AI WORKFLOWS ✦ USEFUL LEVERAGE ✦ ";
+  const text = " AI OPERATOR ✦ PRACTICAL AI ✦ BRAND SYSTEMS ✦ CONTENT ENGINES ✦ AI WORKFLOWS ✦ SHIP FASTER ✦ ";
   return <div className="as-marquee"><div>{text.repeat(4)}</div></div>;
 }
 
@@ -266,7 +266,7 @@ export default function PortfolioExperience() {
         <div className="as-mobile-hero-grid" />
         <Sticker tone="mint">ADITYA SAHAI · AI OPERATOR</Sticker>
         <h1>BUILD AI<br /><span>LEVERAGE.</span><br />GROW WITH<br /><span>INTENTION.</span></h1>
-        <p>I help brands identify AI solutions, build smarter systems, and grow in the AI era.</p>
+        <p>I find where AI is actually useful for your brand — then build the system that does the work.</p>
         <div className="as-actions">
           <a className="as-button as-primary" href="#contact">BOOK A FREE STRATEGY CALL <ArrowUpRight size={17} /></a>
           <a className="as-button" href="#services">SEE WHAT I CAN BUILD</a>
@@ -274,8 +274,8 @@ export default function PortfolioExperience() {
         <div className="as-mobile-hero-visual">
           <img src="/aditya-sahai-approved-hero.png" alt="" aria-hidden="true" />
         </div>
-        <Sticker tone="yellow" className="mobile-hero-sticker-one">AI AS<br />LEVERAGE</Sticker>
-        <Sticker tone="cyan" className="mobile-hero-sticker-two">BUILT FOR<br />THE AI ERA</Sticker>
+        <Sticker tone="yellow" className="mobile-hero-sticker-one">SYSTEMS,<br />NOT TOOLS</Sticker>
+        <Sticker tone="cyan" className="mobile-hero-sticker-two">USEFUL &gt;<br />FLASHY</Sticker>
         <Spark className="mobile-hero-spark-one" />
         <Spark className="mobile-hero-spark-two" />
       </section>
@@ -287,8 +287,8 @@ export default function PortfolioExperience() {
         <Spark className="section-spark leverage-spark" />
         <Reveal>
           <p className="as-eyebrow">THE OPERATING IDEA / 01</p>
-          <h2>LESS RANDOM TOOLS.<br /><span>MORE USEFUL LEVERAGE.</span></h2>
-          <p className="as-section-copy">AI should not become another pile of subscriptions. It should help your brand make sharper decisions, ship faster, and build systems that keep compounding.</p>
+          <h2>LESS RANDOM TOOLS.<br /><span>MORE REAL OUTPUT.</span></h2>
+          <p className="as-section-copy">AI shouldn&apos;t become another pile of subscriptions you forget to cancel. It should help your brand make sharper calls, ship faster, and build systems that compound.</p>
         </Reveal>
         <div className="as-leverage-map">
           {[
@@ -305,7 +305,7 @@ export default function PortfolioExperience() {
             );
           })}
           <ArrowDoodle className="map-arrow-one" /><ArrowDoodle className="map-arrow-two" />
-          <Sticker tone="pink" className="map-sticker">TOOLS CHANGE.<br />LEVERAGE COMPOUNDS.</Sticker>
+          <Sticker tone="pink" className="map-sticker">TOOLS CHANGE.<br />SYSTEMS STAY.</Sticker>
         </div>
       </section>
 
@@ -313,7 +313,7 @@ export default function PortfolioExperience() {
         <Spark className="section-spark services-spark" />
         <Reveal>
           <p className="as-eyebrow">WHAT I CAN BUILD / 02</p>
-          <h2>AI SOLUTIONS THAT<br /><span>CREATE LEVERAGE.</span></h2>
+          <h2>AI SYSTEMS THAT<br /><span>EARN THEIR KEEP.</span></h2>
         </Reveal>
         <div className="as-services-grid">
           {services.map(([num, title, body, Icon, tone], index) => {
@@ -338,8 +338,8 @@ export default function PortfolioExperience() {
         <Spark className="section-spark process-spark" />
         <Reveal>
           <p className="as-eyebrow">THE PROCESS / 03</p>
-          <h2>FIND THE LEVERAGE.<br /><span>BUILD THE SYSTEM.</span> GROW.</h2>
-          <p className="as-section-copy">A focused process for finding the right problem, creating the right AI layer, and turning it into useful momentum.</p>
+          <h2>FIND THE PROBLEM.<br /><span>BUILD THE SYSTEM.</span> SHIP.</h2>
+          <p className="as-section-copy">A focused way of working: find the right problem, build the right AI layer, and turn it into something that actually ships.</p>
         </Reveal>
         <div className="as-process-grid">
           {process.map(([num, title, body, Icon, tone], index) => {
@@ -365,7 +365,7 @@ export default function PortfolioExperience() {
         <div className="as-manifesto-grid" />
         <Reveal>
           <p className="as-eyebrow">THE OPERATOR MANIFESTO / 04</p>
-          <h2>AI SHOULD CREATE<br /><span>LEVERAGE,</span><br />NOT NOISE.</h2>
+          <h2>AI SHOULD CREATE<br /><span>OUTPUT,</span><br />NOT NOISE.</h2>
         </Reveal>
         <div className="as-manifesto-posters">
           {["START WITH THE PROBLEM.", "BUILD WHAT IS USEFUL.", "KEEP THE BRAND HUMAN.", "MAKE OUTPUT COMPOUND.", "MOVE WITH CLARITY."].map((item, index) => (
@@ -396,13 +396,13 @@ export default function PortfolioExperience() {
         <Reveal>
           <p className="as-eyebrow">WHY AN AI OPERATOR? / 06</p>
           <h2>TOOLS CHANGE.<br /><span>LEVERAGE COMPOUNDS.</span></h2>
-          <p className="as-section-copy">The goal is not to use more tools. The goal is to find the right AI solutions for your brand and turn them into useful growth systems.</p>
+          <p className="as-section-copy">Most people sell you tools or a deck. An operator builds the actual system and hands you something that runs. That&apos;s the difference.</p>
         </Reveal>
         <div className="as-why-grid">
           {[
-            ["01", "Find the right opportunity", "Start with the problems worth solving.", Compass],
-            ["02", "Build useful systems", "Turn good ideas into repeatable execution.", BrainCircuit],
-            ["03", "Grow with clarity", "Move faster without losing the brand.", Rocket],
+            ["01", "A builder, not a deck", "Strategy that ends in a working system, not a PDF.", Compass],
+            ["02", "Built around your brand", "Your voice and standards, baked into every output.", BrainCircuit],
+            ["03", "Systems you own", "No lock-in. The system stays yours and keeps running.", Rocket],
           ].map(([num, title, body, Icon], index) => {
             const IconComponent = Icon as typeof Search;
             return <Reveal key={String(title)} delay={index * 0.1}><article><b>{String(num)}</b><IconComponent size={37} /><h3>{String(title)}</h3><p>{String(body)}</p></article></Reveal>;
@@ -416,8 +416,8 @@ export default function PortfolioExperience() {
         <div>
           <Reveal>
             <Sticker tone="mint">AI OPERATOR · INDIA</Sticker>
-            <h2>LET&apos;S FIND<br />YOUR <span>AI LEVERAGE.</span></h2>
-            <p>Tell me what you&apos;re building. I&apos;ll identify where AI can create the most useful advantage for your brand.</p>
+            <h2>LET&apos;S FIND<br />YOUR <span>FIRST AI MOVE.</span></h2>
+            <p>Tell me what you&apos;re building. I&apos;ll point to where AI is actually worth it — and what I&apos;d build first.</p>
             <ArrowDoodle />
             <div className="as-contact-chips">
               <Sticker tone="yellow">LET&apos;S BUILD<br />THE RIGHT THING</Sticker>

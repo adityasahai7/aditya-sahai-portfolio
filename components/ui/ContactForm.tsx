@@ -111,7 +111,7 @@ export default function ContactForm() {
           defaultValue=""
         >
           <option value="" disabled />
-          {["Under ₹25K", "₹25K–75K", "₹75K–1.5L", "₹1.5L+", "Let's talk"].map(
+          {["₹30K–75K", "₹75K–1.5L", "₹1.5L–3L", "₹3L+", "Not sure — help me scope it"].map(
             (b) => <option key={b} value={b}>{b}</option>
           )}
         </select>
