@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Mail, MessageCircle } from "lucide-react";
 import { articles, beliefs, creativeFiles, socials } from "@/lib/operator-content";
@@ -18,6 +18,118 @@ export function Sticker({
   className?: string;
 }) {
   return <span className={`co-sticker co-${variant} ${className}`}>{children}</span>;
+}
+
+export function DoodleArrow({ className = "" }: { className?: string }) {
+  return (
+    <svg className={`co-doodle co-doodle-arrow ${className}`} viewBox="0 0 180 90" aria-hidden="true">
+      <path d="M12 58C47 18 99 18 151 42" />
+      <path d="M132 14l24 29-36 12" />
+    </svg>
+  );
+}
+
+export function ScribbleCircle({ className = "" }: { className?: string }) {
+  return (
+    <svg className={`co-doodle co-scribble-circle ${className}`} viewBox="0 0 180 100" aria-hidden="true">
+      <path d="M17 48C29 13 140 4 161 42c21 38-61 58-111 43C-2 69 21 23 93 16" />
+    </svg>
+  );
+}
+
+export function MarkerUnderline({ className = "" }: { className?: string }) {
+  return (
+    <svg className={`co-doodle co-marker-underline ${className}`} viewBox="0 0 280 34" aria-hidden="true">
+      <path d="M8 19c47-12 96-11 139-8 35 2 74 2 125-5" />
+      <path d="M18 28c54-9 115-8 164-6 29 1 57-3 88-10" />
+    </svg>
+  );
+}
+
+function FloatingSpark({ className = "" }: { className?: string }) {
+  return <span className={`co-spark ${className}`} aria-hidden="true">✦</span>;
+}
+
+function MiniEnvelope() {
+  return <span className="co-mini-illo co-mini-envelope" aria-hidden="true"><i /><b /></span>;
+}
+
+function MiniArticleSheet() {
+  return <span className="co-mini-illo co-mini-sheet" aria-hidden="true"><i /><i /><b /></span>;
+}
+
+function MiniMoodboard() {
+  return <span className="co-mini-illo co-mini-moodboard" aria-hidden="true"><i /><i /><i /><b /></span>;
+}
+
+function MiniSalesPage() {
+  return <span className="co-mini-illo co-mini-sales" aria-hidden="true"><i /><i /><b /></span>;
+}
+
+export function PhotoFile({ compact = false, className = "" }: { compact?: boolean; className?: string }) {
+  const [failed, setFailed] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [src, setSrc] = useState("/images/aditya-photo.png");
+  const photoPaths = useMemo(() => ["/images/aditya-photo.png", "/aditya/aditya-main.png"], []);
+  const tags = ["AI BRANDING", "MARKETING", "SALES STORY", "ARTICLES"];
+
+  useEffect(() => {
+    let cancelled = false;
+    async function probe(index: number) {
+      if (index >= photoPaths.length) {
+        if (cancelled) return;
+      setLoaded(false);
+      setFailed(true);
+        return;
+      }
+      const image = new window.Image();
+      image.onload = () => {
+        if (cancelled) return;
+        setSrc(photoPaths[index]);
+        setLoaded(true);
+        setFailed(false);
+      };
+      image.onerror = () => probe(index + 1);
+      image.src = photoPaths[index];
+    }
+    probe(0);
+    return () => {
+      cancelled = true;
+    };
+  }, [photoPaths]);
+
+  return (
+    <motion.figure
+      className={`co-photo-file ${compact ? "compact" : ""} ${className}`}
+      whileHover={{ y: -8, rotate: compact ? -1 : 1.6 }}
+      transition={{ type: "spring", stiffness: 240, damping: 18 }}
+      data-cursor="OPEN"
+    >
+      <div className="co-photo-backdrop" />
+      <div className="co-photo-frame">
+        {loaded && !failed && (
+          <img
+            src={src}
+            alt="Aditya Sahai portrait file"
+            loading="lazy"
+            className="is-loaded"
+          />
+        )}
+        {(!loaded || failed) && (
+          <div className="co-photo-placeholder" role="img" aria-label="Aditya Sahai photo file coming soon">
+            <span>PHOTO FILE</span>
+            <strong>COMING SOON</strong>
+          </div>
+        )}
+      </div>
+      <figcaption>
+        <b>ADITYA SAHAI</b>
+        <span>CREATIVE AI OPERATOR</span>
+      </figcaption>
+      <Sticker variant="stamp" className="co-photo-stamp">BIO FILE</Sticker>
+      {!compact && tags.map((tag, index) => <span className={`co-photo-tag tag-${index + 1}`} key={tag}>{tag}</span>)}
+    </motion.figure>
+  );
 }
 
 function Cursor() {
@@ -47,17 +159,21 @@ function Cursor() {
 
 function Preloader() {
   const [hidden, setHidden] = useState(false);
+  const labels = ["BIO", "BRANDING", "MARKETING", "SALES", "CREATIVE", "ARTICLES", "NEWSLETTER", "FRROST"];
   useEffect(() => {
-    const timeout = window.setTimeout(() => setHidden(true), 1900);
+    const timeout = window.setTimeout(() => setHidden(true), 1750);
     return () => window.clearTimeout(timeout);
   }, []);
   if (hidden) return null;
   return (
     <motion.div className="co-preloader" exit={{ opacity: 0 }} aria-hidden="true">
       <div className="co-loader-card">
+        <div className="co-loader-stack">
+          {labels.slice(0, 5).map((label, index) => <span key={label} style={{ "--i": index } as CSSProperties}>{label}</span>)}
+        </div>
         <p>Opening the creative operator file...</p>
         <div className="co-loader-tabs">
-          {["BIO", "BRANDING", "MARKETING", "SALES", "CREATIVE", "ARTICLES", "NEWSLETTER", "FRROST MEDIA"].map((item) => (
+          {labels.map((item) => (
             <span key={item}>{item}</span>
           ))}
         </div>
@@ -117,46 +233,57 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 }
 
 function Marquee() {
+  const icons = ["✦", "FILE", "✹", "NOTE", "✺", "SIGNAL"];
   return (
     <section className="co-marquee" aria-label="Creative operator themes">
-      <div><span>AI BRANDING · AI MARKETING · SALES STORIES · CREATIVE DIRECTION · FOUNDER BRANDS · CONTENT STRATEGY · FRROST MEDIA · THINKING BEYOND AVERAGE · ARTICLES · NEWSLETTER · BRAND WORLDS · CREATIVE FILES · </span><span>AI BRANDING · AI MARKETING · SALES STORIES · CREATIVE DIRECTION · FOUNDER BRANDS · CONTENT STRATEGY · FRROST MEDIA · THINKING BEYOND AVERAGE · ARTICLES · NEWSLETTER · BRAND WORLDS · CREATIVE FILES · </span></div>
-      <div className="reverse"><span>AI MADE OUTPUT FREE · TASTE IS THE MOAT · CONTENT IS POSITIONING AT SCALE · SALES PAGES ARE STORIES UNDER PRESSURE · OPEN THE CREATIVE FILE · </span><span>AI MADE OUTPUT FREE · TASTE IS THE MOAT · CONTENT IS POSITIONING AT SCALE · SALES PAGES ARE STORIES UNDER PRESSURE · OPEN THE CREATIVE FILE · </span></div>
+      <div className="strip-a"><span>AI BRANDING {icons[0]} AI MARKETING {icons[1]} SALES STORIES {icons[2]} CREATIVE DIRECTION {icons[3]} FRROST MEDIA {icons[4]} THINKING BEYOND AVERAGE {icons[5]} </span><span>AI BRANDING {icons[0]} AI MARKETING {icons[1]} SALES STORIES {icons[2]} CREATIVE DIRECTION {icons[3]} FRROST MEDIA {icons[4]} THINKING BEYOND AVERAGE {icons[5]} </span></div>
+      <div className="reverse strip-b"><span>AI MADE OUTPUT FREE ✦ TASTE IS THE MOAT ✦ CONTENT IS POSITIONING AT SCALE ✦ SALES PAGES ARE STORIES UNDER PRESSURE ✦ OPEN THE CREATIVE FILE ✦ </span><span>AI MADE OUTPUT FREE ✦ TASTE IS THE MOAT ✦ CONTENT IS POSITIONING AT SCALE ✦ SALES PAGES ARE STORIES UNDER PRESSURE ✦ OPEN THE CREATIVE FILE ✦ </span></div>
+      <div className="strip-c"><span>FILE META: INDIA / CREATIVE AI OPERATOR / ARTICLES / NEWSLETTER / BRAND WORLDS / PUBLIC THINKING / SOFT CONTACT / </span><span>FILE META: INDIA / CREATIVE AI OPERATOR / ARTICLES / NEWSLETTER / BRAND WORLDS / PUBLIC THINKING / SOFT CONTACT / </span></div>
     </section>
   );
 }
 
 function HeroBoard() {
-  const cards = [
-    ["Bio File", "who I am · what I believe", "open"],
-    ["Brand Direction", "positioning · voice · visual world", "shaping signal"],
-    ["Marketing Notes", "hooks · campaigns · content", "drafting"],
-    ["Sales Story", "pain · proof · pitch", "studying"],
-    ["Article File", "AI branding · SEO · founder trust", "publishing"],
-    ["Thinking Beyond Letter", "Sunday notes for operators", "open soon"],
-    ["FRROST Media", "AI creative studio", "building"],
-  ];
+  const tags = ["AI BRANDING", "MARKETING", "SALES STORY", "ARTICLES", "FRROST", "THINKING BEYOND"];
   return (
-    <motion.div className="co-board" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.08 } } }}>
-      <Sticker variant="stamp" className="co-board-stamp">TASTE &gt; TOOLS</Sticker>
-      {cards.map(([title, meta, status], index) => (
-        <motion.article key={title} className={`co-board-card card-${index + 1}`} variants={{ hidden: { opacity: 0, y: 24, rotate: -4 }, show: { opacity: 1, y: 0, rotate: index % 2 ? 2 : -2 } }} data-cursor="OPEN">
-          <b>{title}</b>
-          <p>{meta}</p>
-          <span>{status}</span>
-        </motion.article>
-      ))}
-      <svg viewBox="0 0 320 220" className="co-board-arrow" aria-hidden="true"><path d="M25 166C96 78 173 62 279 78M251 47l33 31-40 20" /></svg>
+    <motion.div className="co-board" initial={{ opacity: 0, y: 38 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45, duration: 0.75, ease: "easeOut" }}>
+      <div className="co-board-panel">
+        <div className="co-board-meta">
+          <span>FILE 001</span>
+          <b>THE CREATIVE OPERATOR FILE</b>
+        </div>
+        <PhotoFile className="co-board-photo" />
+        <div className="co-board-tags" aria-label="Creative operator fields">
+          {tags.map((tag, index) => <span key={tag} className={`tag-${index + 1}`}>{tag}</span>)}
+        </div>
+        <div className="co-board-note">NOT AN AI TOOL GUY. THE CREATIVE LAYER AFTER THE TOOL.</div>
+      </div>
     </motion.div>
   );
 }
 
 function Hero() {
+  const words = ["I", "open", "the", "file", "on", "AI,", "branding,", "marketing,", "and", "creative", "work."];
   return (
     <section className="co-hero">
       <div className="co-paper-grid" />
       <Reveal>
-        <Sticker variant="file-tag">CREATIVE AI OPERATOR · INDIA · AI BRANDING · MARKETING · CREATIVE DIRECTION</Sticker>
-        <h1>I open the file on AI, branding, marketing, and creative work.</h1>
+        <p className="co-hero-kicker">ADITYA SAHAI · CREATIVE AI OPERATOR · INDIA</p>
+        <p className="co-hero-question">WHAT IS A CREATIVE AI OPERATOR?</p>
+        <p className="co-good-question">Good question.</p>
+        <h1 className="co-split-title">
+          {words.map((word, index) => (
+            <motion.span
+              key={`${word}-${index}`}
+              className={["AI,", "branding,", "marketing,", "creative"].includes(word) ? "highlight" : ""}
+              initial={{ opacity: 0, y: 42, rotate: index % 2 ? 1.6 : -1.2 }}
+              animate={{ opacity: 1, y: 0, rotate: 0 }}
+              transition={{ delay: 0.3 + index * 0.055, duration: 0.6, type: "spring", stiffness: 160, damping: 18 }}
+            >
+              {word}{index < words.length - 1 ? " " : ""}
+            </motion.span>
+          ))}
+        </h1>
         <p className="co-hero-copy">I’m Aditya Sahai. I use AI, taste, storytelling, and strategy to think through modern brands, content, websites, sales pages, articles, newsletters, and creative systems.</p>
         <p className="co-support">AI made average output free. Taste, story, and strategy are the moat.</p>
         <div className="co-actions">
@@ -187,21 +314,28 @@ function BioSection() {
       <div className="co-bio-grid">
         <Reveal>
           <article className="co-big-card">
+            <Sticker variant="stamp">OPEN THE BIO FILE</Sticker>
             <p>I’m not interested in being another AI guy posting tool updates.</p>
             <p>I care about the layer after the tool: the brand, the story, the message, the campaign, the article, the sales page, the website, the creative direction, and the taste that decides what should exist in the first place.</p>
             <p>AI made it easier to produce. It did not make it easier to matter. That is the gap I’m building in.</p>
             <p>I’m a Creative AI Operator from India, building at the intersection of AI, branding, marketing, sales storytelling, content strategy, and creative work.</p>
           </article>
         </Reveal>
-        <div className="co-pin-board">
-          {["India", "Creative AI Operator", "FRROST Media", "Thinking Beyond Average", "Articles", "Newsletter", "Beyond Default"].map((item, index) => (
-            <motion.span key={item} initial={{ opacity: 0, scale: 0.86 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: index * 0.06 }} viewport={{ once: true }}>{item}</motion.span>
-          ))}
-          <Sticker>OPEN THE BIO FILE</Sticker>
+        <div className="co-pin-board co-bio-board">
+          <PhotoFile />
+          <div className="co-bio-facts">
+            {["India", "Creative AI Operator", "FRROST Media", "Thinking Beyond Average", "Articles", "Newsletter", "Beyond Default"].map((item, index) => (
+              <motion.span key={item} initial={{ opacity: 0, scale: 0.86, rotate: -4 }} whileInView={{ opacity: 1, scale: 1, rotate: index % 2 ? 2 : -2 }} transition={{ delay: index * 0.06 }} viewport={{ once: true }}>{item}</motion.span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
+}
+
+function MiniCampaignNote() {
+  return <span className="co-mini-illo co-mini-campaign" aria-hidden="true"><i /><i /><b /></span>;
 }
 
 function Beliefs() {
@@ -211,9 +345,10 @@ function Beliefs() {
       <div className="co-card-grid">
         {beliefs.map(([title, copy], index) => (
           <Reveal key={title} delay={index * 0.04}>
-            <article className="co-card">
+            <article className={`co-card belief-${index + 1}`} data-cursor="STORY">
               <span>0{index + 1}</span>
               <h3>{title}</h3>
+              <MarkerUnderline />
               <p>{copy}</p>
               <small>operator note</small>
             </article>
@@ -253,6 +388,12 @@ function CreativeLanes() {
 }
 
 function Stack() {
+  const orbits = [
+    ["moodboard", "references", "delete note"],
+    ["hook", "narrative", "belief shift"],
+    ["articles", "newsletter", "website"],
+    ["recall", "trust", "search"],
+  ];
   return (
     <section className="co-section co-stack">
       <SectionIntro label="THE STACK / 04" title="Taste → Story → System → Signal." copy="AI can produce. It cannot decide what should exist. That is the creative operator’s job." />
@@ -262,8 +403,17 @@ function Stack() {
           ["STORY", "The positioning, hook, narrative, and emotional reason people care."],
           ["SYSTEM", "The repeatable structure: content, articles, newsletter, website, campaign, creative process."],
           ["SIGNAL", "The public memory created through consistent ideas, visuals, writing, and proof."],
-        ].map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}
+        ].map(([title, copy], index) => (
+          <article key={title} data-cursor="OPEN">
+            <h3>{title}</h3>
+            <p>{copy}</p>
+            <div className="co-orbit-notes">{orbits[index].map((item) => <span key={item}>{item}</span>)}</div>
+          </article>
+        ))}
       </div>
+      <svg className="co-stack-lines" viewBox="0 0 760 470" aria-hidden="true">
+        <path d="M80 58C290 140 514 86 688 171C490 264 263 211 82 315C300 372 513 324 690 420" />
+      </svg>
       <Sticker variant="stamp">NO TASTE = AI SLOP</Sticker>
     </section>
   );
@@ -276,11 +426,13 @@ function Archive() {
       <div className="co-file-row" data-cursor="DRAG">
         {creativeFiles.map(([num, title, type, status, description, sticker, href]) => (
           <Link href={href} className="co-file-card" key={num} data-cursor="OPEN">
+            <i className="co-file-tab" />
             <span>FILE {num}</span>
             <Sticker variant="file-tag">{sticker}</Sticker>
             <h3>{title}</h3>
             <b>{type} · {status}</b>
             <p>{description}</p>
+            <div className="co-file-preview"><MiniArticleSheet /><MiniMoodboard /></div>
             <em>Open file →</em>
           </Link>
         ))}
@@ -303,7 +455,7 @@ function Ecosystem() {
       <SectionIntro label="ECOSYSTEM / 06" title="One creative operator. Multiple worlds. Same signal." copy="AdityaSahai.com is the front door. Everything else is a world connected to the same idea: think sharper, build better, and open the file." />
       <div className="co-map">
         <div className="co-map-center">Aditya Sahai<br /><span>Creative AI Operator</span></div>
-        {nodes.map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}
+        {nodes.map(([title, copy], index) => <article key={title} className={`node-${index + 1}`} data-cursor="OPEN"><h3>{title}</h3><p>{copy}</p></article>)}
       </div>
     </section>
   );
@@ -320,6 +472,7 @@ function FrrostDoorway() {
           ["What it builds around", "Brand worlds, website experiences, campaign ideas, founder-led content, visual direction, sales stories, content engines, and creative systems."],
         ].map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}
       </div>
+      <div className="co-frost-lines" aria-hidden="true"><span /><span /><span /></div>
       <div className="co-actions">
         <Link href="/frrost-media" className="co-btn frost" data-cursor="ENTER">Enter the FRROST world</Link>
         <a href="#contact" className="co-btn ghost" data-cursor="SEND">Send a note</a>
@@ -352,6 +505,11 @@ function Newsletter() {
   return (
     <section className="co-section co-newsletter" id="newsletter">
       <SectionIntro label="NEWSLETTER / 09" title="Thinking Beyond Letter." copy="The Sunday read for Indian operators who refuse the default path. One creative build, one sharp lesson, and three things worth your attention." />
+      <div className="co-envelope-stage">
+        <MiniEnvelope />
+        <Sticker variant="stamp">SUNDAY FILE</Sticker>
+        <p>One build. One lesson. Three things worth your attention.</p>
+      </div>
       <div className="co-news-grid">
         {["The Build", "The Lesson", "The Round-up"].map((title, index) => (
           <article key={title}><h3>{title}</h3><p>{["What I’m building in AI, branding, marketing, FRROST Media, content, or creative direction.", "One practical idea on taste, story, strategy, sales, creativity, or operator life.", "Three links, campaigns, tools, books, videos, or ideas worth your attention."][index]}</p></article>
@@ -371,7 +529,7 @@ function BuildTimeline() {
       <SectionIntro label="THE BUILD / 10" title="The file didn’t start finished." copy="I’m documenting the build, not pretending the destination is already done." />
       <div className="co-timeline-list">
         {["Default Path Question", "First AI Realization", "Brand + Creative Direction", "FRROST Media", "Articles", "Thinking Beyond Letter", "The Creative Operator File"].map((title, index) => (
-          <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{["The point where the obvious route stopped feeling obvious.", "When AI stopped feeling like a toy and started looking like a creative lever.", "The layer that made the most sense: not just using tools, but shaping meaning.", "The studio layer for brand worlds, websites, marketing, and creative output.", "The searchable archive for ideas that should compound.", "The weekly letter for operators who want sharper thinking.", "The public home for the whole thing."][index]}</p></article>
+          <article key={title} data-cursor="STORY"><i className="co-tape-piece" /><span>0{index + 1}</span><h3>{title}</h3><p>{["The point where the obvious route stopped feeling obvious.", "When AI stopped feeling like a toy and started looking like a creative lever.", "The layer that made the most sense: not just using tools, but shaping meaning.", "The studio layer for brand worlds, websites, marketing, and creative output.", "The searchable archive for ideas that should compound.", "The weekly letter for operators who want sharper thinking.", "The public home for the whole thing."][index]}</p></article>
         ))}
       </div>
       <Link href="/about" className="co-btn" data-cursor="GO">Read the Full Bio</Link>
@@ -436,6 +594,7 @@ export function ContactNote() {
         </div>
       </div>
       <form className="co-note-form" onSubmit={submit}>
+        <Sticker variant="stamp">SEND THE NOTE</Sticker>
         <label>Name<input name="name" required /></label>
         <label>Email<input name="email" type="email" required /></label>
         <label>What are you building or thinking about?<input name="thinkingAbout" required /></label>

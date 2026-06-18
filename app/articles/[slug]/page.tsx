@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { OperatorFooter, OperatorNav, Sticker } from "@/components/CreativeOperatorSite";
+import { MarkerUnderline, OperatorFooter, OperatorNav, Sticker } from "@/components/CreativeOperatorSite";
 import { articles, getArticle } from "@/lib/operator-content";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -51,6 +51,7 @@ export default async function ArticlePage({ params }: Props) {
       <article className="co-article-layout">
         <Sticker variant="file-tag">{article.category}</Sticker>
         <h1>{article.title}</h1>
+        <MarkerUnderline />
         <p className="co-section-copy">{article.subtitle}</p>
         <div className="co-article-meta">
           <span>{article.author}</span>
@@ -66,6 +67,7 @@ export default async function ArticlePage({ params }: Props) {
               {section.heading && <h2>{section.heading}</h2>}
               {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
               {section.note && <div className="co-callout">{section.note}</div>}
+              {index === 1 && <blockquote>Creative Operator Note: the first draft is not the file. The decision is the file.</blockquote>}
             </section>
           ))}
           <div className="co-callout">

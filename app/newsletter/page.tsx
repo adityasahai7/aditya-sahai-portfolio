@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ContactNote, OperatorFooter, OperatorNav, Sticker } from "@/components/CreativeOperatorSite";
+import { ContactNote, DoodleArrow, OperatorFooter, OperatorNav, PhotoFile, Sticker } from "@/components/CreativeOperatorSite";
 
 export const metadata: Metadata = {
   title: { absolute: "Thinking Beyond Letter — Newsletter by Aditya Sahai" },
@@ -10,10 +10,18 @@ export default function NewsletterPage() {
   return (
     <main className="co-simple-page">
       <OperatorNav />
-      <section className="co-page-hero">
-        <Sticker variant="file-tag">NEWSLETTER FILE</Sticker>
-        <h1>Thinking Beyond Letter.</h1>
-        <p>The Sunday read for Indian operators who refuse the default path. One creative build, one sharp lesson, and three things worth your attention.</p>
+      <section className="co-page-hero co-newsletter-hero">
+        <div>
+          <Sticker variant="file-tag">NEWSLETTER FILE</Sticker>
+          <h1>Thinking Beyond Letter.</h1>
+          <p>The Sunday read for Indian operators who refuse the default path. One creative build, one sharp lesson, and three things worth your attention.</p>
+          <DoodleArrow />
+        </div>
+        <div className="co-letter-hero-card">
+          <PhotoFile compact />
+          <Sticker variant="stamp">SUNDAY FILE</Sticker>
+          <p>One build. One lesson. Three links worth opening.</p>
+        </div>
       </section>
       <section className="co-page-section">
         <h2>What you get.</h2>
