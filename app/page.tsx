@@ -1,7 +1,5 @@
-"use client";
-
-import PortfolioExperience from "@/components/PortfolioExperience";
+import CreativeOperatorHome from "@/components/CreativeOperatorSite";
 
 export default function Home() {
-  return <PortfolioExperience />;
+  return <CreativeOperatorHome />;
 }

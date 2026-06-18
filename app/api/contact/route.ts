@@ -18,8 +18,8 @@ export async function POST(request: Request) {
     const body = await request.json();
     const name        = sanitize(body.name);
     const email       = sanitize(body.email);
-    const projectType = sanitize(body.projectType);
-    const budget      = sanitize(body.budget);
+    const projectType = sanitize(body.noteType || body.projectType);
+    const thinkingAbout = sanitize(body.thinkingAbout);
     const message     = sanitize(body.message);
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       from:     "Portfolio <onboarding@resend.dev>",
       to:       "adityasahai037@gmail.com",
       reply_to: email,
-      subject:  `New Inquiry: ${projectType} — ${name}`,
+      subject:  `New Note: ${projectType || "Creative Operator File"} — ${name}`,
       html: `
         <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:600px;margin:0 auto;background:#F4EFE6;color:#0F0E0C;padding:40px;border-radius:12px;">
           <h2 style="color:#FF4D2E;margin:0 0 24px;font-size:22px;font-weight:500;letter-spacing:-0.01em;">
@@ -57,12 +57,12 @@ export async function POST(request: Request) {
               <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);font-size:15px;">${email}</td>
             </tr>
             <tr>
-              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);color:rgba(15,14,12,0.5);font-size:12px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;vertical-align:top;">Project</td>
+              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);color:rgba(15,14,12,0.5);font-size:12px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;vertical-align:top;">Note Type</td>
               <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);font-size:15px;">${projectType}</td>
             </tr>
             <tr>
-              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);color:rgba(15,14,12,0.5);font-size:12px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;vertical-align:top;">Budget</td>
-              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);font-size:15px;">${budget}</td>
+              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);color:rgba(15,14,12,0.5);font-size:12px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;vertical-align:top;">Thinking About</td>
+              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);font-size:15px;">${thinkingAbout}</td>
             </tr>
           </table>
           <div style="margin-top:24px;">

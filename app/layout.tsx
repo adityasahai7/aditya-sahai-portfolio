@@ -45,19 +45,24 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aditya Sahai — Creative AI Operator",
+  metadataBase: new URL("https://adityasahai.com"),
+  title: {
+    default: "Aditya Sahai — The Creative Operator File",
+    template: "%s — Aditya Sahai",
+  },
   description:
-    "AI Operator helping brands identify useful AI solutions, build smarter systems, and grow with leverage in the AI era.",
-  keywords: ["AI Operator", "Creative AI Operator", "AI Solutions", "AI Workflows", "Brand Systems", "India", "Aditya Sahai", "Thinking Beyond"],
+    "Aditya Sahai is a Creative AI Operator from India writing about AI branding, AI marketing, creative direction, founder brands, sales stories, articles, newsletters, FRROST Media, and Thinking Beyond.",
+  keywords: ["Creative AI Operator", "AI branding", "AI marketing", "creative direction", "founder personal branding", "content strategy", "sales stories", "FRROST Media", "Thinking Beyond Letter", "Aditya Sahai"],
   openGraph: {
-    title: "Aditya Sahai — Creative AI Operator",
-    description: "Identify the opportunity. Build the system. Grow with leverage.",
+    title: "Aditya Sahai — The Creative Operator File",
+    description: "A bio-first personal brand, article archive, newsletter home, and creative operator file for AI branding, marketing, sales stories, and creative direction.",
+    url: "https://adityasahai.com",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aditya Sahai — Creative AI Operator",
-    description: "Identify the opportunity. Build the system. Grow with leverage.",
+    title: "Aditya Sahai — The Creative Operator File",
+    description: "AI branding, AI marketing, sales stories, creative direction, articles, newsletters, and FRROST Media.",
   },
 };
 
