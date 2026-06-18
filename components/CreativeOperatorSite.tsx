@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { type CSSProperties, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Mail, MessageCircle } from "lucide-react";
 import { articles, beliefs, creativeFiles, socials } from "@/lib/operator-content";
@@ -161,24 +161,26 @@ function Preloader() {
   const [hidden, setHidden] = useState(false);
   const labels = ["BIO", "BRANDING", "MARKETING", "SALES", "CREATIVE", "ARTICLES", "NEWSLETTER", "FRROST"];
   useEffect(() => {
-    const timeout = window.setTimeout(() => setHidden(true), 1750);
+    const timeout = window.setTimeout(() => setHidden(true), 2100);
     return () => window.clearTimeout(timeout);
   }, []);
   if (hidden) return null;
   return (
-    <motion.div className="co-preloader" exit={{ opacity: 0 }} aria-hidden="true">
+    <motion.div className="co-preloader co-preloader-wtf" exit={{ opacity: 0 }} aria-hidden="true">
+      <motion.div className="co-loader-wipe" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.65, ease: [0.76, 0, 0.24, 1] }} />
       <div className="co-loader-card">
-        <div className="co-loader-stack">
-          {labels.slice(0, 5).map((label, index) => <span key={label} style={{ "--i": index } as CSSProperties}>{label}</span>)}
-        </div>
-        <p>Opening the creative operator file...</p>
-        <div className="co-loader-tabs">
-          {labels.map((item) => (
-            <span key={item}>{item}</span>
+        <p className="co-loader-question">WHAT IS A CREATIVE AI OPERATOR?</p>
+        <div className="co-loader-tabs" aria-hidden="true">
+          {labels.map((item, index) => (
+            <motion.span key={item} initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: index * 0.055, duration: 0.28 }}>
+              {item}
+            </motion.span>
           ))}
         </div>
-        <motion.div className="co-loader-line" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.35, ease: "easeInOut" }} />
-        <Sticker variant="stamp">FILE OPENED</Sticker>
+        <motion.div className="co-loader-bars" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.08 } } }}>
+          {[0, 1, 2].map((item) => <motion.i key={item} variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1 } }} transition={{ duration: .55, ease: "easeOut" }} />)}
+        </motion.div>
+        <motion.strong className="co-loader-stamp" initial={{ scale: .72, rotate: -7, opacity: 0 }} animate={{ scale: 1, rotate: -2, opacity: 1 }} transition={{ delay: 1.38, type: "spring", stiffness: 260, damping: 16 }}>FILE OPENED</motion.strong>
       </div>
     </motion.div>
   );
@@ -244,7 +246,7 @@ function Marquee() {
 }
 
 function HeroBoard() {
-  const tags = ["AI BRANDING", "MARKETING", "SALES STORY", "ARTICLES", "FRROST", "THINKING BEYOND"];
+  const tags = ["AI BRANDING", "SALES STORIES", "CREATIVE DIRECTION"];
   return (
     <motion.div className="co-board" initial={{ opacity: 0, y: 38 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45, duration: 0.75, ease: "easeOut" }}>
       <div className="co-board-panel">
@@ -321,10 +323,12 @@ function BioSection() {
             <p>I’m a Creative AI Operator from India, building at the intersection of AI, branding, marketing, sales storytelling, content strategy, and creative work.</p>
           </article>
         </Reveal>
-        <div className="co-pin-board co-bio-board">
-          <PhotoFile />
+        <div className="co-pin-board co-bio-board co-meta-panel">
+          <h3>ADITYA SAHAI</h3>
+          <p>CREATIVE AI OPERATOR</p>
+          <b>INDIA</b>
           <div className="co-bio-facts">
-            {["India", "Creative AI Operator", "FRROST Media", "Thinking Beyond Average", "Articles", "Newsletter", "Beyond Default"].map((item, index) => (
+            {["AI Branding", "Marketing", "Sales Stories", "Creative Direction", "Articles", "Newsletter"].map((item, index) => (
               <motion.span key={item} initial={{ opacity: 0, scale: 0.86, rotate: -4 }} whileInView={{ opacity: 1, scale: 1, rotate: index % 2 ? 2 : -2 }} transition={{ delay: index * 0.06 }} viewport={{ once: true }}>{item}</motion.span>
             ))}
           </div>
@@ -423,6 +427,7 @@ function Archive() {
   return (
     <section className="co-section co-archive">
       <SectionIntro label="OPEN THE FILE / 05" title="The archive is the proof of taste." copy="A living collection of ideas, brand notes, article drafts, newsletter issues, creative directions, campaign thoughts, website breakdowns, and public build files." />
+      <div className="co-drag-label">DRAG TO EXPLORE</div>
       <div className="co-file-row" data-cursor="DRAG">
         {creativeFiles.map(([num, title, type, status, description, sticker, href]) => (
           <Link href={href} className="co-file-card" key={num} data-cursor="OPEN">

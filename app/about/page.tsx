@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ContactNote, DoodleArrow, OperatorFooter, OperatorNav, PhotoFile, Sticker } from "@/components/CreativeOperatorSite";
+import { ContactNote, OperatorFooter, OperatorNav, Sticker } from "@/components/CreativeOperatorSite";
 import { beliefs, creativeFiles } from "@/lib/operator-content";
 
 export const metadata: Metadata = {
@@ -17,9 +17,11 @@ export default function AboutPage() {
           <Sticker variant="file-tag">ABOUT / BIO FILE</Sticker>
           <h1>I’m Aditya Sahai. I’m building the Creative AI Operator lane.</h1>
           <p>I care about the layer where AI meets taste: branding, marketing, sales stories, content, websites, articles, newsletters, and the creative decisions that make output worth remembering.</p>
-          <DoodleArrow />
         </div>
-        <PhotoFile />
+        <div className="co-about-manifesto">
+          <span>THINKING BEYOND AVERAGE</span>
+          <b>AI made it easier to produce. It did not make it easier to matter.</b>
+        </div>
       </section>
       <section className="co-page-section">
         <h2>The longer bio.</h2>

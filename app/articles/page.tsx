@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { DoodleArrow, MarkerUnderline, OperatorFooter, OperatorNav, Sticker } from "@/components/CreativeOperatorSite";
+import { MarkerUnderline, OperatorFooter, OperatorNav, Sticker } from "@/components/CreativeOperatorSite";
 import { articles, categories } from "@/lib/operator-content";
 
 export const metadata: Metadata = {
@@ -17,7 +17,6 @@ export default function ArticlesPage() {
           <Sticker variant="file-tag">ARTICLES INDEX</Sticker>
           <h1>Articles for brands building in the AI age.</h1>
           <p>Essays on AI branding, marketing, sales stories, creative direction, founder brands, content systems, and the operator mindset behind modern creative work.</p>
-          <DoodleArrow />
         </div>
         <div className="co-archive-wall" aria-hidden="true">
           {["AI BRANDING", "MARKETING", "SALES STORY", "TASTE", "FRROST"].map((item) => <span key={item}>{item}</span>)}
