@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import "./three-worlds.css";
 import GrainOverlay from "@/components/ui/GrainOverlay";
 import LenisProvider from "@/components/layout/LenisProvider";
 

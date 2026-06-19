@@ -1,0 +1,179 @@
+/* Final three-world premium redesign overrides. Kept separate so Git/Vercel deploys can patch safely. */
+.co-loader-answer {
+  margin: 16px 0 0;
+  font: 900 clamp(1.25rem, 3vw, 2.2rem)/.95 var(--font-display);
+  letter-spacing: -.025em;
+}
+
+.co-worlds {
+  background: linear-gradient(110deg, rgba(255,210,63,.26), transparent 46%), var(--paper-deep);
+}
+
+.co-world-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+  margin-top: 52px;
+}
+
+.co-world-card,
+.co-show-grid article {
+  position: relative;
+  overflow: hidden;
+  border: 4px solid var(--operator-ink);
+  background: var(--paper);
+  box-shadow: 8px 8px 0 var(--operator-ink);
+}
+
+.co-world-card::before,
+.co-show-grid article::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(rgba(26,26,26,.12) .7px, transparent .7px);
+  background-size: 7px 7px;
+  opacity: .26;
+  pointer-events: none;
+}
+
+.co-world-card {
+  display: flex;
+  min-height: 560px;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(24px, 3vw, 34px);
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+}
+
+.co-world-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 13px 13px 0 var(--operator-ink);
+}
+
+.co-world-card > span,
+.co-show-grid article > span {
+  width: fit-content;
+  padding: 8px 10px;
+  border: 2px solid currentColor;
+  font: 900 .66rem var(--font-mono);
+  text-transform: uppercase;
+}
+
+.co-world-card h3 {
+  margin-top: auto;
+  font-size: clamp(2.6rem, 4.8vw, 5rem);
+}
+
+.co-world-card b {
+  font: 900 .86rem var(--font-mono);
+  text-transform: uppercase;
+}
+
+.co-world-card ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.co-world-card li {
+  padding: 7px 9px;
+  border: 2px solid currentColor;
+  background: rgba(255,255,255,.48);
+  font: 900 .58rem var(--font-mono);
+  text-transform: uppercase;
+}
+
+.co-world-card a {
+  margin-top: 12px;
+  color: inherit;
+  font: 900 .78rem var(--font-mono);
+  text-transform: uppercase;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+}
+
+.world-frrost {
+  color: var(--snow);
+  border-color: var(--ice-blue);
+  background: radial-gradient(circle at 84% 14%, rgba(127,205,227,.28), transparent 27%), var(--black-ice);
+  box-shadow: 8px 8px 0 var(--ice-blue);
+}
+
+.world-default {
+  background: var(--receipt-yellow);
+}
+
+.world-club {
+  background: var(--fresh-mint);
+}
+
+.co-show {
+  background: linear-gradient(135deg, rgba(255,210,63,.85), rgba(245,241,232,.72));
+}
+
+.co-show-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin: 48px 0 28px;
+}
+
+.co-show-grid article {
+  min-height: 300px;
+  padding: 26px;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.co-show-grid article:hover {
+  transform: translateY(-8px) rotate(-.5deg);
+  box-shadow: 12px 12px 0 var(--operator-ink);
+}
+
+.co-show-grid h3 {
+  margin: 72px 0 14px;
+  font-size: clamp(2rem, 4vw, 3.8rem);
+}
+
+.co-club {
+  background: radial-gradient(circle at 88% 20%, rgba(184,224,240,.72), transparent 22%), var(--fresh-mint);
+}
+
+.co-club-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  max-width: 920px;
+  margin: 44px 0 28px;
+}
+
+.co-club-grid span {
+  padding: 14px 16px;
+  border: 3px solid var(--operator-ink);
+  background: var(--paper);
+  box-shadow: 5px 5px 0 var(--operator-ink);
+  font: 900 .8rem var(--font-mono);
+  text-transform: uppercase;
+}
+
+@media (max-width: 1180px) {
+  .co-world-grid,
+  .co-show-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .co-world-grid,
+  .co-show-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .co-world-card {
+    min-height: auto;
+  }
+}
