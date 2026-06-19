@@ -67,36 +67,20 @@ function MiniSalesPage() {
 }
 
 export function PhotoFile({ compact = false, className = "" }: { compact?: boolean; className?: string }) {
-  const [failed, setFailed] = useState(false);
-  const [loaded, setLoaded] = useState(false);
   const [src, setSrc] = useState("/images/aditya-photo.png");
   const photoPaths = useMemo(() => ["/images/aditya-photo.png", "/aditya/aditya-main.png", "/aditya.png"], []);
+  const [pathIndex, setPathIndex] = useState(0);
+  const [failed, setFailed] = useState(false);
   const tags = ["AI BRANDING", "SALES STORIES", "CREATIVE DIRECTION"];
 
   useEffect(() => {
-    let cancelled = false;
-    async function probe(index: number) {
-      if (index >= photoPaths.length) {
-        if (cancelled) return;
-      setLoaded(false);
+    if (pathIndex >= photoPaths.length) {
       setFailed(true);
-        return;
-      }
-      const image = new window.Image();
-      image.onload = () => {
-        if (cancelled) return;
-        setSrc(photoPaths[index]);
-        setLoaded(true);
-        setFailed(false);
-      };
-      image.onerror = () => probe(index + 1);
-      image.src = photoPaths[index];
+      return;
     }
-    probe(0);
-    return () => {
-      cancelled = true;
-    };
-  }, [photoPaths]);
+    setSrc(photoPaths[pathIndex]);
+    setFailed(false);
+  }, [pathIndex, photoPaths]);
 
   return (
     <motion.figure
@@ -107,15 +91,16 @@ export function PhotoFile({ compact = false, className = "" }: { compact?: boole
     >
       <div className="co-photo-backdrop" />
       <div className="co-photo-frame">
-        {loaded && !failed && (
+        {!failed && (
           <img
             src={src}
             alt="Aditya Sahai, Creative AI Operator"
             loading="lazy"
             className="is-loaded"
+            onError={() => setPathIndex((index) => index + 1)}
           />
         )}
-        {(!loaded || failed) && (
+        {failed && (
           <div className="co-photo-placeholder" role="img" aria-label="Aditya Sahai photo file coming soon">
             <span>PHOTO FILE</span>
             <strong>COMING SOON</strong>
@@ -282,7 +267,7 @@ function Hero() {
     <section className="co-hero">
       <div className="co-paper-grid" />
       <Reveal>
-        <p className="co-hero-kicker">ADITYA SAHAI · CREATIVE AI OPERATOR · INDIA</p>
+        <p className="co-hero-kicker">ADITYA SAHAI / CREATIVE AI OPERATOR / FOUNDER / CO-FOUNDER & CEO, FRROST MEDIA / INDIA</p>
         <h1 className="co-split-title">
           {words.map((word, index) => (
             <motion.span
@@ -336,6 +321,8 @@ function BioSection() {
         <div className="co-pin-board co-bio-board co-meta-panel">
           <h3>ADITYA SAHAI</h3>
           <p>CREATIVE AI OPERATOR</p>
+          <p>FOUNDER</p>
+          <p>CO-FOUNDER & CEO, FRROST MEDIA</p>
           <b>INDIA</b>
           <div className="co-bio-facts">
             {["AI Branding", "Marketing", "Sales Stories", "Creative Direction", "Articles", "Newsletter"].map((item, index) => (
@@ -355,7 +342,7 @@ function MiniCampaignNote() {
 function Beliefs() {
   return (
     <section className="co-section co-beliefs">
-      <SectionIntro label="BELIEF FILE / 02" title="AI is not the brand. It is the lever." copy="Most people use AI to make more average things. I care about using it to make sharper brands, better marketing, stronger stories, and creative work with a reason to exist." />
+      <SectionIntro label="BELIEF FILE / 02" title="The beliefs behind the file." copy="Most people use AI to make more average things. I care about using it to make sharper brands, better marketing, stronger stories, and creative work with a reason to exist." />
       <div className="co-card-grid">
         {beliefs.map(([title, copy], index) => (
           <Reveal key={title} delay={index * 0.04}>
@@ -430,7 +417,7 @@ function ThreeWorlds() {
   ];
   return (
     <section className="co-section co-worlds">
-      <SectionIntro label="THREE WORLDS / 03" title="Three worlds. One creative operator." copy="AdityaSahai.com is the front door. The work expands into three worlds: the studio, the show, and the club." />
+      <SectionIntro label="THREE WORLDS / 03" title="Three worlds. One creative operator." copy="The work expands into three worlds: the studio, the show, and the club." />
       <div className="co-world-grid">
         {worlds.map((world, index) => (
           <Reveal key={world.title} delay={index * 0.06}>
@@ -560,7 +547,7 @@ function FAQ() {
   ];
   return (
     <section className="co-section co-faq">
-      <SectionIntro label="FAQ / 11" title="Clear answers for humans and search engines." />
+      <SectionIntro label="FAQ / 10" title="Clear answers for humans and search engines." />
       <div className="co-faq-list">
         {faqs.map(([question, answer]) => <details key={question} open><summary>{question}</summary><p>{answer}</p></details>)}
       </div>
