@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { MarkerUnderline, OperatorFooter, OperatorNav, Sticker } from "@/components/CreativeOperatorSite";
-import { articles, categories } from "@/lib/operator-content";
+import { articles } from "@/lib/operator-content";
 
 export const metadata: Metadata = {
   title: { absolute: "Articles by Aditya Sahai — AI Branding, AI Marketing & Creative Operator Notes" },
@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default function ArticlesPage() {
+  const filters = ["All", "Creative AI Operator", "AI Branding", "AI Marketing", "Creative Direction", "Sales Pages", "Founder Brand", "Content Strategy", "FRROST Notes", "Beyond Default", "Thinking Beyond Club"];
   return (
     <main className="co-simple-page">
       <OperatorNav />
@@ -16,7 +17,7 @@ export default function ArticlesPage() {
         <div>
           <Sticker variant="file-tag">ARTICLES INDEX</Sticker>
           <h1>Articles for brands building in the AI age.</h1>
-          <p>Essays on AI branding, marketing, sales stories, creative direction, founder brands, content systems, and the operator mindset behind modern creative work.</p>
+          <p>Essays on AI branding, AI marketing, creative direction, founder brands, sales pages, content strategy, FRROST Media, Beyond Default, Thinking Beyond Club, and operator thinking.</p>
         </div>
         <div className="co-archive-wall" aria-hidden="true">
           {["AI BRANDING", "MARKETING", "SALES STORY", "TASTE", "FRROST"].map((item) => <span key={item}>{item}</span>)}
@@ -24,7 +25,7 @@ export default function ArticlesPage() {
       </section>
       <section className="co-page-section">
         <div className="co-loader-tabs" aria-label="Article filters">
-          {categories.map((category) => <span key={category}>{category}</span>)}
+          {filters.map((category) => <span key={category}>{category}</span>)}
         </div>
         <label className="co-note-form" style={{ marginBottom: 28 }}>
           Search articles…

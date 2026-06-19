@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Mail, MessageCircle } from "lucide-react";
-import { articles, beliefs, creativeFiles, socials } from "@/lib/operator-content";
+import { articles, beliefs, socials } from "@/lib/operator-content";
 
 type StickerVariant = "pill" | "tape" | "stamp" | "square" | "starburst" | "corner-label" | "file-tag";
 
@@ -70,8 +70,8 @@ export function PhotoFile({ compact = false, className = "" }: { compact?: boole
   const [failed, setFailed] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [src, setSrc] = useState("/images/aditya-photo.png");
-  const photoPaths = useMemo(() => ["/images/aditya-photo.png", "/aditya/aditya-main.png"], []);
-  const tags = ["AI BRANDING", "MARKETING", "SALES STORY", "ARTICLES"];
+  const photoPaths = useMemo(() => ["/images/aditya-photo.png", "/aditya/aditya-main.png", "/aditya.png"], []);
+  const tags = ["AI BRANDING", "SALES STORIES", "CREATIVE DIRECTION"];
 
   useEffect(() => {
     let cancelled = false;
@@ -110,7 +110,7 @@ export function PhotoFile({ compact = false, className = "" }: { compact?: boole
         {loaded && !failed && (
           <img
             src={src}
-            alt="Aditya Sahai portrait file"
+            alt="Aditya Sahai, Creative AI Operator"
             loading="lazy"
             className="is-loaded"
           />
@@ -126,7 +126,6 @@ export function PhotoFile({ compact = false, className = "" }: { compact?: boole
         <b>ADITYA SAHAI</b>
         <span>CREATIVE AI OPERATOR</span>
       </figcaption>
-      <Sticker variant="stamp" className="co-photo-stamp">BIO FILE</Sticker>
       {!compact && tags.map((tag, index) => <span className={`co-photo-tag tag-${index + 1}`} key={tag}>{tag}</span>)}
     </motion.figure>
   );
@@ -157,9 +156,9 @@ function Cursor() {
   );
 }
 
-function Preloader() {
+function PreloaderWTF() {
   const [hidden, setHidden] = useState(false);
-  const labels = ["BIO", "BRANDING", "MARKETING", "SALES", "CREATIVE", "ARTICLES", "NEWSLETTER", "FRROST"];
+  const labels = ["BRANDING", "MARKETING", "SALES", "CREATIVE", "ARTICLES", "NEWSLETTER", "FRROST", "BEYOND DEFAULT", "TBC"];
   useEffect(() => {
     const timeout = window.setTimeout(() => setHidden(true), 2100);
     return () => window.clearTimeout(timeout);
@@ -180,6 +179,7 @@ function Preloader() {
         <motion.div className="co-loader-bars" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.08 } } }}>
           {[0, 1, 2].map((item) => <motion.i key={item} variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1 } }} transition={{ duration: .55, ease: "easeOut" }} />)}
         </motion.div>
+        <motion.p className="co-loader-answer" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.08, duration: 0.28 }}>GOOD QUESTION.</motion.p>
         <motion.strong className="co-loader-stamp" initial={{ scale: .72, rotate: -7, opacity: 0 }} animate={{ scale: 1, rotate: -2, opacity: 1 }} transition={{ delay: 1.38, type: "spring", stiffness: 260, damping: 16 }}>FILE OPENED</motion.strong>
       </div>
     </motion.div>
@@ -204,6 +204,18 @@ export function OperatorNav() {
 }
 
 export function OperatorFooter() {
+  const footerLinks = [
+    ["Home", "/"],
+    ["About", "/about"],
+    ["Articles", "/articles"],
+    ["Newsletter", "/newsletter"],
+    ["FRROST Media", "/frrost-media"],
+    ["Beyond Default", "/#beyond-default"],
+    ["Thinking Beyond Club", "/#thinking-beyond-club"],
+    ["Contact", "/#contact"],
+    ["Privacy", "/privacy"],
+    ["Terms", "/terms"],
+  ];
   return (
     <footer className="co-footer">
       <div>
@@ -213,8 +225,8 @@ export function OperatorFooter() {
         <strong>Thinking Beyond Average.</strong>
       </div>
       <div className="co-footer-links">
-        {["Home", "About", "Articles", "Newsletter", "FRROST Media", "Privacy", "Terms"].map((item) => (
-          <Link key={item} href={item === "Home" ? "/" : `/${item.toLowerCase().replace(" media", "-media")}`}>{item}</Link>
+        {footerLinks.map(([item, href]) => (
+          <Link key={item} href={href}>{item}</Link>
         ))}
       </div>
       <div className="co-socials">
@@ -238,9 +250,9 @@ function Marquee() {
   const icons = ["✦", "FILE", "✹", "NOTE", "✺", "SIGNAL"];
   return (
     <section className="co-marquee" aria-label="Creative operator themes">
-      <div className="strip-a"><span>AI BRANDING {icons[0]} AI MARKETING {icons[1]} SALES STORIES {icons[2]} CREATIVE DIRECTION {icons[3]} FRROST MEDIA {icons[4]} THINKING BEYOND AVERAGE {icons[5]} </span><span>AI BRANDING {icons[0]} AI MARKETING {icons[1]} SALES STORIES {icons[2]} CREATIVE DIRECTION {icons[3]} FRROST MEDIA {icons[4]} THINKING BEYOND AVERAGE {icons[5]} </span></div>
-      <div className="reverse strip-b"><span>AI MADE OUTPUT FREE ✦ TASTE IS THE MOAT ✦ CONTENT IS POSITIONING AT SCALE ✦ SALES PAGES ARE STORIES UNDER PRESSURE ✦ OPEN THE CREATIVE FILE ✦ </span><span>AI MADE OUTPUT FREE ✦ TASTE IS THE MOAT ✦ CONTENT IS POSITIONING AT SCALE ✦ SALES PAGES ARE STORIES UNDER PRESSURE ✦ OPEN THE CREATIVE FILE ✦ </span></div>
-      <div className="strip-c"><span>FILE META: INDIA / CREATIVE AI OPERATOR / ARTICLES / NEWSLETTER / BRAND WORLDS / PUBLIC THINKING / SOFT CONTACT / </span><span>FILE META: INDIA / CREATIVE AI OPERATOR / ARTICLES / NEWSLETTER / BRAND WORLDS / PUBLIC THINKING / SOFT CONTACT / </span></div>
+      <div className="strip-a"><span>AI BRANDING {icons[0]} AI MARKETING {icons[1]} SALES STORIES {icons[2]} CREATIVE DIRECTION {icons[3]} FRROST MEDIA {icons[4]} BEYOND DEFAULT {icons[5]} THINKING BEYOND CLUB {icons[0]} </span><span>AI BRANDING {icons[0]} AI MARKETING {icons[1]} SALES STORIES {icons[2]} CREATIVE DIRECTION {icons[3]} FRROST MEDIA {icons[4]} BEYOND DEFAULT {icons[5]} THINKING BEYOND CLUB {icons[0]} </span></div>
+      <div className="reverse strip-b"><span>AI MADE AVERAGE OUTPUT FREE ✦ TASTE IS THE MOAT ✦ CONTENT IS POSITIONING AT SCALE ✦ THINKING BEYOND AVERAGE ✦ </span><span>AI MADE AVERAGE OUTPUT FREE ✦ TASTE IS THE MOAT ✦ CONTENT IS POSITIONING AT SCALE ✦ THINKING BEYOND AVERAGE ✦ </span></div>
+      <div className="strip-c"><span>FILE 001 / BIO · FILE 002 / THREE WORLDS · FILE 003 / ARTICLES · FILE 004 / NEWSLETTER · </span><span>FILE 001 / BIO · FILE 002 / THREE WORLDS · FILE 003 / ARTICLES · FILE 004 / NEWSLETTER · </span></div>
     </section>
   );
 }
@@ -271,8 +283,6 @@ function Hero() {
       <div className="co-paper-grid" />
       <Reveal>
         <p className="co-hero-kicker">ADITYA SAHAI · CREATIVE AI OPERATOR · INDIA</p>
-        <p className="co-hero-question">WHAT IS A CREATIVE AI OPERATOR?</p>
-        <p className="co-good-question">Good question.</p>
         <h1 className="co-split-title">
           {words.map((word, index) => (
             <motion.span
@@ -286,8 +296,8 @@ function Hero() {
             </motion.span>
           ))}
         </h1>
-        <p className="co-hero-copy">I’m Aditya Sahai. I use AI, taste, storytelling, and strategy to think through modern brands, content, websites, sales pages, articles, newsletters, and creative systems.</p>
-        <p className="co-support">AI made average output free. Taste, story, and strategy are the moat.</p>
+        <p className="co-hero-copy">I use AI, taste, story, and strategy to think through modern brands, content, websites, sales pages, shows, articles, newsletters, and creative systems.</p>
+        <p className="co-support">AI made average output free. Taste is the moat.</p>
         <div className="co-actions">
           <Link href="/about" className="co-btn primary" data-cursor="OPEN">Start With My Story <ArrowRight size={17} /></Link>
           <Link href="/articles" className="co-btn" data-cursor="READ">Read the Articles</Link>
@@ -318,7 +328,7 @@ function BioSection() {
           <article className="co-big-card">
             <Sticker variant="stamp">OPEN THE BIO FILE</Sticker>
             <p>I’m not interested in being another AI guy posting tool updates.</p>
-            <p>I care about the layer after the tool: the brand, the story, the message, the campaign, the article, the sales page, the website, the creative direction, and the taste that decides what should exist in the first place.</p>
+            <p>I care about the layer after the tool: the brand, the story, the message, the campaign, the article, the sales page, the website, the show, the newsletter, the creative direction, and the taste that decides what should exist in the first place.</p>
             <p>AI made it easier to produce. It did not make it easier to matter. That is the gap I’m building in.</p>
             <p>I’m a Creative AI Operator from India, building at the intersection of AI, branding, marketing, sales storytelling, content strategy, and creative work.</p>
           </article>
@@ -363,41 +373,7 @@ function Beliefs() {
   );
 }
 
-function CreativeLanes() {
-  const lanes = [
-    ["Brand", "Positioning + identity", "How a brand sounds, looks, moves, and becomes memorable.", ["positioning", "voice", "visual direction", "brand world", "founder narrative", "message clarity"], "BRAND FILE"],
-    ["Market", "Content + campaigns", "How ideas travel through hooks, articles, newsletters, launches, and campaigns.", ["campaign angles", "content ideas", "article topics", "newsletter themes", "creative territories", "distribution thinking"], "SIGNAL DESIGN"],
-    ["Sell", "Pages + stories", "How websites, sales pages, CTAs, and proof flows make people understand what to do next.", ["sales story", "landing page flow", "offer narrative", "proof structure", "conversion path"], "STORY UNDER PRESSURE"],
-    ["Create", "AI-assisted creative direction", "How AI can explore moodboards, campaign ideas, website worlds, and art direction without replacing taste.", ["moodboards", "visual references", "creative concepts", "website direction", "content packaging"], "TASTE > TOOLS"],
-    ["Write", "Articles + letters", "How writing turns thinking into a searchable archive, a trust engine, and a long-term personal brand asset.", ["essays", "articles", "newsletters", "notes", "frameworks", "public thinking"], "ARTICLE FILE"],
-  ];
-  return (
-    <section className="co-section co-lanes">
-      <SectionIntro label="CREATIVE LANES / 03" title="Brand. Market. Sell. Create. Write." copy="This is not a package list. It is the map of the work I think about, study, write, and build around." />
-      <div className="co-lane-grid">
-        {lanes.map(([title, subtitle, copy, items, sticker], index) => (
-          <Reveal key={String(title)} delay={index * 0.04}>
-            <article className="co-lane" data-cursor="OPEN">
-              <Sticker variant="corner-label">{sticker as string}</Sticker>
-              <h3>{title as string}</h3>
-              <b>{subtitle as string}</b>
-              <p>{copy as string}</p>
-              <ul>{(items as string[]).map((item) => <li key={item}>{item}</li>)}</ul>
-            </article>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function Stack() {
-  const orbits = [
-    ["moodboard", "references", "delete note"],
-    ["hook", "narrative", "belief shift"],
-    ["articles", "newsletter", "website"],
-    ["recall", "trust", "search"],
-  ];
   return (
     <section className="co-section co-stack">
       <SectionIntro label="THE STACK / 04" title="Taste → Story → System → Signal." copy="AI can produce. It cannot decide what should exist. That is the creative operator’s job." />
@@ -411,7 +387,6 @@ function Stack() {
           <article key={title} data-cursor="OPEN">
             <h3>{title}</h3>
             <p>{copy}</p>
-            <div className="co-orbit-notes">{orbits[index].map((item) => <span key={item}>{item}</span>)}</div>
           </article>
         ))}
       </div>
@@ -423,44 +398,52 @@ function Stack() {
   );
 }
 
-function Archive() {
-  return (
-    <section className="co-section co-archive">
-      <SectionIntro label="OPEN THE FILE / 05" title="The archive is the proof of taste." copy="A living collection of ideas, brand notes, article drafts, newsletter issues, creative directions, campaign thoughts, website breakdowns, and public build files." />
-      <div className="co-drag-label">DRAG TO EXPLORE</div>
-      <div className="co-file-row" data-cursor="DRAG">
-        {creativeFiles.map(([num, title, type, status, description, sticker, href]) => (
-          <Link href={href} className="co-file-card" key={num} data-cursor="OPEN">
-            <i className="co-file-tab" />
-            <span>FILE {num}</span>
-            <Sticker variant="file-tag">{sticker}</Sticker>
-            <h3>{title}</h3>
-            <b>{type} · {status}</b>
-            <p>{description}</p>
-            <div className="co-file-preview"><MiniArticleSheet /><MiniMoodboard /></div>
-            <em>Open file →</em>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Ecosystem() {
-  const nodes = [
-    ["FRROST Media", "An AI creative studio for brand worlds, marketing systems, websites, content, sales stories, and creative direction."],
-    ["Thinking Beyond Letter", "The Sunday newsletter for Indian operators who refuse the default path."],
-    ["Articles", "SEO-rich essays on AI branding, AI marketing, creative direction, founder brands, sales pages, and content strategy."],
-    ["Beyond Default", "A content layer for business, AI, creative breakdowns, and upskill paths."],
-    ["Thinking Beyond Average", "The anchor phrase, mindset, and future community direction."],
-    ["Personal Archive", "Build notes, idea files, creative files, lessons, drafts, and public thinking."],
+function ThreeWorlds() {
+  const worlds = [
+    {
+      title: "FRROST Media",
+      role: "The AI creative studio.",
+      description: "FRROST Media builds brand worlds, websites, marketing systems, sales stories, campaigns, and AI-assisted creative direction for modern founders and brands.",
+      points: ["brand worlds", "websites", "marketing systems", "sales stories", "campaigns", "creative direction"],
+      cta: "Visit FRROST Media",
+      href: "/frrost-media",
+      className: "world-frrost",
+    },
+    {
+      title: "Beyond Default Show",
+      role: "The breakdown show.",
+      description: "Beyond Default is where I break down AI, business, brands, creators, founders, and operator systems — not for motivation, but for mechanisms.",
+      points: ["AI breakdowns", "business breakdowns", "brand breakdowns", "creator breakdowns", "operator lessons"],
+      cta: "Explore the Show",
+      href: "#beyond-default",
+      className: "world-default",
+    },
+    {
+      title: "Thinking Beyond Club",
+      role: "The community layer.",
+      description: "Thinking Beyond Club is for ambitious Indian operators who refuse the default path and want to level up through AI, business, creativity, content, and execution.",
+      points: ["community", "learning", "events", "operator challenges", "accountability", "future programs"],
+      cta: "Join the Club / Coming Soon",
+      href: "#thinking-beyond-club",
+      className: "world-club",
+    },
   ];
   return (
-    <section className="co-section co-ecosystem">
-      <SectionIntro label="ECOSYSTEM / 06" title="One creative operator. Multiple worlds. Same signal." copy="AdityaSahai.com is the front door. Everything else is a world connected to the same idea: think sharper, build better, and open the file." />
-      <div className="co-map">
-        <div className="co-map-center">Aditya Sahai<br /><span>Creative AI Operator</span></div>
-        {nodes.map(([title, copy], index) => <article key={title} className={`node-${index + 1}`} data-cursor="OPEN"><h3>{title}</h3><p>{copy}</p></article>)}
+    <section className="co-section co-worlds">
+      <SectionIntro label="THREE WORLDS / 03" title="Three worlds. One creative operator." copy="AdityaSahai.com is the front door. The work expands into three worlds: the studio, the show, and the club." />
+      <div className="co-world-grid">
+        {worlds.map((world, index) => (
+          <Reveal key={world.title} delay={index * 0.06}>
+            <article className={`co-world-card ${world.className}`} data-cursor="OPEN">
+              <span>WORLD 0{index + 1}</span>
+              <h3>{world.title}</h3>
+              <b>{world.role}</b>
+              <p>{world.description}</p>
+              <ul>{world.points.map((point) => <li key={point}>{point}</li>)}</ul>
+              <Link href={world.href} data-cursor="OPEN">{world.cta} →</Link>
+            </article>
+          </Reveal>
+        ))}
       </div>
     </section>
   );
@@ -469,7 +452,7 @@ function Ecosystem() {
 function FrrostDoorway() {
   return (
     <section className="co-section co-frrost" id="frrost">
-      <SectionIntro label="FRROST MEDIA / 07" title="FRROST Media is the studio layer." copy="FRROST Media is where the creative operator thinking turns into brand worlds, websites, content systems, campaigns, sales stories, and AI-assisted creative direction." />
+      <SectionIntro label="FRROST MEDIA / 08" title="FRROST Media is the studio layer." copy="The place where creative operator thinking turns into brand worlds, websites, content, sales stories, campaigns, and AI-assisted creative direction." />
       <div className="co-frrost-grid">
         {[
           ["What it is", "An AI creative studio built around branding, marketing, sales storytelling, websites, content, and creative output."],
@@ -489,7 +472,7 @@ function FrrostDoorway() {
 function ArticlesPreview() {
   return (
     <section className="co-section co-articles">
-      <SectionIntro label="ARTICLES / 08" title="Articles for creative operators, founders, and AI-native brands." copy="Essays on AI branding, AI marketing, creative direction, founder personal brands, sales pages, content systems, and building modern brands with taste." />
+      <SectionIntro label="ARTICLES / 05" title="Articles for creative operators, founders, and AI-native brands." copy="Essays on AI branding, AI marketing, creative direction, founder brands, sales pages, content strategy, FRROST Media, Beyond Default, and Thinking Beyond Club." />
       <div className="co-article-grid">
         {articles.filter((article) => article.featured).slice(0, 6).map((article) => (
           <Link key={article.slug} href={`/articles/${article.slug}`} className="co-article-card" data-cursor="READ">
@@ -509,7 +492,7 @@ function ArticlesPreview() {
 function Newsletter() {
   return (
     <section className="co-section co-newsletter" id="newsletter">
-      <SectionIntro label="NEWSLETTER / 09" title="Thinking Beyond Letter." copy="The Sunday read for Indian operators who refuse the default path. One creative build, one sharp lesson, and three things worth your attention." />
+      <SectionIntro label="NEWSLETTER / 06" title="Thinking Beyond Letter." copy="The Sunday read for Indian operators who refuse the default path. One creative build, one sharp lesson, and three things worth your attention." />
       <div className="co-envelope-stage">
         <MiniEnvelope />
         <Sticker variant="stamp">SUNDAY FILE</Sticker>
@@ -528,32 +511,52 @@ function Newsletter() {
   );
 }
 
-function BuildTimeline() {
+function BeyondDefault() {
   return (
-    <section className="co-section co-timeline">
-      <SectionIntro label="THE BUILD / 10" title="The file didn’t start finished." copy="I’m documenting the build, not pretending the destination is already done." />
-      <div className="co-timeline-list">
-        {["Default Path Question", "First AI Realization", "Brand + Creative Direction", "FRROST Media", "Articles", "Thinking Beyond Letter", "The Creative Operator File"].map((title, index) => (
-          <article key={title} data-cursor="STORY"><i className="co-tape-piece" /><span>0{index + 1}</span><h3>{title}</h3><p>{["The point where the obvious route stopped feeling obvious.", "When AI stopped feeling like a toy and started looking like a creative lever.", "The layer that made the most sense: not just using tools, but shaping meaning.", "The studio layer for brand worlds, websites, marketing, and creative output.", "The searchable archive for ideas that should compound.", "The weekly letter for operators who want sharper thinking.", "The public home for the whole thing."][index]}</p></article>
+    <section className="co-section co-show" id="beyond-default">
+      <SectionIntro label="BEYOND DEFAULT / 07" title="The show for AI, business, and operator breakdowns." copy="Beyond Default is where I break down AI shifts, business moves, brands, creators, founders, and systems — not for motivation, but for mechanisms." />
+      <div className="co-show-grid">
+        {[
+          ["AI Breakdowns", "New tools, model shifts, AI use cases, creative AI workflows, and what they mean for operators."],
+          ["Business Breakdowns", "Brands, creators, startups, campaigns, sales pages, and market moves explained through mechanisms."],
+          ["Operator Lessons", "Skills, creative systems, content, sales, writing, execution, and how to think beyond the default path."],
+        ].map(([title, copy], index) => (
+          <article key={title} data-cursor="STORY">
+            <span>STREAM 0{index + 1}</span>
+            <h3>{title}</h3>
+            <p>{copy}</p>
+          </article>
         ))}
       </div>
-      <Link href="/about" className="co-btn" data-cursor="GO">Read the Full Bio</Link>
+      <a href="#contact" className="co-btn" data-cursor="SEND">Explore Beyond Default / Coming Soon</a>
+    </section>
+  );
+}
+
+function ThinkingBeyondClub() {
+  return (
+    <section className="co-section co-club" id="thinking-beyond-club">
+      <SectionIntro label="THINKING BEYOND CLUB / 09" title="A club for Indian operators who refuse the default path." copy="Thinking Beyond Club is the future community layer for ambitious students, creators, founders, and young operators who want to build skills, taste, leverage, and execution in public." />
+      <div className="co-club-grid">
+        {["AI", "business", "creativity", "content", "career leverage", "operator skills", "accountability", "community", "challenges", "events"].map((item) => (
+          <span key={item}>{item}</span>
+        ))}
+      </div>
+      <a href="#contact" className="co-btn primary" data-cursor="JOIN">Join the Waitlist / Coming Soon</a>
     </section>
   );
 }
 
 function FAQ() {
   const faqs = [
-    ["Who is Aditya Sahai?", "Aditya Sahai is a Creative AI Operator from India building at the intersection of AI branding, AI marketing, creative direction, content strategy, founder personal branding, articles, newsletters, and FRROST Media."],
-    ["What is a Creative AI Operator?", "A Creative AI Operator uses AI to improve the creative and strategic parts of a brand: positioning, content, marketing, sales stories, visual direction, websites, articles, newsletters, and public trust."],
-    ["What does Aditya write about?", "Aditya writes about AI branding, AI marketing, creative direction, sales pages, founder personal brands, content strategy, websites, FRROST Media, and the operator mindset behind modern creative work."],
-    ["What is FRROST Media?", "FRROST Media is the studio layer Aditya is building around AI-powered branding, marketing, websites, content systems, sales storytelling, and creative direction."],
+    ["Who is Aditya Sahai?", "Aditya Sahai is a Creative AI Operator from India building at the intersection of AI branding, AI marketing, creative direction, sales storytelling, articles, newsletter, FRROST Media, Beyond Default Show, and Thinking Beyond Club."],
+    ["What is a Creative AI Operator?", "A Creative AI Operator uses AI, taste, story, strategy, and systems to improve the creative and strategic parts of a brand: positioning, content, marketing, websites, sales pages, articles, newsletters, and public trust."],
+    ["What is FRROST Media?", "FRROST Media is Aditya’s AI creative studio for brand worlds, websites, marketing systems, content, sales stories, campaigns, and creative direction."],
+    ["What is Beyond Default Show?", "Beyond Default is Aditya’s show/content layer where he breaks down AI, business, brands, creators, founders, and operator lessons."],
+    ["What is Thinking Beyond Club?", "Thinking Beyond Club is the future community layer for ambitious Indian operators who want to level up through AI, business, creativity, content, and execution."],
+    ["What does Aditya write about?", "Aditya writes about AI branding, AI marketing, creative direction, sales pages, founder brands, content strategy, business breakdowns, and operator thinking."],
     ["What is Thinking Beyond Letter?", "Thinking Beyond Letter is Aditya’s newsletter for Indian operators who refuse the default path. It covers creative builds, lessons, links, AI, branding, marketing, and operator thinking."],
-    ["What is AI branding?", "AI branding is using AI to support brand positioning, voice, visual direction, customer research, content ideas, and creative exploration without losing strategy or taste."],
-    ["What is AI marketing?", "AI marketing is using AI to plan, create, test, and improve marketing assets like content, campaigns, landing pages, sales pages, emails, newsletters, and social posts."],
-    ["Does Aditya build websites?", "Aditya thinks about websites as brand worlds and sales conversations. The focus is not just design, but story, structure, message, visual direction, and conversion logic."],
-    ["Is this a services website?", "No. AdityaSahai.com is primarily a personal brand, bio, article, and newsletter website. It includes a soft contact path, but it is not built around packages or pricing."],
-    ["How do I contact Aditya?", "Use the contact section to send a note about what you’re building, writing, launching, or trying to clarify."],
+    ["Is this a services website?", "No. AdityaSahai.com is primarily a personal brand, bio, article, newsletter, and ecosystem website. It includes soft links to FRROST Media and contact, but it is not built around packages or pricing."],
   ];
   return (
     <section className="co-section co-faq">
@@ -592,7 +595,7 @@ export function ContactNote() {
   return (
     <section className="co-section co-contact" id="contact">
       <div>
-        <SectionIntro label="SEND A NOTE / 12" title="Want to open a file with me?" copy="Send a note if you want to talk about brand, marketing, creative direction, articles, newsletters, websites, FRROST Media, or something you’re building." />
+        <SectionIntro label="SEND A NOTE / 11" title="Want to open a file with me?" copy="Send a note if you want to talk about brand, marketing, creative direction, articles, newsletter, FRROST Media, Beyond Default, Thinking Beyond Club, or something you’re building." />
         <div className="co-direct">
           <a href="mailto:adityasahai037@gmail.com"><Mail size={18} /> Email</a>
           <a href="https://wa.me/916207126091" target="_blank" rel="noreferrer"><MessageCircle size={18} /> WhatsApp</a>
@@ -603,7 +606,7 @@ export function ContactNote() {
         <label>Name<input name="name" required /></label>
         <label>Email<input name="email" type="email" required /></label>
         <label>What are you building or thinking about?<input name="thinkingAbout" required /></label>
-        <label>What kind of note is this?<select name="noteType" required defaultValue=""><option value="" disabled>Select a file type</option><option>Brand / positioning</option><option>Marketing / content</option><option>Website / landing page</option><option>Article / newsletter</option><option>FRROST Media</option><option>Creative direction</option><option>Collaboration</option><option>Something else</option></select></label>
+        <label>What kind of note is this?<select name="noteType" required defaultValue=""><option value="" disabled>Select a file type</option><option>Brand / positioning</option><option>Marketing / content</option><option>Website / landing page</option><option>Article / newsletter</option><option>FRROST Media</option><option>Beyond Default</option><option>Thinking Beyond Club</option><option>Creative direction</option><option>Collaboration</option><option>Something else</option></select></label>
         <label>Message<textarea name="message" minLength={20} required /></label>
         <button className="co-btn primary" type="submit" disabled={status === "loading"} data-cursor="SEND">{status === "loading" ? "Sending..." : "Send the Note"}</button>
         {status === "success" && <p className="co-success">Note received. I’ll read the file and reply if there is a clear next move.</p>}
@@ -628,7 +631,7 @@ export default function CreativeOperatorHome() {
   return (
     <main className="creative-operator">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
-      <Preloader />
+      <PreloaderWTF />
       <Cursor />
       <motion.div className="co-progress" style={{ width: progress }} />
       <OperatorNav />
@@ -636,14 +639,13 @@ export default function CreativeOperatorHome() {
       <Marquee />
       <BioSection />
       <Beliefs />
-      <CreativeLanes />
+      <ThreeWorlds />
       <Stack />
-      <Archive />
-      <Ecosystem />
-      <FrrostDoorway />
       <ArticlesPreview />
       <Newsletter />
-      <BuildTimeline />
+      <BeyondDefault />
+      <FrrostDoorway />
+      <ThinkingBeyondClub />
       <FAQ />
       <ContactNote />
       <OperatorFooter />

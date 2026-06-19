@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ContactNote, OperatorFooter, OperatorNav, Sticker } from "@/components/CreativeOperatorSite";
-import { beliefs, creativeFiles } from "@/lib/operator-content";
+import { beliefs } from "@/lib/operator-content";
 
 export const metadata: Metadata = {
   title: { absolute: "About Aditya Sahai — Creative AI Operator" },
@@ -16,7 +16,7 @@ export default function AboutPage() {
         <div>
           <Sticker variant="file-tag">ABOUT / BIO FILE</Sticker>
           <h1>I’m Aditya Sahai. I’m building the Creative AI Operator lane.</h1>
-          <p>I care about the layer where AI meets taste: branding, marketing, sales stories, content, websites, articles, newsletters, and the creative decisions that make output worth remembering.</p>
+          <p>I care about the layer where AI meets taste: branding, marketing, sales stories, content, websites, shows, articles, newsletters, and the creative decisions that make output worth remembering.</p>
         </div>
         <div className="co-about-manifesto">
           <span>THINKING BEYOND AVERAGE</span>
@@ -42,9 +42,11 @@ export default function AboutPage() {
         </div>
       </section>
       <section className="co-page-section">
-        <h2>What I’m building.</h2>
+        <h2>The three worlds.</h2>
         <div className="co-page-grid">
-          {creativeFiles.slice(0, 6).map(([num, title, type, status, description]) => <article className="co-page-card co-file-mini" key={num}><i className="co-file-tab" /><span>FILE {num}</span><h3>{title}</h3><b>{type} · {status}</b><p>{description}</p></article>)}
+          <article className="co-page-card co-file-mini"><span>WORLD 01</span><h3>FRROST Media</h3><b>The AI creative studio</b><p>Brand worlds, websites, marketing systems, sales stories, campaigns, and creative direction.</p></article>
+          <article className="co-page-card co-file-mini"><span>WORLD 02</span><h3>Beyond Default Show</h3><b>The breakdown show</b><p>AI, business, brand, creator, founder, and operator breakdowns for mechanisms, not motivation.</p></article>
+          <article className="co-page-card co-file-mini"><span>WORLD 03</span><h3>Thinking Beyond Club</h3><b>The community layer</b><p>A future community for ambitious Indian operators building skill, taste, leverage, and execution.</p></article>
         </div>
       </section>
       <section className="co-page-section">
