@@ -23,6 +23,44 @@ body {
   color: var(--ink);
   font-family: var(--font-body), Inter, sans-serif;
   isolation: isolate;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+}
+
+/* Readable editorial rhythm: display type stays bold without collapsing words. */
+.creative-operator h1,
+.creative-operator h2,
+.creative-operator h3,
+.co-simple-page h1,
+.co-simple-page h2,
+.co-simple-page h3,
+.co-article-page h1,
+.co-article-page h2,
+.co-article-page h3 {
+  letter-spacing: -.02em;
+  word-spacing: .12em;
+}
+
+.creative-operator p,
+.creative-operator li,
+.creative-operator summary,
+.co-simple-page p,
+.co-simple-page li,
+.co-article-page p,
+.co-article-page li {
+  letter-spacing: 0;
+  word-spacing: .025em;
+}
+
+.co-nav a,
+.co-btn,
+.co-label,
+.co-sticker,
+.co-board-meta,
+.co-board-tags,
+.co-photo-file figcaption,
+.co-article-meta {
+  word-spacing: .08em;
 }
 
 .co-section,
@@ -58,7 +96,8 @@ body {
 .co-loader-question {
   max-width: 980px;
   font-size: clamp(3rem, 9vw, 9.4rem);
-  letter-spacing: -.06em;
+  letter-spacing: -.025em;
+  word-spacing: .14em;
   line-height: .82;
 }
 
@@ -109,7 +148,8 @@ body {
 
 .co-hero h1 {
   max-width: 1050px;
-  letter-spacing: -.08em;
+  letter-spacing: -.025em;
+  word-spacing: .13em;
   text-wrap: balance;
 }
 
@@ -223,7 +263,8 @@ body {
 .co-section-intro h2,
 .co-page-hero h1,
 .co-page-section h2 {
-  letter-spacing: -.07em;
+  letter-spacing: -.02em;
+  word-spacing: .12em;
   text-wrap: balance;
 }
 
@@ -266,7 +307,8 @@ body {
 
 .co-world-card h3,
 .co-show-grid h3 {
-  letter-spacing: -.075em;
+  letter-spacing: -.018em;
+  word-spacing: .1em;
   line-height: .88;
 }
 
@@ -398,7 +440,8 @@ body {
 
   .co-hero h1 {
     font-size: clamp(3.3rem, 15vw, 5.2rem);
-    letter-spacing: -.065em;
+    letter-spacing: -.018em;
+    word-spacing: .1em;
   }
 
   .co-board .co-board-photo {

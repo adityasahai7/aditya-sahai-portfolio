@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Mail, MessageCircle } from "lucide-react";
 import { articles, beliefs, socials } from "@/lib/operator-content";
@@ -270,15 +270,17 @@ function Hero() {
         <p className="co-hero-kicker">ADITYA SAHAI / CREATIVE AI OPERATOR / FOUNDER / CO-FOUNDER & CEO, FRROST MEDIA / INDIA</p>
         <h1 className="co-split-title">
           {words.map((word, index) => (
-            <motion.span
-              key={`${word}-${index}`}
-              className={["AI,", "branding,", "marketing,", "creative"].includes(word) ? "highlight" : ""}
-              initial={{ opacity: 0, y: 42, rotate: index % 2 ? 1.6 : -1.2 }}
-              animate={{ opacity: 1, y: 0, rotate: 0 }}
-              transition={{ delay: 0.3 + index * 0.055, duration: 0.6, type: "spring", stiffness: 160, damping: 18 }}
-            >
-              {word}{index < words.length - 1 ? " " : ""}
-            </motion.span>
+            <Fragment key={`${word}-${index}`}>
+              <motion.span
+                className={["AI,", "branding,", "marketing,", "creative"].includes(word) ? "highlight" : ""}
+                initial={{ opacity: 0, y: 42, rotate: index % 2 ? 1.6 : -1.2 }}
+                animate={{ opacity: 1, y: 0, rotate: 0 }}
+                transition={{ delay: 0.3 + index * 0.055, duration: 0.6, type: "spring", stiffness: 160, damping: 18 }}
+              >
+                {word}
+              </motion.span>
+              {index < words.length - 1 ? " " : null}
+            </Fragment>
           ))}
         </h1>
         <p className="co-hero-copy">I use AI, taste, story, and strategy to think through modern brands, content, websites, sales pages, shows, articles, newsletters, and creative systems.</p>
