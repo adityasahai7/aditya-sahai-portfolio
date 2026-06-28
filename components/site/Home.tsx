@@ -16,6 +16,8 @@ import {
 import { ContactForm, NewsletterForm } from "@/components/site/Forms";
 import { Badge, ButtonLink, IconCard, SectionHeading, StatusDot } from "@/components/site/UI";
 import { SiteShell } from "@/components/site/Chrome";
+import { TrackedExternalLink, TrackedInternalLink } from "@/components/site/Experience";
+import { EXTERNAL_LINKS } from "@/lib/external-links";
 
 function ArticleCard({ article }: { article: (typeof articles)[number] }) {
   return (
@@ -40,7 +42,7 @@ function Hero() {
           <div className="ice-actions">
             <ButtonLink href="/contact">Work With Me</ButtonLink>
             <ButtonLink href="/articles" variant="secondary">Read My Thinking</ButtonLink>
-            <ButtonLink href="/frrost-media" variant="moss">Enter FRROST Media</ButtonLink>
+            <ButtonLink href="/frrost-media" variant="moss">Learn About FRROST</ButtonLink>
           </div>
           <div className="ice-honesty-line"><StatusDot>Available for selected early projects</StatusDot><span>Early. Serious. Building in public.</span></div>
         </div>
@@ -110,7 +112,7 @@ export default function HomePage() {
           <div className="ice-container">
             <SectionHeading label="THE ECOSYSTEM" title="Three worlds. One operating system." copy="The personal brand, studio, show, newsletter, and community connect into one larger creative operator ecosystem." />
             <div className="ice-world-grid">
-              {worlds.map((world) => <article className={`ice-world-card ${world.className}`} key={world.title}><Badge tone={world.className === "ice-world-dark" ? "blue" : "dark"}>{world.label}</Badge><h3>{world.title}</h3><p>{world.copy}</p><Link href={world.href}>{world.cta}<ArrowRight size={16} /></Link></article>)}
+              {worlds.map((world) => <article className={`ice-world-card ${world.className}`} key={world.title}><Badge tone={world.className === "ice-world-dark" ? "blue" : "dark"}>{world.label}</Badge><h3>{world.title}</h3><p>{world.copy}</p><div className="ice-world-actions">{world.title === "FRROST Media" ? <TrackedInternalLink href={world.href} eventName="frrost_learn_click">{world.cta}<ArrowRight size={16} /></TrackedInternalLink> : <Link href={world.href}>{world.cta}<ArrowRight size={16} /></Link>}{world.title === "FRROST Media" ? <TrackedExternalLink href={EXTERNAL_LINKS.frrostMedia} eventName="frrost_visit_click">Visit FRROST Media<ArrowRight size={16} /></TrackedExternalLink> : null}</div></article>)}
             </div>
           </div>
         </section>
@@ -139,8 +141,8 @@ export default function HomePage() {
 
         <section className="ice-section ice-newsletter-section">
           <div className="ice-container ice-newsletter-grid">
-            <div><p className="ice-section-label">THINKING BEYOND LETTER</p><h2>The Sunday read for operators who refuse the default path.</h2><p>One creative build, one sharp lesson, and three things worth your attention.</p><ul><li>The build</li><li>The lesson</li><li>The round-up</li></ul></div>
-            <NewsletterForm source="homepage" />
+            <div><p className="ice-section-label">THINKING BEYOND LETTER</p><h2>The Sunday read for Indian operators who refuse the default path.</h2><p>One creative build. One sharp lesson. Three things worth your attention.</p><ul><li>AI, branding, content, websites, and creative systems</li><li>Lessons from building FRROST Media</li><li>Brand, creator, page, and growth-system breakdowns</li><li>Honest notes from building in public</li></ul><small className="ice-newsletter-microcopy">No spam. No generic AI news. No fake guru advice.</small></div>
+            <NewsletterForm source="homepage" sourceComponent="homepage-newsletter" />
           </div>
         </section>
 

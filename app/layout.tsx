@@ -6,6 +6,7 @@ import "./premium-rebuild.css";
 import "./ice-system.css";
 import GrainOverlay from "@/components/ui/GrainOverlay";
 import LenisProvider from "@/components/layout/LenisProvider";
+import { SiteExperience } from "@/components/site/Experience";
 
 const display = localFont({
   src: [
@@ -64,6 +65,7 @@ export default function RootLayout({
       className={`${display.variable} ${body.variable}`}
     >
       <body className="grain antialiased">
+        <SiteExperience />
         <LenisProvider>
           <GrainOverlay />
           {children}

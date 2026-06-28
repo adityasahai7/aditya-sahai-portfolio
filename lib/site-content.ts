@@ -138,7 +138,7 @@ export const worlds = [
     label: "The studio layer",
     copy: "An early-stage AI creative studio for brand worlds, websites, marketing systems, sales stories, content engines, and creative direction.",
     href: "/frrost-media",
-    cta: "Enter FRROST",
+    cta: "Learn about FRROST",
     className: "ice-world-dark",
   },
   {

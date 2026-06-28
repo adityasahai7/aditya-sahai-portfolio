@@ -2,8 +2,9 @@
 
 import { useState, type FormEvent } from "react";
 import { ArrowRight, LoaderCircle } from "lucide-react";
+import { trackSiteEvent } from "@/components/site/Experience";
 
-type FormState = "idle" | "loading" | "success" | "duplicate" | "error";
+type FormState = "idle" | "focused" | "loading" | "success" | "duplicate" | "validation" | "error";
 
 type ApiResponse = {
   message?: string;
@@ -22,47 +23,54 @@ async function submitForm(endpoint: string, form: HTMLFormElement) {
   return { response, payload };
 }
 
-function SubmitButton({ loading, children }: { loading: boolean; children: string }) {
+function SubmitButton({ loading, children, loadingLabel = "Sending…" }: { loading: boolean; children: string; loadingLabel?: string }) {
   return (
     <button className="ice-button ice-button-primary ice-submit" disabled={loading} type="submit">
-      {loading ? <><LoaderCircle className="ice-spinner" size={17} /> Sending</> : <>{children}<ArrowRight size={17} /></>}
+      {loading ? <><LoaderCircle className="ice-spinner" size={17} />{loadingLabel}</> : <>{children}<ArrowRight size={17} /></>}
     </button>
   );
 }
 
-export function NewsletterForm({ source = "website", compact = false }: { source?: string; compact?: boolean }) {
+export function NewsletterForm({ source = "website", sourceComponent = "newsletter-form", compact = false }: { source?: string; sourceComponent?: string; compact?: boolean }) {
   const [state, setState] = useState<FormState>("idle");
   const [message, setMessage] = useState("");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
     setState("loading");
     setMessage("");
+    trackSiteEvent("newsletter_submit", { sourcePage: source, sourceComponent });
     try {
-      const { response, payload } = await submitForm("/api/newsletter", event.currentTarget);
+      const { response, payload } = await submitForm("/api/newsletter", form);
       if (response.ok) {
-        setState(payload.code === "duplicate" ? "duplicate" : "success");
-        setMessage(payload.message || "Welcome to Thinking Beyond Letter. Check your inbox for the first note soon.");
-        if (payload.code !== "duplicate") event.currentTarget.reset();
+        const duplicate = payload.code === "duplicate";
+        setState(duplicate ? "duplicate" : "success");
+        setMessage(payload.message || (duplicate ? "You’re already on the list. Good taste." : "You’re in. Welcome to Thinking Beyond Letter."));
+        trackSiteEvent(duplicate ? "newsletter_duplicate" : "newsletter_success", { sourcePage: source, sourceComponent });
+        if (!duplicate) form.reset();
         return;
       }
-      setState(payload.code === "duplicate" ? "duplicate" : "error");
-      setMessage(payload.error || "Something went wrong. Please try again.");
+      setState(payload.code === "validation_error" ? "validation" : "error");
+      setMessage(payload.error || "Something broke while joining. Try again or send me a note.");
     } catch {
       setState("error");
-      setMessage("Something went wrong. Please try again.");
+      setMessage("Something broke while joining. Try again or send me a note.");
     }
   }
 
+  const buttonLabel = state === "success" ? "You’re in" : state === "duplicate" ? "Already joined" : "Join the Letter";
+
   return (
-    <form className={`ice-form ice-newsletter-form ${compact ? "is-compact" : ""}`} onSubmit={handleSubmit} noValidate>
+    <form className={`ice-form ice-newsletter-form is-${state} ${compact ? "is-compact" : ""}`} onSubmit={handleSubmit} onFocusCapture={() => state === "idle" && setState("focused")} noValidate>
       <input type="hidden" name="sourcePage" value={source} />
+      <input type="hidden" name="sourceComponent" value={sourceComponent} />
       <label className="ice-honeypot" aria-hidden="true">Leave this empty<input name="website" tabIndex={-1} autoComplete="off" /></label>
       {!compact ? <label><span>Name <em>optional</em></span><input name="name" autoComplete="name" placeholder="Your name" /></label> : null}
       <label><span>Email</span><input name="email" type="email" autoComplete="email" placeholder="you@example.com" required aria-describedby="newsletter-status" /></label>
-      <SubmitButton loading={state === "loading"}>Join the Letter</SubmitButton>
+      <SubmitButton loading={state === "loading"} loadingLabel="Joining…">{buttonLabel}</SubmitButton>
       {message ? <p className={`ice-form-message is-${state}`} id="newsletter-status" role="status">{message}</p> : null}
-      <small>No spam. Just the build, the lesson, and the useful things.</small>
+      <small>No spam. No generic AI news. Only sharp operator thinking.</small>
     </form>
   );
 }
@@ -70,6 +78,7 @@ export function NewsletterForm({ source = "website", compact = false }: { source
 export function ContactForm({ source = "contact" }: { source?: string }) {
   const [state, setState] = useState<FormState>("idle");
   const [message, setMessage] = useState("");
+  const [helpType, setHelpType] = useState("");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -81,6 +90,7 @@ export function ContactForm({ source = "contact" }: { source?: string }) {
         setState("success");
         setMessage(payload.message || "Got it. Your note has been sent. I’ll read it and reply if it feels aligned.");
         event.currentTarget.reset();
+        setHelpType("");
         return;
       }
       setState("error");
@@ -102,7 +112,7 @@ export function ContactForm({ source = "contact" }: { source?: string }) {
       <label><span>Company / project name <em>optional</em></span><input name="company" autoComplete="organization" placeholder="What are you building?" /></label>
       <label><span>What are you building?</span><input name="projectDescription" required placeholder="A short description is enough" /></label>
       <div className="ice-form-row">
-        <label><span>What do you need help with?</span><select name="helpType" required defaultValue=""><option value="" disabled>Select one</option><option>Brand positioning</option><option>Website / landing page</option><option>Content system</option><option>AI workflow</option><option>Sales page / offer story</option><option>FRROST Media</option><option>Beyond Default</option><option>Thinking Beyond Club</option><option>Collaboration</option><option>Something else</option></select></label>
+        <label><span>What do you need help with?</span><select name="helpType" required defaultValue="" onChange={(event) => setHelpType(event.target.value)}><option value="" disabled>Select one</option><option>Brand positioning</option><option>Website / landing page</option><option>Content system</option><option>AI workflow</option><option>Sales page / offer story</option><option>FRROST Media</option><option>Beyond Default</option><option>Thinking Beyond Club</option><option>Collaboration</option><option>Something else</option></select>{helpType === "FRROST Media" ? <small className="ice-field-help">Tell me what you want FRROST to build or improve.</small> : null}</label>
         <label><span>Budget range <em>optional</em></span><select name="budgetRange" defaultValue=""><option value="">Select one</option><option>Not sure yet</option><option>Under ₹25k</option><option>₹25k–₹75k</option><option>₹75k–₹2L</option><option>₹2L+</option></select></label>
       </div>
       <label><span>Timeline <em>optional</em></span><select name="timeline" defaultValue=""><option value="">Select one</option><option>This week</option><option>This month</option><option>1–3 months</option><option>Just exploring</option></select></label>

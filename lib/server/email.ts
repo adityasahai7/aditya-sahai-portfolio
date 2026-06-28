@@ -39,10 +39,15 @@ export async function sendContactEmails(input: Record<string, string>) {
   return { configured: true, ok: true };
 }
 
-export async function sendWelcomeEmail(email: string, name: string) {
+export async function sendWelcomeEmail(email: string, name: string, sourcePage: string) {
   const resend = getResend();
-  if (!resend || !process.env.EMAIL_FROM) return { configured: Boolean(resend), ok: false };
-  const result = await resend.emails.send({ from: process.env.EMAIL_FROM, to: email, subject: "Welcome to Thinking Beyond Letter", html: emailShell(`<p>Hey ${escapeHtml(name || "there")},</p><p>You’re on the list. I’ll send the first useful note soon: one build, one lesson, and three things worth your attention.</p><p>— Aditya</p>`) });
+  if (!resend || !process.env.EMAIL_FROM) return { configured: false, ok: false };
+  const result = await resend.emails.send({
+    from: process.env.EMAIL_FROM,
+    to: email,
+    subject: "Welcome to Thinking Beyond Letter",
+    html: emailShell(`<p>Hey ${escapeHtml(name || "there")},</p><p>You’re in.</p><p>Thinking Beyond Letter is where I share one creative build, one sharp lesson, and three things worth your attention — across AI, branding, content, websites, business, and operator thinking.</p><p>No spam. No generic AI news. Just useful signal.</p><p>— Aditya</p><p style="margin-top:28px;color:#5D6B70;font-size:12px">You joined from ${escapeHtml(sourcePage)}. You can unsubscribe by replying to this email.</p>`),
+  });
   return { configured: true, ok: !result.error };
 }
 

@@ -1,6 +1,5 @@
-type TableName = "contacts" | "newsletter_subscribers" | "waitlist_entries";
-type RecordValue = string | number | boolean | null | undefined;
-type SiteRecord = Record<string, RecordValue>;
+type TableName = "contacts" | "newsletter_subscribers" | "waitlist_entries" | "analytics_events";
+type SiteRecord = Record<string, unknown>;
 
 function getConfig() {
   const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;

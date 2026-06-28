@@ -6,6 +6,8 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { navigation, socialLinks } from "@/lib/site-content";
 import { ButtonLink } from "@/components/site/UI";
+import { TrackedExternalLink } from "@/components/site/Experience";
+import { EXTERNAL_LINKS } from "@/lib/external-links";
 
 export function SiteNav() {
   const pathname = usePathname();
@@ -75,6 +77,7 @@ export function SiteFooter() {
           <p className="ice-footer-label">Connect</p>
           <div className="ice-footer-links">
             {socialLinks.map(([label, href]) => <a href={href} key={label} target="_blank" rel="noreferrer">{label}</a>)}
+            <TrackedExternalLink href={EXTERNAL_LINKS.frrostMedia} eventName="frrost_visit_click">FRROST Media — Studio Layer</TrackedExternalLink>
             <a href="mailto:adityasahai037@gmail.com">Email</a>
             <a href="https://wa.me/916207126091" target="_blank" rel="noreferrer">WhatsApp</a>
           </div>
