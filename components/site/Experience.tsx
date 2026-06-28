@@ -44,6 +44,36 @@ export function SiteExperience() {
     return () => document.removeEventListener("click", handleClick);
   }, []);
 
+  useEffect(() => {
+    const targets = Array.from(document.querySelectorAll<HTMLElement>([
+      ".ice-section-heading",
+      ".ice-card",
+      ".ice-world-card",
+      ".ice-meta-grid article",
+      ".ice-newsletter-promise-grid article",
+      ".ice-sample-issue",
+      ".ice-process-list li",
+      ".ice-faq-list details",
+    ].join(",")));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      targets.forEach((target) => target.classList.add("is-visible"));
+      return;
+    }
+    targets.forEach((target, index) => {
+      target.classList.add("ice-reveal-target");
+      target.style.setProperty("--ice-reveal-delay", `${Math.min(index % 4, 3) * 55}ms`);
+    });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        (entry.target as HTMLElement).classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -8%", threshold: .12 });
+    targets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, [pathname]);
+
   return (
     <>
       <div className={`ice-route-progress ${routeLoading ? "is-active" : ""}`} aria-hidden="true" />
