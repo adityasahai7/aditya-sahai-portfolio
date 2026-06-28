@@ -1,85 +1,34 @@
-import { Resend } from "resend";
-import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { sendContactEmails } from "@/lib/server/email";
+import { insertRecord } from "@/lib/server/storage";
+import { cleanEmail, cleanText, isEmail, jsonError, rateLimit, requestContext } from "@/lib/server/security";
 
-/** Strip HTML tags and escape special chars to prevent XSS in email HTML */
-function sanitize(input: unknown): string {
-  if (typeof input !== "string") return "";
-  return input
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#x27;")
-    .slice(0, 2000); // hard cap
-}
-
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const name        = sanitize(body.name);
-    const email       = sanitize(body.email);
-    const projectType = sanitize(body.noteType || body.projectType);
-    const thinkingAbout = sanitize(body.thinkingAbout);
-    const message     = sanitize(body.message);
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!name || !email || !message) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-    }
-    if (!emailRegex.test(email)) {
-      return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
-    }
-
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
-      console.error("Email send error: RESEND_API_KEY is not configured");
-      return NextResponse.json({ error: "Email service is not configured" }, { status: 503 });
-    }
-
-    const resend = new Resend(apiKey);
-    const { error } = await resend.emails.send({
-      from:     "Portfolio <onboarding@resend.dev>",
-      to:       "adityasahai037@gmail.com",
-      reply_to: email,
-      subject:  `New Note: ${projectType || "Creative Operator File"} — ${name}`,
-      html: `
-        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:600px;margin:0 auto;background:#F4EFE6;color:#0F0E0C;padding:40px;border-radius:12px;">
-          <h2 style="color:#FF4D2E;margin:0 0 24px;font-size:22px;font-weight:500;letter-spacing:-0.01em;">
-            New Portfolio Inquiry
-          </h2>
-          <table style="width:100%;border-collapse:collapse;">
-            <tr>
-              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);color:rgba(15,14,12,0.5);font-size:12px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;width:130px;vertical-align:top;">Name</td>
-              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);font-size:15px;">${name}</td>
-            </tr>
-            <tr>
-              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);color:rgba(15,14,12,0.5);font-size:12px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;vertical-align:top;">Email</td>
-              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);font-size:15px;">${email}</td>
-            </tr>
-            <tr>
-              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);color:rgba(15,14,12,0.5);font-size:12px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;vertical-align:top;">Note Type</td>
-              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);font-size:15px;">${projectType}</td>
-            </tr>
-            <tr>
-              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);color:rgba(15,14,12,0.5);font-size:12px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;vertical-align:top;">Thinking About</td>
-              <td style="padding:12px 0;border-bottom:1px solid rgba(15,14,12,0.1);font-size:15px;">${thinkingAbout}</td>
-            </tr>
-          </table>
-          <div style="margin-top:24px;">
-            <div style="color:rgba(15,14,12,0.5);font-size:11px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;">Message</div>
-            <div style="background:#FBF7EF;padding:20px;border-radius:8px;border:1px solid rgba(15,14,12,0.08);font-size:15px;line-height:1.65;">${message}</div>
-          </div>
-          <div style="margin-top:32px;padding-top:20px;border-top:1px solid rgba(15,14,12,0.1);color:rgba(15,14,12,0.35);font-size:11px;font-family:monospace;letter-spacing:0.08em;">
-            SENT VIA ADITYA SAHAI PORTFOLIO
-          </div>
-        </div>
-      `,
-    });
-    if (error) throw error;
-
-    return NextResponse.json({ success: true });
+    if (cleanText(body.website, 80)) return Response.json({ message: "Got it. Your note has been sent." });
+    const context = requestContext(request);
+    const limit = rateLimit(`contact:${context.ip}`, 5, 60_000);
+    if (!limit.allowed) return Response.json({ error: "Too many attempts. Please wait a minute and try again.", code: "rate_limited" }, { status: 429, headers: { "Retry-After": String(limit.retryAfter) } });
+    const input = {
+      name: cleanText(body.name, 120), email: cleanEmail(body.email), company: cleanText(body.company, 160),
+      projectDescription: cleanText(body.projectDescription, 700), helpType: cleanText(body.helpType, 120),
+      budgetRange: cleanText(body.budgetRange, 80), timeline: cleanText(body.timeline, 80), message: cleanText(body.message, 5000),
+      sourcePage: cleanText(body.sourcePage, 160) || "website",
+    };
+    if (input.name.length < 2) return jsonError("Please enter your name.");
+    if (!isEmail(input.email)) return jsonError("Please enter a valid email address.");
+    if (!input.projectDescription) return jsonError("Please tell me what you are building.");
+    if (!input.helpType) return jsonError("Please select what you need help with.");
+    if (input.message.length < 20) return jsonError("Please add a little more detail to your message.");
+    const [storage, email] = await Promise.all([
+      insertRecord("contacts", { name: input.name, email: input.email, company: input.company || null, project_description: input.projectDescription, help_type: input.helpType, budget_range: input.budgetRange || null, timeline: input.timeline || null, message: input.message, source_page: input.sourcePage, user_agent: context.userAgent, ip_hash: context.ipHash }),
+      sendContactEmails(input),
+    ]);
+    if (!storage.ok && !email.ok) return jsonError("The note could not be delivered. Please email me directly at adityasahai037@gmail.com.", 503, "delivery_unavailable");
+    return Response.json({ message: "Got it. Your note has been sent. I’ll read it and reply if it feels aligned." });
   } catch (error) {
-    console.error("Email send error:", error);
-    return NextResponse.json({ error: "Failed to send" }, { status: 500 });
+    console.error("Contact submission failed", error);
+    return jsonError("Something went wrong. Please try again or email me directly.", 500, "server_error");
   }
 }

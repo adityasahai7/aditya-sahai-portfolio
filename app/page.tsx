@@ -1,5 +1,5 @@
-import CreativeOperatorHome from "@/components/CreativeOperatorSite";
+import HomePage from "@/components/site/Home";
 
 export default function Home() {
-  return <CreativeOperatorHome />;
+  return <HomePage />;
 }

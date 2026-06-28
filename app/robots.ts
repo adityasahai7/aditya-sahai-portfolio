@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: ["/studio-admin", "/api/"],
     },
     sitemap: "https://adityasahai.com/sitemap.xml",
   };

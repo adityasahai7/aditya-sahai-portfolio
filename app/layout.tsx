@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Cormorant, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import "./three-worlds.css";
 import "./premium-rebuild.css";
+import "./ice-system.css";
 import GrainOverlay from "@/components/ui/GrainOverlay";
 import LenisProvider from "@/components/layout/LenisProvider";
 
@@ -23,14 +23,6 @@ const display = localFont({
   fallback: ["Inter", "sans-serif"],
 });
 
-const editorial = Cormorant({
-  subsets: ["latin"],
-  variable: "--font-editorial",
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
 const body = localFont({
   src: "../public/fonts/satoshi/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Variable.woff2",
   variable: "--font-body",
@@ -39,33 +31,28 @@ const body = localFont({
   fallback: ["Inter", "sans-serif"],
 });
 
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "500"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://adityasahai.com"),
   title: {
-    default: "Aditya Sahai — The Creative Operator File",
+    default: "Aditya Sahai — Creative AI Operator",
     template: "%s — Aditya Sahai",
   },
   description:
-    "Aditya Sahai is a Creative AI Operator from India writing about AI branding, AI marketing, creative direction, founder brands, sales stories, articles, newsletters, FRROST Media, and Thinking Beyond.",
+    "Aditya Sahai is a Creative AI Operator from India building sharper brands, websites, content systems, sales stories, and AI-assisted creative workflows.",
   keywords: ["Creative AI Operator", "AI branding", "AI marketing", "creative direction", "founder personal branding", "content strategy", "sales stories", "FRROST Media", "Thinking Beyond Letter", "Aditya Sahai"],
   openGraph: {
-    title: "Aditya Sahai — The Creative Operator File",
-    description: "A bio-first personal brand, article archive, newsletter home, and creative operator file for AI branding, marketing, sales stories, and creative direction.",
+    title: "Aditya Sahai — Creative AI Operator",
+    description: "AI, taste, and storytelling for sharper brands, websites, content systems, and creative workflows.",
     url: "https://adityasahai.com",
     type: "website",
+    images: [{ url: "/images/aditya-photo.png", width: 322, height: 292, alt: "Aditya Sahai, Creative AI Operator" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aditya Sahai — The Creative Operator File",
-    description: "AI branding, AI marketing, sales stories, creative direction, articles, newsletters, and FRROST Media.",
+    title: "Aditya Sahai — Creative AI Operator",
+    description: "AI, taste, and storytelling for sharper brands, websites, content systems, and creative workflows.",
   },
+  alternates: { canonical: "https://adityasahai.com" },
 };
 
 export default function RootLayout({
@@ -74,7 +61,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${editorial.variable} ${body.variable} ${mono.variable}`}
+      className={`${display.variable} ${body.variable}`}
     >
       <body className="grain antialiased">
         <LenisProvider>

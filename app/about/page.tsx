@@ -1,67 +1,25 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ContactNote, OperatorFooter, OperatorNav, Sticker } from "@/components/CreativeOperatorSite";
+import { SiteShell } from "@/components/site/Chrome";
+import { ButtonLink, PageHero, SectionHeading } from "@/components/site/UI";
 import { beliefs } from "@/lib/operator-content";
+import { worlds } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: { absolute: "About Aditya Sahai — Creative AI Operator" },
-  description: "Read the story, beliefs, and creative operator file of Aditya Sahai, an Indian Creative AI Operator building around AI branding, AI marketing, creative direction, articles, newsletters, FRROST Media, and Thinking Beyond.",
+  description: "The story, beliefs, current builds, and learning path of Aditya Sahai, a Creative AI Operator from India.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
   return (
-    <main className="co-simple-page">
-      <OperatorNav />
-      <section className="co-page-hero co-about-hero">
-        <div>
-          <Sticker variant="file-tag">ABOUT / BIO FILE</Sticker>
-          <h1>I’m Aditya Sahai. I’m building the Creative AI Operator lane.</h1>
-          <p>I care about the layer where AI meets taste: branding, marketing, sales stories, content, websites, shows, articles, newsletters, and the creative decisions that make output worth remembering.</p>
-        </div>
-        <div className="co-about-manifesto">
-          <span>THINKING BEYOND AVERAGE</span>
-          <b>AI made it easier to produce. It did not make it easier to matter.</b>
-        </div>
-      </section>
-      <section className="co-page-section">
-        <h2>The longer bio.</h2>
-        <div className="co-big-card">
-          <Sticker variant="stamp">PERSONAL FILE</Sticker>
-          <p>I’m not building a normal portfolio.</p>
-          <p>I wanted AdityaSahai.com to feel more like a public notebook: the place where my ideas, articles, creative files, newsletter, brand notes, and studio experiments live.</p>
-          <p>The core question I keep returning to is simple: what happens when a young Indian operator learns AI, branding, marketing, sales, content, and creative direction at the same time?</p>
-          <p>Not AI for the sake of AI. Not branding for decoration. Not marketing as noise. Not content as daily posting. Not sales as pressure.</p>
-          <p>The real work is sharper: make the brand easier to remember, make the message easier to understand, make the creative direction harder to ignore, make the website feel like a world, make the article useful enough to rank, make the newsletter worth opening, and make the whole system feel like it came from one mind.</p>
-          <blockquote>AI made it easier to produce. It did not make it easier to matter.</blockquote>
-        </div>
-      </section>
-      <section className="co-page-section">
-        <h2>What I believe.</h2>
-        <div className="co-page-grid">
-          {beliefs.map(([title, copy], index) => <article className={`co-page-card belief-${index + 1}`} key={title}><h3>{title}</h3><p>{copy}</p></article>)}
-        </div>
-      </section>
-      <section className="co-page-section">
-        <h2>The three worlds.</h2>
-        <div className="co-page-grid">
-          <article className="co-page-card co-file-mini"><span>WORLD 01</span><h3>FRROST Media</h3><b>The AI creative studio</b><p>Brand worlds, websites, marketing systems, sales stories, campaigns, and creative direction.</p></article>
-          <article className="co-page-card co-file-mini"><span>WORLD 02</span><h3>Beyond Default Show</h3><b>The breakdown show</b><p>AI, business, brand, creator, founder, and operator breakdowns for mechanisms, not motivation.</p></article>
-          <article className="co-page-card co-file-mini"><span>WORLD 03</span><h3>Thinking Beyond Club</h3><b>The community layer</b><p>A future community for ambitious Indian operators building skill, taste, leverage, and execution.</p></article>
-        </div>
-      </section>
-      <section className="co-page-section">
-        <h2>What I refuse to become.</h2>
-        <div className="co-page-grid">
-          {["another AI tool-review account", "fake luxury content", "random motivation", "package-selling guru", "generic AI agency", "template portfolio", "content with no point", "branding with no taste", "marketing with no positioning", "sales without story"].map((item) => <article className="co-page-card" key={item}>{item}</article>)}
-        </div>
-        <div className="co-actions">
-          <Link href="/articles" className="co-btn primary">Read the Articles</Link>
-          <Link href="/newsletter" className="co-btn">Join the Newsletter</Link>
-          <a href="#contact" className="co-btn">Send a Note</a>
-        </div>
-      </section>
-      <ContactNote />
-      <OperatorFooter />
-    </main>
+    <SiteShell>
+      <main>
+        <PageHero eyebrow="ABOUT ADITYA" title="I’m building the creative operator lane." copy="I’m not interested in being another person posting tool updates. I care about the layer after the tool: the brand, story, website, content system, sales page, and creative direction that decides what should exist." ><div className="ice-about-quote"><span>CORE BELIEF</span><b>AI made it easier to produce. It did not make it easier to matter.</b></div></PageHero>
+        <section className="ice-page-section"><div className="ice-container ice-prose"><SectionHeading label="THE STORY" title="Early, serious, and building in public." /><p>I’m Aditya Sahai, a Creative AI Operator from India. I’m learning the connected disciplines that make modern brands easier to understand, trust, and remember: positioning, writing, websites, content, creative direction, sales stories, and AI-assisted systems.</p><p>I do not have a wall of giant client logos or dramatic growth screenshots. I have the work I can honestly show now: articles, experiments, breakdowns, systems, visual directions, and the early build of FRROST Media.</p><blockquote>I’m early, but I’m building in public with taste, systems, and sharp thinking.</blockquote><p>This site is the public layer of that journey. The goal is not to perform expertise. It is to make the thinking visible, improve the quality of the work, and become useful enough that the right people want to build together.</p></div></section>
+        <section className="ice-page-section is-tint"><div className="ice-container"><SectionHeading label="BELIEFS" title="What I believe." /><div className="ice-meta-grid">{beliefs.map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section>
+        <section className="ice-page-section"><div className="ice-container"><SectionHeading label="CURRENT BUILDS" title="What I’m building." /><div className="ice-world-grid">{worlds.map((world) => <article className={`ice-world-card ${world.className}`} key={world.title}><span className="ice-section-label">{world.label}</span><h3>{world.title}</h3><p>{world.copy}</p></article>)}</div></div></section>
+        <section className="ice-page-section is-tint"><div className="ice-container"><SectionHeading label="LEARNING IN PUBLIC" title="What I’m learning." copy="Brand memory, website storytelling, AI-assisted creative workflows, founder-led content, visual direction, and the discipline of shipping useful work before it feels finished." /><div className="ice-meta-grid">{[["Study the mechanism","Why did this brand, page, hook, or visual work?"],["Build the system","Turn the lesson into something reusable and practical."],["Publish the thinking","Write clearly enough that another operator can use it."]].map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div><div className="ice-actions"><ButtonLink href="/work">Explore the Lab</ButtonLink><ButtonLink href="/newsletter" variant="secondary">Join the Letter</ButtonLink><ButtonLink href="/contact" variant="moss">Send a Note</ButtonLink></div></div></section>
+      </main>
+    </SiteShell>
   );
 }

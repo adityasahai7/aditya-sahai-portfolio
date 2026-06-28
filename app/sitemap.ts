@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
-    ...["about", "articles", "newsletter", "frrost-media"].map((path) => ({
+    ...["about", "work", "articles", "newsletter", "frrost-media", "beyond-default", "thinking-beyond-club", "contact"].map((path) => ({
       url: `${base}/${path}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
