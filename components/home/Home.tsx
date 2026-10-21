@@ -10,7 +10,6 @@ import { Btn, Doodle, FlipText, Label, Marquee, MaskLines, Reveal, ScrubText, Ti
 import { StickerPile } from "./StickerPile";
 import { MagnetName } from "./MagnetName";
 import { AsciiPhoto } from "@/components/fun/AsciiPhoto";
-import { InkBlob } from "@/components/fun/InkBlob";
 import { LiveClock } from "@/components/fun/Fun";
 
 /* ─────────────────────────── HERO ─────────────────────────── */
@@ -46,7 +45,6 @@ export function Hero() {
           <motion.div initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.9 }}><LiveClock /></motion.div>
         </motion.div>
         <motion.div className="hero-photo-wrap" style={{ y: photoY }}>
-          <InkBlob />
           <motion.div className="hero-photo" style={{ rotateY: rotY, rotateX: rotX }} initial={reduce ? false : { y: -500, rotate: 20 }} animate={{ y: 0, rotate: -4 }} transition={{ type: "spring", stiffness: 70, damping: 11, delay: 0.6 }} whileTap={{ scale: 0.96 }}>
             <span className="tape tape-a" /><span className="tape tape-b" />
             <span className="photo-frame">

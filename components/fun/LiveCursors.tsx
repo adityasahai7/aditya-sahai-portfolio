@@ -87,7 +87,7 @@ export function LiveCursors() {
 
   return (
     <>
-      <div className="live-layer" aria-hidden="true" style={{ height: docH }}>
+      <div className="live-layer" aria-hidden="true">
         {here.map((p) => (
           <motion.button key={p.id} type="button" className="live-cursor" style={{ ["--c" as string]: p.color }} animate={{ left: `${p.x * 100}%`, top: p.y * docH }} transition={{ type: "spring", stiffness: 300, damping: 30 }} onClick={() => wave(p)} title="Wave 👋" tabIndex={-1}>
             <svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 2l7 19 2.5-7.5L20 11z" fill={p.color} stroke="#202727" strokeWidth="2" strokeLinejoin="round" /></svg>
