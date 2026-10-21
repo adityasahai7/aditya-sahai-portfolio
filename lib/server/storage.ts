@@ -1,4 +1,4 @@
-type TableName = "contacts" | "newsletter_subscribers" | "waitlist_entries" | "analytics_events";
+export type TableName = "contacts" | "newsletter_subscribers" | "waitlist_entries" | "analytics_events" | "newsletter_issues";
 type SiteRecord = Record<string, unknown>;
 
 function getConfig() {
@@ -44,4 +44,42 @@ export async function listRecords<T>(table: TableName, limit = 100): Promise<T[]
   });
   if (!response.ok) throw new Error(`Storage read failed for ${table}: ${response.status}`);
   return response.json() as Promise<T[]>;
+}
+
+export function hasPrivilegedStorage() {
+  return Boolean(getConfig()?.privileged);
+}
+
+/** Privileged read with a raw PostgREST query string (e.g. "status=eq.active&select=email"). */
+export async function queryRecords<T>(table: TableName, query: string): Promise<T[]> {
+  const config = getConfig();
+  if (!config?.privileged) return [];
+  const response = await fetch(`${config.url}/rest/v1/${table}?${query}`, { headers: headers(config.key), cache: "no-store" });
+  if (!response.ok) throw new Error(`Storage query failed for ${table}: ${response.status}`);
+  return response.json() as Promise<T[]>;
+}
+
+/** Privileged update of rows matching a PostgREST filter (e.g. "unsubscribe_token=eq.abc"). */
+export async function updateRecords(table: TableName, filter: string, patch: SiteRecord) {
+  const config = getConfig();
+  if (!config?.privileged) return { ok: false, count: 0 };
+  const response = await fetch(`${config.url}/rest/v1/${table}?${filter}`, {
+    method: "PATCH",
+    headers: headers(config.key, "return=representation"),
+    body: JSON.stringify(patch),
+    cache: "no-store",
+  });
+  if (!response.ok) return { ok: false, count: 0 };
+  const rows = (await response.json()) as unknown[];
+  return { ok: true, count: rows.length };
+}
+
+/** Privileged insert that returns the created row. */
+export async function insertReturning<T>(table: TableName, record: SiteRecord): Promise<T | null> {
+  const config = getConfig();
+  if (!config?.privileged) return null;
+  const response = await fetch(`${config.url}/rest/v1/${table}`, { method: "POST", headers: headers(config.key, "return=representation"), body: JSON.stringify(record), cache: "no-store" });
+  if (!response.ok) throw new Error(`Insert failed for ${table}: ${response.status} ${await response.text()}`);
+  const rows = (await response.json()) as T[];
+  return rows[0] ?? null;
 }

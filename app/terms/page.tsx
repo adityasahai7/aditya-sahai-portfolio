@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { SiteShell } from "@/components/site/Chrome";
-import { PageHero } from "@/components/site/UI";
+import { PageHero } from "@/components/pages/PageKit";
 
 export const metadata: Metadata = { title: "Terms of Service", description: "Terms for using AdityaSahai.com and beginning a direct collaboration with Aditya Sahai or FRROST Media.", alternates: { canonical: "/terms" } };
 const sections = [
@@ -14,4 +13,16 @@ const sections = [
   ["Changes", "These terms may change as the website, newsletter, FRROST Media, and collaboration model develop. The current version will remain available here."],
   ["Contact", "Questions can be sent to adityasahai037@gmail.com or via WhatsApp at +91 62071 26091."],
 ] as const;
-export default function TermsPage(){return <SiteShell><main><PageHero eyebrow="LEGAL" title="Terms of Service" copy="Clear terms for using this site and starting an aligned collaboration." /><section className="ice-page-section"><div className="ice-container ice-prose"><p><b>Last updated: 28 June 2026</b></p>{sections.map(([title,copy],index)=><section key={title}><h2>{index+1}. {title}</h2><p>{copy}</p></section>)}</div></section></main></SiteShell>}
+export default function TermsPage() {
+  return (
+    <>
+      <PageHero label="LEGAL 📜" lines={["TERMS."]} lead="The plain-language version. No tricks." tone="paper" />
+      <section className="page-section" style={{ paddingTop: 0 }}>
+        <div className="wrap"><div className="prose">
+          <p><b>Last updated: 21 October 2026</b></p>
+          {sections.map(([heading, copy], index) => <section key={heading}><h2>{index + 1}. {heading}</h2><p>{copy}</p></section>)}
+        </div></div>
+      </section>
+    </>
+  );
+}

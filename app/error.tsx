@@ -2,30 +2,16 @@
 
 import { useEffect } from "react";
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
-
+export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+  useEffect(() => { console.error(error); }, [error]);
   return (
-    <div className="min-h-screen bg-smoke flex items-center justify-center p-8">
-      <div className="text-center max-w-2xl">
-        <p className="font-mono text-[11px] tracking-[0.15em] uppercase text-ink/45 mb-4">
-          Something went wrong
-        </p>
-<button
-          onClick={reset}
-          className="font-grotesk text-[13px] text-ink border border-ink/20 px-5 py-2.5 rounded-full hover:bg-ink hover:text-smoke transition-colors duration-300"
-        >
-          Try again
-        </button>
+    <section className="page-hero" style={{ minHeight: "80svh", textAlign: "center" }}>
+      <div className="wrap">
+        <p style={{ fontSize: 80, margin: 0 }}>🫠</p>
+        <h1 className="h-xl">WELL, THAT BROKE.</h1>
+        <p className="lead" style={{ margin: "16px auto 30px" }}>Something went wrong on my side. Try again?</p>
+        <button type="button" className="btn btn-ink btn-lg" onClick={reset}>Try again 🔁</button>
       </div>
-    </div>
+    </section>
   );
 }

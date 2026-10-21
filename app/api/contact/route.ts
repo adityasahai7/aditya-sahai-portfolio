@@ -18,15 +18,15 @@ export async function POST(request: NextRequest) {
     };
     if (input.name.length < 2) return jsonError("Please enter your name.");
     if (!isEmail(input.email)) return jsonError("Please enter a valid email address.");
-    if (!input.projectDescription) return jsonError("Please tell me what you are building.");
-    if (!input.helpType) return jsonError("Please select what you need help with.");
-    if (input.message.length < 20) return jsonError("Please add a little more detail to your message.");
+    if (!input.helpType) input.helpType = "General note";
+    if (!input.projectDescription) input.projectDescription = input.helpType;
+    if (input.message.length < 20) return jsonError("Add a little more to your note (20+ characters).");
     const [storage, email] = await Promise.all([
       insertRecord("contacts", { name: input.name, email: input.email, company: input.company || null, project_description: input.projectDescription, help_type: input.helpType, budget_range: input.budgetRange || null, timeline: input.timeline || null, message: input.message, source_page: input.sourcePage, user_agent: context.userAgent, ip_hash: context.ipHash }),
       sendContactEmails(input),
     ]);
     if (!storage.ok && !email.ok) return jsonError("The note could not be delivered. Please email me directly at adityasahai037@gmail.com.", 503, "delivery_unavailable");
-    return Response.json({ message: "Got it. Your note has been sent. I’ll read it and reply if it feels aligned." });
+    return Response.json({ message: "Note sent! I read every one." });
   } catch (error) {
     console.error("Contact submission failed", error);
     return jsonError("Something went wrong. Please try again or email me directly.", 500, "server_error");

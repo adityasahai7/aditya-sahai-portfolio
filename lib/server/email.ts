@@ -11,7 +11,7 @@ function getResend() {
 }
 
 function emailShell(content: string) {
-  return `<div style="font-family:Inter,Arial,sans-serif;max-width:640px;margin:auto;background:#F3FAFB;color:#0A0D11;padding:36px;border:1px solid #D4E5E8;border-radius:18px"><div style="font:600 11px monospace;letter-spacing:.12em;color:#167986;margin-bottom:22px">ADITYA SAHAI · WEBSITE SIGNAL</div>${content}</div>`;
+  return `<div style="font-family:Inter,Arial,sans-serif;max-width:640px;margin:auto;background:#F7F1E7;color:#202727;padding:36px;border:2.5px solid #202727;border-radius:18px"><div style="font:600 11px monospace;letter-spacing:.12em;color:#176D70;margin-bottom:22px">👋 ADITYA SAHAI · NEW NOTE</div>${content}</div>`;
 }
 
 export async function sendContactEmails(input: Record<string, string>) {
@@ -37,31 +37,6 @@ export async function sendContactEmails(input: Record<string, string>) {
     });
   }
   return { configured: true, ok: true };
-}
-
-export async function sendWelcomeEmail(email: string, name: string, sourcePage: string) {
-  const resend = getResend();
-  if (!resend || !process.env.EMAIL_FROM) return { configured: false, ok: false };
-  const result = await resend.emails.send({
-    from: process.env.EMAIL_FROM,
-    to: email,
-    subject: "Welcome to Thinking Beyond Letter",
-    html: emailShell(`<p>Hey ${escapeHtml(name || "there")},</p><p>You’re in.</p><p>Thinking Beyond Letter is where I share one creative build, one sharp lesson, and three things worth your attention — across AI, branding, content, websites, business, and operator thinking.</p><p>No spam. No generic AI news. Just useful signal.</p><p>— Aditya</p><p style="margin-top:28px;color:#5D6B70;font-size:12px">You joined from ${escapeHtml(sourcePage)}. You can unsubscribe by replying to this email.</p>`),
-  });
-  return { configured: true, ok: !result.error };
-}
-
-export async function addToResendAudience(email: string, firstName: string) {
-  const key = process.env.RESEND_API_KEY;
-  const audienceId = process.env.RESEND_AUDIENCE_ID;
-  if (!key || !audienceId) return { configured: false, ok: false, duplicate: false };
-  const response = await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ email, first_name: firstName || undefined, unsubscribed: false }),
-  });
-  const text = response.ok ? "" : await response.text();
-  return { configured: true, ok: response.ok, duplicate: response.status === 409 || /already exists/i.test(text) };
 }
 
 export async function sendWaitlistNotification(input: { name: string; email: string; waitlistType: string; reason: string }) {

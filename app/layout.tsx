@@ -1,75 +1,57 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
+import type { Metadata, Viewport } from "next";
+import { Archivo_Black, Bricolage_Grotesque, Space_Mono } from "next/font/google";
 import "./globals.css";
-import "./three-worlds.css";
-import "./premium-rebuild.css";
-import "./ice-system.css";
-import GrainOverlay from "@/components/ui/GrainOverlay";
-import LenisProvider from "@/components/layout/LenisProvider";
-import { SiteExperience } from "@/components/site/Experience";
+import "./sections.css";
+import { Cursor, EasterEgg, Footer, Nav, Preloader, ScrollProgress, SmoothScroll } from "@/components/chrome/Chrome";
+import { LINKS } from "@/lib/content";
+import { FunDock, PullString, Torch } from "@/components/fun/Fun";
 
-const display = localFont({
-  src: [
-    {
-      path: "../public/fonts/clash-display/ClashDisplay_Complete/Fonts/WEB/fonts/ClashDisplay-Semibold.woff2",
-      weight: "600",
-    },
-    {
-      path: "../public/fonts/clash-display/ClashDisplay_Complete/Fonts/WEB/fonts/ClashDisplay-Bold.woff2",
-      weight: "700",
-    },
-  ],
-  variable: "--font-display",
-  display: "swap",
-  fallback: ["Inter", "sans-serif"],
-});
+const display = Archivo_Black({ subsets: ["latin"], weight: "400", variable: "--font-display", display: "swap" });
+const body = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-body", display: "swap" });
+const mono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-mono", display: "swap" });
 
-const body = localFont({
-  src: "../public/fonts/satoshi/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Variable.woff2",
-  variable: "--font-body",
-  weight: "100 900",
-  display: "swap",
-  fallback: ["Inter", "sans-serif"],
-});
+const description = "Aditya Sahai is a Creative AI Operator from India. Creator, storyteller and builder behind Beyond Default, Thinking Beyond Club and FRROST Media.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://adityasahai.com"),
-  title: {
-    default: "Aditya Sahai — Creative AI Operator",
-    template: "%s — Aditya Sahai",
-  },
-  description:
-    "Aditya Sahai is a Creative AI Operator from India building sharper brands, websites, content systems, sales stories, and AI-assisted creative workflows.",
-  keywords: ["Creative AI Operator", "AI branding", "AI marketing", "creative direction", "founder personal branding", "content strategy", "sales stories", "FRROST Media", "Thinking Beyond Letter", "Aditya Sahai"],
-  openGraph: {
-    title: "Aditya Sahai — Creative AI Operator",
-    description: "AI, taste, and storytelling for sharper brands, websites, content systems, and creative workflows.",
-    url: "https://adityasahai.com",
-    type: "website",
-    images: [{ url: "/images/aditya-photo.png", width: 322, height: 292, alt: "Aditya Sahai, Creative AI Operator" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Aditya Sahai — Creative AI Operator",
-    description: "AI, taste, and storytelling for sharper brands, websites, content systems, and creative workflows.",
-  },
+  title: { default: "Aditya Sahai · Creative AI Operator", template: "%s · Aditya Sahai" },
+  description,
+  keywords: ["Aditya Sahai", "Creative AI Operator", "Beyond Default", "Thinking Beyond Club", "FRROST Media", "Thinking Beyond Letter", "AI creator India", "storyteller"],
+  authors: [{ name: "Aditya Sahai", url: "https://adityasahai.com" }],
+  openGraph: { title: "Aditya Sahai · Creative AI Operator", description, url: "https://adityasahai.com", siteName: "Aditya Sahai", type: "website", locale: "en_IN" },
+  twitter: { card: "summary_large_image", title: "Aditya Sahai · Creative AI Operator", description, creator: "@adityasahai07" },
   alternates: { canonical: "https://adityasahai.com" },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export const viewport: Viewport = { themeColor: "#F7F1E7", width: "device-width", initialScale: 1 };
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Person", "@id": "https://adityasahai.com/#person", name: "Aditya Sahai", url: "https://adityasahai.com", jobTitle: "Creative AI Operator", image: "https://adityasahai.com/images/aditya-sahai.webp", description, sameAs: [LINKS.instagram, LINKS.youtube, LINKS.linkedin, LINKS.x, LINKS.tbc, LINKS.frrost] },
+    { "@type": "WebSite", "@id": "https://adityasahai.com/#website", name: "Aditya Sahai", url: "https://adityasahai.com", publisher: { "@id": "https://adityasahai.com/#person" } },
+  ],
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${display.variable} ${body.variable}`}
-    >
-      <body className="grain antialiased">
-        <SiteExperience />
-        <LenisProvider>
-          <GrainOverlay />
-          {children}
-        </LenisProvider>
+    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`} suppressHydrationWarning>
+      <body>
+        <noscript><style>{".wipe{display:none}.mask-inner{transform:none!important}[style*='opacity:0']{opacity:1!important}"}</style></noscript>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+        <a className="skip" href="#main">Skip to content</a>
+        <SmoothScroll />
+        <Preloader />
+        <ScrollProgress />
+        <Nav />
+        <main id="main">{children}</main>
+        <Footer />
+        <Cursor />
+        <EasterEgg />
+        <Torch />
+        <PullString />
+        <FunDock />
+        <svg className="grain" aria-hidden="true"><filter id="grain-f"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch" /></filter><rect width="100%" height="100%" filter="url(#grain-f)" /></svg>
       </body>
     </html>
   );

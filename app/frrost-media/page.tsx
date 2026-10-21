@@ -1,31 +1,57 @@
 import type { Metadata } from "next";
-import { SiteShell } from "@/components/site/Chrome";
-import { Badge, ButtonLink, PageHero, SectionHeading, StatusDot } from "@/components/site/UI";
-import { TrackedExternalLink } from "@/components/site/Experience";
-import { EXTERNAL_LINKS } from "@/lib/external-links";
+import { frrost, LINKS } from "@/lib/content";
+import { ExitDoor, FlipCards } from "@/components/pages/PageKit";
+import { Shatter } from "@/components/pages/Shatter";
+import { Btn, FlipText, Label, Marquee, MaskLines, Reveal, ScrubText } from "@/components/motion/kit";
 
 export const metadata: Metadata = {
-  title: { absolute: "FRROST Media — AI Creative Studio Layer" },
-  description: "FRROST Media is the studio layer Aditya Sahai is building around AI branding, AI marketing, websites, sales stories, content systems, and creative direction.",
+  title: "FRROST Media",
+  description: "FRROST Media is Aditya Sahai's AI-native Demand Engineering company for founders and consumer brands. Where is growth breaking? Growth, Engineered.",
   alternates: { canonical: "/frrost-media" },
 };
 
-export default function FrrostMediaPage() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "FRROST Media",
-    url: EXTERNAL_LINKS.frrostMedia,
-    founder: { "@type": "Person", name: "Aditya Sahai" },
-    description: "An AI creative studio for brand worlds, marketing systems, websites, content, sales stories, and creative direction.",
-  };
+export default function FrrostPage() {
   return (
-    <SiteShell className="ice-frrost-site"><main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <PageHero dark eyebrow="FRROST MEDIA · BUILD IN PUBLIC" title="The studio layer I’m building." copy="FRROST Media is the early-stage studio layer I’m building for brand worlds, websites, content systems, sales stories, and AI-assisted creative direction."><div><Badge tone="moss">Early-stage studio</Badge><p className="ice-frrost-note">It is early, but the direction is clear: help founders and brands look sharper, communicate better, and build creative systems that do not feel generic.</p><div className="ice-actions"><TrackedExternalLink href={EXTERNAL_LINKS.frrostMedia} eventName="frrost_visit_click" className="ice-button ice-button-light">Visit FRROST Media</TrackedExternalLink><ButtonLink href="/contact" variant="moss">Send a FRROST Note</ButtonLink></div></div></PageHero>
-      <section className="ice-page-section is-dark"><div className="ice-container"><SectionHeading invert label="STUDIO CAPABILITIES" title="What FRROST is being built around." /><div className="ice-meta-grid ice-dark-cards">{["Brand worlds","Website experiences","Marketing systems","Content engines","Sales stories","Campaigns","Creative direction","AI-assisted workflows"].map((item) => <article key={item}><h3>{item}</h3><p>Strategy, story, system, and signal designed as one connected surface.</p></article>)}</div></div></section>
-      <section className="ice-page-section"><div className="ice-container"><SectionHeading label="BUILD IN PUBLIC" title="What is being built now." copy="No giant-agency theatre. These are the actual operating pieces taking shape." /><div className="ice-lab-grid">{["Brand system","Website experiments","Content engine","Sales story framework","Client onboarding flow","AI creative workflow","Founder-led content system"].map((item) => <article className="ice-card ice-lab-card" key={item}><StatusDot>In Progress</StatusDot><h3>{item}</h3><p>Being designed, tested, documented, and improved as the studio becomes real.</p></article>)}</div></div></section>
-      <section className="ice-page-section is-tint"><div className="ice-container"><SectionHeading label="WHO IT IS FOR" title="Aligned early projects." copy="Founders, creators, startups, local businesses, and personal brands that need clearer positioning, a sharper digital surface, or a practical creative system." /><div className="ice-process-list">{[["01","Diagnose","Find what is unclear or generic."],["02","Position","Build the message and story."],["03","Design","Shape the visual and experience system."],["04","Build","Turn direction into a real asset."],["05","Improve","Refine with honest feedback."]].map(([number,title,copy]) => <li key={number}><span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div></li>)}</div><div className="ice-actions"><TrackedExternalLink href={EXTERNAL_LINKS.frrostMedia} eventName="frrost_visit_click" className="ice-button ice-button-primary">Visit FRROST Media</TrackedExternalLink><ButtonLink href="/contact">Send a FRROST Note</ButtonLink><ButtonLink href="/articles/what-we-are-building-with-frrost-media" variant="secondary">Read the studio thesis</ButtonLink></div></div></section>
-    </main></SiteShell>
+    <>
+      <section className="page-hero tone-ink" data-room="ink">
+        <div className="dot-grid" aria-hidden="true" style={{ opacity: 0.3, filter: "invert(1)" }} />
+        <div className="wrap" style={{ position: "relative" }}>
+          <Label tone="mint">{frrost.label} 📈</Label>
+          <Shatter lines={frrost.question} />
+          <p className="lead" style={{ marginTop: 28 }}>{frrost.category}</p>
+          <div className="hero-cta" style={{ marginTop: 30 }}>
+            <Btn href={LINKS.frrost} tone="mint" size="lg" cursor="VISIT ↗">📈 Visit FRROST ↗</Btn>
+          </div>
+        </div>
+      </section>
+
+      <section className="page-section tone-mint" data-room="mint">
+        <div className="wrap">
+          <Label>WHAT FRROST DOES</Label>
+          <ScrubText text={frrost.promise} hot={["constraint", "removes"]} />
+          <p className="lead" style={{ marginTop: 30 }}>{frrost.who}</p>
+        </div>
+      </section>
+
+      <section className="page-section" data-room="paper">
+        <div className="wrap">
+          <Label tone="teal">ONE SERVICE 🎯</Label>
+          <MaskLines lines={["THE FRROST", "DEMAND SYSTEM."]} className="h-xl" accent={1} />
+          <p className="lead" style={{ margin: "18px 0 50px" }}>{frrost.serviceLine} Every engagement starts by finding the one constraint that&apos;s actually breaking growth:</p>
+          <FlipCards items={frrost.constraints.map((c) => ({ emoji: c.emoji, front: c.name, sub: "THE CONSTRAINT", tone: c.tone, back: <><b style={{ fontSize: 22, color: "#F5D46D" }}>The break 🩹</b><p>{c.symptom}</p><b style={{ fontSize: 22, color: "#BDEFD5" }}>The fix 🔧</b><p>{c.fix}</p></> }))} />
+        </div>
+      </section>
+
+      <Marquee items={["Diagnose ✦", "Build the system ✦", "Remove the constraint ✦", "Growth, Engineered ✦"]} tone="ink" tilt={-2} />
+
+      <section className="page-section tone-cyan" data-room="cyan" style={{ textAlign: "center" }}>
+        <div className="wrap">
+          <Reveal y={60}><p className="h-mega" style={{ margin: 0 }}><FlipText text="GROWTH," outline={false} /></p></Reveal>
+          <Reveal y={60} delay={0.15}><p className="h-mega" style={{ margin: 0 }}><FlipText text="ENGINEERED." /></p></Reveal>
+        </div>
+      </section>
+
+      <ExitDoor href={LINKS.frrost} label={frrost.cta} note={frrost.ctaNote} tone="mint" emoji="📈" />
+    </>
   );
 }

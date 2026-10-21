@@ -1,23 +1,60 @@
 import type { Metadata } from "next";
-import { AdminLogin, AdminLogout } from "@/components/site/AdminLogin";
+import { AdminLogin, AdminLogout } from "@/components/admin/AdminLogin";
+import { Composer } from "@/components/admin/Composer";
 import { isAdminAuthenticated } from "@/lib/server/admin";
-import { hasDurableStorage, listRecords } from "@/lib/server/storage";
+import { hasPrivilegedStorage, listRecords, queryRecords } from "@/lib/server/storage";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Studio Admin", robots: { index: false, follow: false } };
 
-type Contact = { id: string; created_at: string; name: string; email: string; company?: string; help_type?: string; budget_range?: string; timeline?: string; message: string; source_page?: string; status?: string };
-type Subscriber = { id: string; created_at: string; name?: string; email: string; source_page?: string; status?: string };
-type Waitlist = { id: string; created_at: string; name?: string; email: string; waitlist_type: string; reason?: string; source_page?: string; status?: string };
+type Row = Record<string, unknown>;
 
-function Table({ title, columns, rows }: { title: string; columns: string[]; rows: Record<string, unknown>[] }) {
-  return <section><h2>{title}</h2><div className="ice-admin-table-wrap">{rows.length ? <table className="ice-admin-table"><thead><tr>{columns.map((column)=><th key={column}>{column.replaceAll("_", " ")}</th>)}</tr></thead><tbody>{rows.map((row,index)=><tr key={String(row.id || index)}>{columns.map((column)=><td key={column}>{String(row[column] ?? "—")}</td>)}</tr>)}</tbody></table> : <p className="ice-admin-empty">No records yet.</p>}</div></section>;
+function Table({ title, columns, rows }: { title: string; columns: string[]; rows: Row[] }) {
+  return (
+    <section>
+      <h2 className="h-md" style={{ margin: "0 0 14px" }}>{title}</h2>
+      <div className="admin-table-wrap">
+        {rows.length ? (
+          <table className="admin-table">
+            <thead><tr>{columns.map((c) => <th key={c}>{c.replaceAll("_", " ")}</th>)}</tr></thead>
+            <tbody>{rows.map((r, i) => <tr key={String(r.id ?? i)}>{columns.map((c) => <td key={c}>{String(r[c] ?? "—")}</td>)}</tr>)}</tbody>
+          </table>
+        ) : <p style={{ padding: 16, margin: 0 }}>Nothing here yet.</p>}
+      </div>
+    </section>
+  );
 }
 
 export default async function StudioAdminPage() {
-  const authenticated = await isAdminAuthenticated();
-  if (!authenticated) return <main className="ice-admin-shell"><div className="ice-container"><AdminLogin /></div></main>;
-  const configured = hasDurableStorage();
-  const [contacts, subscribers, waitlists] = configured ? await Promise.all([listRecords<Contact>("contacts"), listRecords<Subscriber>("newsletter_subscribers"), listRecords<Waitlist>("waitlist_entries")]) : [[], [], []];
-  return <main className="ice-admin-shell"><div className="ice-container"><header className="ice-admin-header"><div><p className="ice-section-label">PRIVATE COMMAND ROOM</p><h1>Studio Admin</h1><p>{configured ? "Live submissions from the connected database." : "The dashboard is ready, but Supabase is not connected yet."}</p></div><AdminLogout /></header><div className="ice-admin-tables"><Table title="Contact submissions" columns={["created_at","name","email","company","help_type","budget_range","timeline","source_page","status"]} rows={contacts as unknown as Record<string, unknown>[]} /><Table title="Newsletter subscribers" columns={["created_at","name","email","source_page","status"]} rows={subscribers as unknown as Record<string, unknown>[]} /><Table title="Waitlist entries" columns={["created_at","name","email","waitlist_type","reason","source_page","status"]} rows={waitlists as unknown as Record<string, unknown>[]} /></div></div></main>;
+  if (!(await isAdminAuthenticated())) return <section className="admin"><div className="wrap"><AdminLogin /></div></section>;
+  const privileged = hasPrivilegedStorage();
+  const [contacts, subscribers, issues] = privileged
+    ? await Promise.all([
+        listRecords<Row>("contacts", 100).catch(() => []),
+        listRecords<Row>("newsletter_subscribers", 500).catch(() => []),
+        queryRecords<Row>("newsletter_issues", "select=number,subject,status,sent_at,recipients,failures&order=number.desc&limit=50").catch(() => []),
+      ])
+    : [[], [], []];
+  const active = subscribers.filter((s) => s.status === "active").length;
+  return (
+    <section className="admin">
+      <div className="wrap">
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+          <div><p className="label">🔒 PRIVATE COMMAND ROOM</p><h1 className="h-xl" style={{ margin: 0 }}>STUDIO ADMIN</h1></div>
+          <AdminLogout />
+        </div>
+        {!privileged && <p className="warn" style={{ marginTop: 20 }}>The site can save signups but can&apos;t read them yet. Add <b>SUPABASE_SECRET_KEY</b> in Vercel (Supabase → Project Settings → API keys → secret) to see your list and send letters.</p>}
+        <div className="admin-stats">
+          <span>💌 {active} active subscribers</span>
+          <span>👋 {subscribers.length - active} unsubscribed</span>
+          <span>📨 {contacts.length} notes</span>
+          <span>🗂️ {issues.length} letters</span>
+        </div>
+        <Composer active={active} ready={{ secret: privileged, from: Boolean(process.env.EMAIL_FROM) }} />
+        <Table title="Letters sent" columns={["number", "subject", "status", "sent_at", "recipients", "failures"]} rows={issues} />
+        <Table title="Subscribers" columns={["created_at", "name", "email", "status", "source_page"]} rows={subscribers} />
+        <Table title="Notes" columns={["created_at", "name", "email", "help_type", "message", "source_page"]} rows={contacts} />
+      </div>
+    </section>
+  );
 }
