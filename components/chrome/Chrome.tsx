@@ -8,6 +8,8 @@ import { footer, nav, preloader, socials, LINKS } from "@/lib/content";
 import { ScrollTrigger, ease, scrollToTop, startSmoothScroll } from "@/components/motion/core";
 import { FlipText, Magnetic } from "@/components/motion/kit";
 import { LiveClock } from "@/components/fun/Fun";
+import { unlock } from "@/components/fun/achievements";
+import { NeonSign } from "@/components/fun/Night";
 
 const TONE_HEX: Record<string, string> = { teal: "#176D70", sea: "#38A997", mint: "#BDEFD5", cyan: "#9CE8F2", yellow: "#F5D46D", red: "#F18179", fuchsia: "#E56AA6", ink: "#202727", paper: "#F7F1E7" };
 
@@ -181,6 +183,7 @@ export function Footer() {
         <div>
           <p className="footer-kicker">Think Beyond Default 🧠</p>
           <LiveClock className="is-dark" />
+          <NeonSign />
           <p className="footer-lead">Got a story, a project or a hi? My inbox is open.</p>
           <div className="footer-cta">
             <Magnetic><a className="btn btn-yellow btn-lg" href={LINKS.email} data-cursor="EMAIL">Email me ✉️</a></Magnetic>
@@ -190,7 +193,7 @@ export function Footer() {
         <div className="footer-cols">
           <div>
             <p className="footer-h">Explore</p>
-            {[["Home", "/"], ...nav.map((n) => [n.label, n.href]), ["Contact", "/contact"], ["Links", "/links"]].map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
+            {[["Home", "/"], ...nav.map((n) => [n.label, n.href]), ["Contact", "/contact"], ["The Wall 📌", "/wall"], ["Links", "/links"]].map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
           </div>
           <div>
             <p className="footer-h">Follow</p>
@@ -222,7 +225,7 @@ export function EasterEgg() {
       const tag = (e.target as HTMLElement).tagName;
       if (tag === "INPUT" || tag === "TEXTAREA") return;
       buffer = (buffer + e.key.toLowerCase()).slice(-6);
-      if (buffer === "beyond") { const id = Date.now(); setBursts((b) => [...b, id]); window.setTimeout(() => setBursts((b) => b.filter((x) => x !== id)), 2600); }
+      if (buffer === "beyond") { unlock("beyond"); const id = Date.now(); setBursts((b) => [...b, id]); window.setTimeout(() => setBursts((b) => b.filter((x) => x !== id)), 2600); }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AdminLogin, AdminLogout } from "@/components/admin/AdminLogin";
 import { Composer } from "@/components/admin/Composer";
+import { Moderation } from "@/components/admin/Moderation";
 import { isAdminAuthenticated } from "@/lib/server/admin";
 import { hasPrivilegedStorage, listRecords, queryRecords } from "@/lib/server/storage";
 
@@ -28,13 +29,15 @@ function Table({ title, columns, rows }: { title: string; columns: string[]; row
 export default async function StudioAdminPage() {
   if (!(await isAdminAuthenticated())) return <section className="admin"><div className="wrap"><AdminLogin /></div></section>;
   const privileged = hasPrivilegedStorage();
-  const [contacts, subscribers, issues] = privileged
+  const [contacts, subscribers, issues, wall, voices] = privileged
     ? await Promise.all([
         listRecords<Row>("contacts", 100).catch(() => []),
         listRecords<Row>("newsletter_subscribers", 500).catch(() => []),
         queryRecords<Row>("newsletter_issues", "select=number,subject,status,sent_at,recipients,failures&order=number.desc&limit=50").catch(() => []),
+        queryRecords<Row>("wall_notes", "select=*&order=created_at.desc&limit=100").catch(() => []),
+        queryRecords<Row>("voice_notes", "select=*&status=neq.archived&order=created_at.desc&limit=30").catch(() => []),
       ])
-    : [[], [], []];
+    : [[], [], [], [], []];
   const active = subscribers.filter((s) => s.status === "active").length;
   return (
     <section className="admin">
@@ -50,6 +53,7 @@ export default async function StudioAdminPage() {
           <span>📨 {contacts.length} notes</span>
           <span>🗂️ {issues.length} letters</span>
         </div>
+        <Moderation wall={wall as any} voices={voices as any} />
         <Composer active={active} ready={{ secret: privileged, from: Boolean(process.env.EMAIL_FROM) }} />
         <Table title="Letters sent" columns={["number", "subject", "status", "sent_at", "recipients", "failures"]} rows={issues} />
         <Table title="Subscribers" columns={["created_at", "name", "email", "status", "source_page"]} rows={subscribers} />

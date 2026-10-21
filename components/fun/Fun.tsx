@@ -5,6 +5,9 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { loadSoundPref, setSound, sfx } from "./sound";
+import { TrophyShelf, unlock } from "./achievements";
+import { DoodleLayer } from "./Doodle";
+import { Gravity } from "./Gravity";
 
 const EMOJIS = ["⭐", "🔥", "💛", "🧠", "🎬", "🚀", "😂", "👀", "🫶", "✨", "🍕", "🤯"];
 type Slap = { x: number; y: number; e: string; r: number; id: number };
@@ -21,7 +24,7 @@ function useLights() {
 function setLights(off: boolean) {
   window.dispatchEvent(new CustomEvent("as:lights", { detail: off }));
   document.documentElement.classList.toggle("lights-off", off);
-  if (off) sfx.switchOff(); else sfx.switchOn();
+  if (off) { sfx.switchOff(); unlock("pull"); } else sfx.switchOn();
 }
 
 /** WTF-style hanging string. Pull it down to switch the lights off (and on again). */
@@ -107,6 +110,10 @@ export function FunDock() {
   const [layer, setLayer] = useState<HTMLElement | null>(null);
   const [aim, setAim] = useState({ x: -100, y: -100 });
   const [open, setOpen] = useState(false);
+  const [gravity, setGravity] = useState(false);
+  const [doodle, setDoodle] = useState(false);
+  const [shelf, setShelf] = useState(false);
+  useEffect(() => { const id = window.setTimeout(() => { setGravity(false); setDoodle(false); }, 0); return () => window.clearTimeout(id); }, [pathname]);
 
   useEffect(() => { const id = window.setTimeout(() => { setSoundState(loadSoundPref()); setLayer(document.getElementById("main")); }, 0); return () => window.clearTimeout(id); }, [pathname]);
   useEffect(() => { document.documentElement.classList.toggle("sticker-mode", gun); }, [gun]);
@@ -123,6 +130,7 @@ export function FunDock() {
       const slap: Slap = { x: ((e.clientX - rect.left) / rect.width) * 100, y: e.clientY - rect.top, e: emoji, r: Math.round(Math.random() * 50 - 25), id: Date.now() };
       save([...slaps, slap]);
       sfx.pop();
+      if (slaps.length + 1 >= 10) unlock("slap10");
     };
     window.addEventListener("pointermove", move, { passive: true });
     document.addEventListener("click", shoot, true);
@@ -145,8 +153,10 @@ export function FunDock() {
         </div>,
         layer,
       )}
+      <Gravity on={gravity} />
+      {doodle && <DoodleLayer onClose={() => setDoodle(false)} />}
       {gun && <span className="aim" style={{ transform: `translate(${aim.x}px, ${aim.y}px)` }} aria-hidden="true">{emoji}</span>}
-      <div className={`dock ${off ? "is-dark" : ""} ${open || gun || off ? "is-open" : ""}`}>
+      <div className={`dock ${off ? "is-dark" : ""} ${open || gun || off || gravity || shelf ? "is-open" : ""}`}>
         <AnimatePresence>
           {gun && (
             <motion.div className="dock-tray" initial={{ opacity: 0, y: 20, scale: 0.8 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 20, scale: 0.8 }} transition={{ type: "spring", stiffness: 260, damping: 20 }}>
@@ -160,6 +170,10 @@ export function FunDock() {
         </AnimatePresence>
         <motion.button type="button" className={`dock-btn ${gun ? "is-on" : ""}`} onClick={() => { setGun(!gun); sfx.click(); }} whileTap={{ scale: 0.85 }} aria-pressed={gun} aria-label="Sticker gun" data-cursor={gun ? "DONE" : "STICKERS"}>{gun ? "✖️" : "🎯"}</motion.button>
         <motion.button type="button" className={`dock-btn ${off ? "is-on" : ""}`} onClick={() => setLights(!off)} whileTap={{ scale: 0.85 }} aria-pressed={off} aria-label="Lights" data-cursor="LIGHTS">{off ? "💡" : "🌙"}</motion.button>
+        <AnimatePresence>{shelf && <TrophyShelf onClose={() => setShelf(false)} />}</AnimatePresence>
+        <motion.button type="button" className={`dock-btn ${gravity ? "is-on" : ""}`} onClick={() => { const next = !gravity; setGravity(next); if (next) unlock("gravity"); }} whileTap={{ scale: 0.85 }} aria-pressed={gravity} aria-label="Gravity switch" data-cursor={gravity ? "RESTORE" : "GRAVITY"}>{gravity ? "🧲" : "🪐"}</motion.button>
+        <motion.button type="button" className={`dock-btn ${doodle ? "is-on" : ""}`} onClick={() => { setDoodle(!doodle); sfx.click(); }} whileTap={{ scale: 0.85 }} aria-pressed={doodle} aria-label="Doodle mode" data-cursor="DOODLE">✏️</motion.button>
+        <motion.button type="button" className={`dock-btn ${shelf ? "is-on" : ""}`} onClick={() => { setShelf(!shelf); sfx.click(); }} whileTap={{ scale: 0.85 }} aria-pressed={shelf} aria-label="Trophies" data-cursor="TROPHIES">🏆</motion.button>
         <motion.button type="button" className="dock-btn dock-toggle" onClick={() => { setOpen(!open); sfx.click(); }} whileTap={{ scale: 0.85 }} aria-expanded={open} aria-label="Fun stuff">{open ? "✖️" : "✨"}</motion.button>
         <motion.button type="button" className={`dock-btn ${sound ? "is-on" : ""}`} onClick={() => { const next = !sound; setSound(next); setSoundState(next); if (next) sfx.pop(); }} whileTap={{ scale: 0.85 }} aria-pressed={sound} aria-label="Sound" data-cursor="SOUND">{sound ? "🔊" : "🔈"}</motion.button>
       </div>

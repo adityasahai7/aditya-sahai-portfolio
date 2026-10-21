@@ -3,6 +3,7 @@ import { tbc, LINKS } from "@/lib/content";
 import { ExitDoor, PageHero } from "@/components/pages/PageKit";
 import { Btn, Label, Marquee, MaskLines, Reveal, ScrubText } from "@/components/motion/kit";
 import { Stamp } from "@/components/pages/Stamp";
+import { PosterMaker } from "@/components/fun/Poster";
 
 export const metadata: Metadata = {
   title: "Thinking Beyond Club",
@@ -83,6 +84,15 @@ export default function TbcPage() {
         <div className="wrap">
           <MaskLines lines={[tbc.free]} className="h-mega" />
           <p className="lead" style={{ margin: "20px auto 0" }}>{tbc.freeLine}</p>
+        </div>
+      </section>
+
+      <section className="page-section tone-mint" data-room="mint">
+        <div className="wrap">
+          <Label>MAKE YOUR MONDAY NOTE 📝</Label>
+          <MaskLines lines={["SAY IT", "OUT LOUD."]} className="h-xl" accent={1} />
+          <p className="lead" style={{ margin: "18px 0 40px" }}>One line. One thing you&apos;re doing this week. Make the poster, post it on your story, and you&apos;ve already done the first club ritual.</p>
+          <PosterMaker />
         </div>
       </section>
 

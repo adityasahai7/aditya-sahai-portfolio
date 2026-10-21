@@ -1,4 +1,4 @@
-export type TableName = "contacts" | "newsletter_subscribers" | "waitlist_entries" | "analytics_events" | "newsletter_issues";
+export type TableName = "contacts" | "newsletter_subscribers" | "waitlist_entries" | "analytics_events" | "newsletter_issues" | "wall_notes" | "chai_counter" | "voice_notes";
 type SiteRecord = Record<string, unknown>;
 
 function getConfig() {
@@ -82,4 +82,28 @@ export async function insertReturning<T>(table: TableName, record: SiteRecord): 
   if (!response.ok) throw new Error(`Insert failed for ${table}: ${response.status} ${await response.text()}`);
   const rows = (await response.json()) as T[];
   return rows[0] ?? null;
+}
+
+/** Read with whatever key is configured (publishable is enough where RLS allows public reads). */
+export async function publicSelect<T>(table: TableName, query: string): Promise<T[]> {
+  const config = getConfig();
+  if (!config) return [];
+  const response = await fetch(`${config.url}/rest/v1/${table}?${query}`, { headers: headers(config.key), cache: "no-store" });
+  if (!response.ok) return [];
+  return response.json() as Promise<T[]>;
+}
+
+/** Call a Postgres function exposed through PostgREST. */
+export async function rpc<T>(fn: string, args: Record<string, unknown> = {}): Promise<T | null> {
+  const config = getConfig();
+  if (!config) return null;
+  const response = await fetch(`${config.url}/rest/v1/rpc/${fn}`, { method: "POST", headers: headers(config.key), body: JSON.stringify(args), cache: "no-store" });
+  if (!response.ok) return null;
+  return response.json() as Promise<T>;
+}
+
+export function publicConfig() {
+  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  return url && key ? { url: url.replace(/\/$/, ""), key } : null;
 }

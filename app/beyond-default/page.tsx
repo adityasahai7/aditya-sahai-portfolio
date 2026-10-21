@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { beyondDefault, LINKS } from "@/lib/content";
 import { LetterSection } from "@/components/home/Blocks";
+import { Cinema } from "@/components/show/Cinema";
+import { Roulette } from "@/components/show/Roulette";
+import { VideoShelf } from "@/components/show/VideoShelf";
+import { latestVideos } from "@/lib/server/youtube";
 import { PageHero } from "@/components/pages/PageKit";
 import { Btn, FlipText, Label, Marquee, MaskLines, Reveal, ScrubText } from "@/components/motion/kit";
 
@@ -10,9 +14,13 @@ export const metadata: Metadata = {
   alternates: { canonical: "/beyond-default" },
 };
 
-export default function BeyondDefaultPage() {
+export const revalidate = 3600;
+
+export default async function BeyondDefaultPage() {
+  const videos = await latestVideos(beyondDefault.youtubeChannelId, beyondDefault.youtubeSince);
   return (
     <>
+      <Cinema />
       <PageHero label="THE SHOW 🎬" lines={beyondDefault.title} lead={beyondDefault.tagline} emoji="🎬" tone="cyan" accent={1}>
         <div className="hero-cta" style={{ marginTop: 30 }}>
           <Btn href={LINKS.youtube} tone="red" size="lg" cursor="WATCH">▶️ Watch on YouTube</Btn>
@@ -20,7 +28,7 @@ export default function BeyondDefaultPage() {
         </div>
       </PageHero>
 
-      <section className="page-section tone-ink" data-room="ink">
+      <section data-scene="1" className="page-section tone-ink" data-room="ink">
         <div className="wrap">
           <Label tone="yellow">WHAT IT ISN&apos;T ✋</Label>
           <div style={{ display: "grid", gap: 8 }}>
@@ -33,14 +41,14 @@ export default function BeyondDefaultPage() {
         </div>
       </section>
 
-      <section className="page-section tone-yellow" data-room="yellow">
+      <section data-scene="2" className="page-section tone-yellow" data-room="yellow">
         <div className="wrap">
           <Label>THE BELIEF 💡</Label>
           <MaskLines lines={beyondDefault.belief} className="h-lg" accent={2} />
         </div>
       </section>
 
-      <section className="page-section" data-room="paper">
+      <section data-scene="3" className="page-section" data-room="paper">
         <div className="wrap">
           <Label tone="teal">TWO EXPERIENCES · EVERY WEEK</Label>
           <MaskLines lines={["WEEKDAYS BUILD.", "WEEKENDS FEEL."]} className="h-xl" accent={1} />
@@ -59,7 +67,7 @@ export default function BeyondDefaultPage() {
 
       <Marquee items={["Build Your World 🌍", "Beyond the Story 🎞️", "Stories That Stay With You 💛"]} tone="red" tilt={2} />
 
-      <section className="page-section tone-mint" data-room="mint">
+      <section data-scene="4" className="page-section tone-mint" data-room="mint">
         <div className="wrap" style={{ textAlign: "center" }}>
           <Label>THE STORY WORLDS 🌌</Label>
           <MaskLines lines={["ANYTHING IS", "FAIR GAME."]} className="h-xl" accent={1} />
@@ -70,7 +78,24 @@ export default function BeyondDefaultPage() {
         </div>
       </section>
 
-      <section className="page-section" data-room="paper">
+      <section data-scene="5" className="page-section tone-ink" data-room="ink">
+        <div className="wrap">
+          <Label tone="yellow">LATEST EPISODES 📺</Label>
+          <MaskLines lines={["NOW", "SHOWING."]} className="h-xl" accent={1} />
+          <div style={{ marginTop: 40 }}><VideoShelf videos={videos} /></div>
+        </div>
+      </section>
+
+      <section data-scene="6" className="page-section tone-fuchsia" data-room="fuchsia">
+        <div className="wrap">
+          <Label>FEELING LUCKY? 🎰</Label>
+          <MaskLines lines={["SPIN FOR", "A STORY."]} className="h-xl" accent={1} />
+          <p className="lead" style={{ margin: "18px 0 40px" }}>Person × topic × twist. Pull the lever and get a Beyond Default episode idea. Like it? Send it to me.</p>
+          <Roulette />
+        </div>
+      </section>
+
+      <section data-scene="7" className="page-section" data-room="paper">
         <div className="wrap">
           <Label tone="red">WHAT YOU SHOULD FEEL</Label>
           <MaskLines lines={["FOUR REACTIONS."]} className="h-xl" />
@@ -84,7 +109,7 @@ export default function BeyondDefaultPage() {
         </div>
       </section>
 
-      <section className="page-section tone-ink" data-room="ink" style={{ textAlign: "center" }}>
+      <section data-scene="8" className="page-section tone-ink" data-room="ink" style={{ textAlign: "center" }}>
         <div className="wrap">
           <p className="h-xl" style={{ margin: 0 }}><FlipText text="FOR GOOD," /></p>
           <p className="h-xl" style={{ margin: "0 0 40px" }}><FlipText text="TOWARDS GREATNESS." /></p>

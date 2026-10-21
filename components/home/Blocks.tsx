@@ -2,7 +2,9 @@
 
 import { contact, letter, socials, LINKS } from "@/lib/content";
 import { ContactForm, NewsletterForm } from "@/components/forms/Forms";
-import { Doodle, Label, MaskLines } from "@/components/motion/kit";
+import { Btn, Doodle, Label, MaskLines } from "@/components/motion/kit";
+import { Chai } from "@/components/social/Chai";
+import { VoiceHello } from "@/components/social/VoiceHello";
 
 export function LetterSection({ source = "website", heading = true }: { source?: string; heading?: boolean }) {
   return (
@@ -35,8 +37,13 @@ export function SaySection({ source = "website" }: { source?: string }) {
               {socials.slice(0, 2).map((s) => <a key={s.label} href={s.href} target="_blank" rel="noreferrer">{s.emoji} {s.label} <small>{s.handle} ↗</small></a>)}
             </div>
             <Doodle kind="squiggle" color="#E56AA6" className="say-squiggle" />
+            <Chai />
+            <div style={{ marginTop: 18 }}><Btn href="/wall" tone="mint" size="md" cursor="PIN">📌 Leave a sticker on my wall</Btn></div>
           </div>
-          <ContactForm source={source} />
+          <div style={{ display: "grid", gap: 22 }}>
+            <ContactForm source={source} />
+            <VoiceHello />
+          </div>
         </div>
       </div>
     </section>

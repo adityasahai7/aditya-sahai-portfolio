@@ -1,3 +1,5 @@
+import { newArticles } from "./new-articles";
+
 export type Article = {
   slug: string;
   title: string;
@@ -48,6 +50,7 @@ export const creativeFiles = [
 ];
 
 export const articles: Article[] = [
+  ...newArticles,
   {
     slug: "what-is-a-creative-ai-operator",
     title: "What Is a Creative AI Operator?",

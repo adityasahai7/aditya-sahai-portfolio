@@ -34,6 +34,7 @@ export const nav = [
   { label: "Work", href: "/work", tone: "fuchsia" },
   { label: "Writing", href: "/articles", tone: "sea" },
   { label: "Letter", href: "/newsletter", tone: "red" },
+  { label: "Quiz", href: "/quiz", tone: "yellow" },
 ] as const;
 
 export const preloader = ["THINK", "BEYOND", "THE", "DEFAULT."];
@@ -124,6 +125,15 @@ export const beyondDefault = {
     { word: "THAT'S ME", emoji: "🫵", body: "He's talking about me.", tone: "red" },
   ] as { word: string; emoji: string; body: string; tone: Tone }[],
   signature: "FOR GOOD, TOWARDS GREATNESS.",
+  // Only videos published on/after this date show on the site (older uploads stay off).
+  youtubeChannelId: "UCEeZ2daCwwSDMZkO1MLKxiA",
+  youtubeSince: "2026-10-01",
+};
+
+export const roulette = {
+  people: ["Ramanujan", "Ratan Tata", "Steve Jobs", "Kalpana Chawla", "Leonardo da Vinci", "Dhirubhai Ambani", "Marie Curie", "A.R. Rahman", "Chanakya", "Satyajit Ray", "Elon Musk", "Homi Bhabha", "Coco Chanel", "Milkha Singh", "Nikola Tesla"],
+  topics: ["AI", "money", "branding", "fear", "a forgotten invention", "failure", "cinema", "mythology", "a single decision", "the internet", "chess", "cricket", "taste", "loneliness", "a city"],
+  twists: ["what if they had ChatGPT?", "told in 60 seconds", "the decision nobody saw", "as a heist movie", "what it teaches a 22-year-old", "the part history skips", "if it happened today in India", "the one rule they lived by", "told by their rival", "the day it almost failed"],
 };
 
 export const tbc = {

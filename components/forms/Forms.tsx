@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { contact, letter } from "@/lib/content";
 import { Magnetic } from "@/components/motion/kit";
 
@@ -60,6 +60,16 @@ export function ContactForm({ source = "contact" }: { source?: string }) {
   const [state, setState] = useState<State>("idle");
   const [msg, setMsg] = useState("");
   const [topic, setTopic] = useState(contact.options[0]);
+  const msgRef = useRef<HTMLTextAreaElement>(null);
+  // Arriving from the story roulette: prefill the idea.
+  useEffect(() => {
+    const idea = new URLSearchParams(window.location.search).get("idea");
+    if (idea && msgRef.current && !msgRef.current.value) {
+      msgRef.current.value = `Episode idea from the story roulette 🎰: ${idea.slice(0, 200)}. I'd watch this because…`;
+      const id = window.setTimeout(() => setTopic(contact.options[0]), 0);
+      return () => window.clearTimeout(id);
+    }
+  }, []);
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = Object.fromEntries(new FormData(e.currentTarget).entries());
@@ -79,7 +89,7 @@ export function ContactForm({ source = "contact" }: { source?: string }) {
         <label className="field"><span>Your name</span><input name="name" required minLength={2} autoComplete="name" placeholder="What should I call you?" /></label>
         <label className="field"><span>Email</span><input name="email" type="email" required autoComplete="email" placeholder="you@example.com" /></label>
       </div>
-      <label className="field"><span>Your note</span><textarea name="message" required minLength={20} rows={5} placeholder="Tell me what's on your mind…" /></label>
+      <label className="field"><span>Your note</span><textarea ref={msgRef} name="message" required minLength={20} rows={5} placeholder="Tell me what's on your mind…" /></label>
       <input name="website" tabIndex={-1} autoComplete="off" className="hp" aria-hidden="true" />
       <div className="contact-send">
         <Magnetic><button className="btn btn-ink btn-lg" type="submit" disabled={state === "loading"} data-cursor="SEND">{state === "loading" ? "Folding the plane…" : "Send it ✈️"}</button></Magnetic>

@@ -4,10 +4,12 @@ import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTran
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { beyondDefault, builds, frrost, hero, operator, ribbons, sides, tbc, toolkit, whatIDo, LINKS } from "@/lib/content";
+import { beyondDefault, builds, frrost, hero, operator, ribbons, sides, tbc, whatIDo, LINKS } from "@/lib/content";
 import { gsap } from "@/components/motion/core";
 import { Btn, Doodle, FlipText, Label, Marquee, MaskLines, Reveal, ScrubText, Tilt, useRefreshOnLoad } from "@/components/motion/kit";
 import { StickerPile } from "./StickerPile";
+import { MagnetName } from "./MagnetName";
+import { AsciiPhoto } from "@/components/fun/AsciiPhoto";
 import { InkBlob } from "@/components/fun/InkBlob";
 import { LiveClock } from "@/components/fun/Fun";
 
@@ -21,13 +23,6 @@ export function Hero() {
   const my = useMotionValue(0);
   const rotY = useSpring(useTransform(mx, [-1, 1], [-14, 14]), { stiffness: 120, damping: 14 });
   const rotX = useSpring(useTransform(my, [-1, 1], [10, -10]), { stiffness: 120, damping: 14 });
-  const letter = (word: string, offset: number) =>
-    Array.from(word).map((ch, i) => (
-      <motion.span key={i} className="hero-letter" initial={reduce ? false : { y: "120%", rotate: 18, opacity: 0 }} animate={{ y: "0%", rotate: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 160, damping: 13, delay: 0.35 + (offset + i) * 0.055 }} whileHover={{ y: -14, rotate: -8, color: ["#F18179", "#176D70", "#E56AA6", "#F5D46D"][i % 4] }}>
-        {ch}
-      </motion.span>
-    ));
 
   return (
     <section className="hero" data-room="paper" onPointerMove={(e) => { mx.set((e.clientX / window.innerWidth) * 2 - 1); my.set((e.clientY / window.innerHeight) * 2 - 1); }}>
@@ -36,10 +31,7 @@ export function Hero() {
       <div className="hero-inner wrap">
         <motion.div className="hero-copy" style={{ y: nameY }}>
           <motion.p className="hero-kicker" initial={reduce ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>{hero.kicker}</motion.p>
-          <h1 className="hero-name" aria-label="Aditya Sahai">
-            <span className="hero-row">{letter(hero.name[0], 0)}</span>
-            <span className="hero-row is-outline">{letter(hero.name[1], 6)}</span>
-          </h1>
+          <MagnetName rows={[hero.name[0], hero.name[1]]} />
           <motion.div className="hero-title-wrap" initial={reduce ? false : { scale: 0, rotate: -30 }} animate={{ scale: 1, rotate: -4 }} transition={{ type: "spring", stiffness: 200, damping: 12, delay: 1.1 }}>
             <span className="hero-title">⚡ {hero.title}</span>
           </motion.div>
@@ -57,8 +49,11 @@ export function Hero() {
           <InkBlob />
           <motion.div className="hero-photo" style={{ rotateY: rotY, rotateX: rotX }} initial={reduce ? false : { y: -500, rotate: 20 }} animate={{ y: 0, rotate: -4 }} transition={{ type: "spring", stiffness: 70, damping: 11, delay: 0.6 }} whileTap={{ scale: 0.96 }}>
             <span className="tape tape-a" /><span className="tape tape-b" />
-            <Image src="/images/aditya-sahai.webp" alt="Aditya Sahai" width={560} height={560} priority sizes="(max-width: 900px) 78vw, 440px" />
-            <span className="polaroid-caption">that&apos;s me 👆 (hi)</span>
+            <span className="photo-frame">
+              <Image src="/images/aditya-sahai.webp" alt="Aditya Sahai" width={560} height={560} priority sizes="(max-width: 900px) 78vw, 440px" />
+              <AsciiPhoto src="/images/aditya-sahai.webp" />
+            </span>
+            <span className="polaroid-caption">that&apos;s me 👆 (hover / hold me)</span>
           </motion.div>
           <motion.span className="hero-badge" initial={reduce ? false : { scale: 0 }} animate={{ scale: 1, rotate: [0, 360] }} transition={{ scale: { delay: 1.5, type: "spring" }, rotate: { duration: 14, repeat: Infinity, ease: "linear" } }}>
             <svg viewBox="0 0 120 120"><defs><path id="badge-circle" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" /></defs><text><textPath href="#badge-circle" textLength="272" lengthAdjust="spacing">THINK BEYOND DEFAULT ✦ CREATIVE AI ✦</textPath></text></svg>
@@ -302,17 +297,6 @@ export function Builds({ full = false }: { full?: boolean }) {
           ))}
         </div>
       </div>
-    </section>
-  );
-}
-
-/* ───────────────────── TOOLKIT ───────────────────── */
-export function Toolkit() {
-  return (
-    <section className="toolkit" data-room="mint">
-      <div className="wrap"><Label>THE TOOLKIT 🧰</Label><MaskLines lines={["WHAT I BUILD WITH."]} className="h-lg" /></div>
-      <Marquee items={toolkit.slice(0, 8)} tone="paper" speed={30} className="tool-row" />
-      <Marquee items={toolkit.slice(8)} tone="ink" reverse speed={34} className="tool-row" />
     </section>
   );
 }

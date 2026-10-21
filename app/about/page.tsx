@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { about, LINKS } from "@/lib/content";
 import { Sides } from "@/components/home/Home";
 import { LetterSection } from "@/components/home/Blocks";
 import { PageHero } from "@/components/pages/PageKit";
 import { Btn, Label, Marquee, MaskLines, Reveal, ScrubText, Tilt } from "@/components/motion/kit";
+import { HoloCard } from "@/components/fun/HoloCard";
+import { LinePortrait } from "@/components/fun/LinePortrait";
+import { MeltText } from "@/components/fun/MeltText";
+import { RipplePhoto } from "@/components/fun/RipplePhoto";
 
 export const metadata: Metadata = {
   title: "About",
@@ -26,10 +29,10 @@ export default function AboutPage() {
       <section className="page-section tone-cyan" data-room="cyan">
         <div className="wrap grid-2">
           <Reveal rotate={-4}>
-            <Tilt className="hero-photo" max={12} style={{ maxWidth: 440, margin: "0 auto" }}>
+            <Tilt className="hero-photo" max={8} style={{ maxWidth: 440, margin: "0 auto" }}>
               <span className="tape tape-a" /><span className="tape tape-b" />
-              <Image src="/images/aditya-sahai.webp" alt="Aditya Sahai" width={520} height={520} sizes="(max-width: 860px) 80vw, 440px" />
-              <span className="polaroid-caption">creator · storyteller · builder</span>
+              <RipplePhoto src="/images/aditya-sahai.webp" alt="Aditya Sahai" />
+              <span className="polaroid-caption">touch the water 💧</span>
             </Tilt>
           </Reveal>
           <div>
@@ -43,7 +46,30 @@ export default function AboutPage() {
         <div className="wrap">
           <Label tone="yellow">THE MISSION</Label>
           <p className="lead" style={{ marginBottom: 30 }}>To create stories, knowledge and experiences that help people change their own lives. That means helping you:</p>
-          <MaskLines lines={about.mission} as="div" className="mission" />
+          <div className="mission">{about.mission.map((m) => <MeltText key={m}>{m}</MeltText>)}</div>
+          <p className="hint" style={{ marginTop: 18, color: "#F5D46D" }}>(hover the words. they melt 🫠)</p>
+        </div>
+      </section>
+
+      <section className="page-section" data-room="paper">
+        <div className="wrap grid-2">
+          <div>
+            <Label tone="fuchsia">THE COLLECTOR&apos;S EDITION 🃏</Label>
+            <MaskLines lines={["ULTRA RARE.", "ONE OF ONE."]} className="h-xl" accent={1} />
+            <p className="lead" style={{ marginTop: 18 }}>Every creator deserves a trading card. Here&apos;s mine. Shiny side up, stats on the back.</p>
+          </div>
+          <HoloCard />
+        </div>
+      </section>
+
+      <section className="page-section tone-yellow" data-room="yellow">
+        <div className="wrap grid-2">
+          <div>
+            <Label>SELF PORTRAIT ✍️</Label>
+            <MaskLines lines={["KEEP", "SCROLLING."]} className="h-xl" accent={1} />
+            <p className="lead" style={{ marginTop: 18 }}>A line drawing traced from my actual photo, drawing itself as you scroll. One stroke at a time, like everything else I build.</p>
+          </div>
+          <LinePortrait src="/images/aditya-sahai.webp" />
         </div>
       </section>
 
