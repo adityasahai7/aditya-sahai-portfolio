@@ -5,6 +5,7 @@ import "./sections.css";
 import { Footer, Nav, ScrollProgress, SmoothScroll } from "@/components/chrome/Chrome";
 import { LINKS } from "@/lib/content";
 import { DayNight } from "@/components/fun/Night";
+import { KeepWords } from "@/components/chrome/KeepWords";
 
 const display = Archivo_Black({ subsets: ["latin"], weight: "400", variable: "--font-display", display: "swap" });
 const body = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main id="main">{children}</main>
         <Footer />
         <DayNight />
+        <KeepWords />
         <svg className="grain" aria-hidden="true"><filter id="grain-f"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch" /></filter><rect width="100%" height="100%" filter="url(#grain-f)" /></svg>
       </body>
     </html>

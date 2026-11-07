@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { LetterSection } from "@/components/home/Blocks";
 import { PageHero } from "@/components/pages/PageKit";
 import { articles, getArticle } from "@/lib/operator-content";
+import { nobr } from "@/lib/nobr";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -50,7 +51,7 @@ export default async function ArticlePage({ params }: Props) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <PageHero label={`${article.category.toUpperCase()} · ${article.readingTime.toUpperCase()}`} lines={[article.title]} lead={article.subtitle} tone="paper" size="lg" />
+      <PageHero label={`${article.category.toUpperCase()} · ${article.readingTime.toUpperCase()}`} lines={[nobr(article.title)]} lead={article.subtitle} tone="paper" size="lg" />
       <article className="page-section" style={{ paddingTop: 0 }}>
         <div className="wrap"><div className="prose">
           <p className="hint">By {article.author} · {article.publishedAt}</p>
@@ -71,7 +72,7 @@ export default async function ArticlePage({ params }: Props) {
             <div className="article-grid">
               {related.map((r, i) => (
                 <Link key={r.slug} href={`/articles/${r.slug}`} className={`deal-card tone-${["yellow", "cyan", "red"][i]}`}>
-                  <span className="deal-cat">{r.category}</span><h3>{r.title}</h3><p>{r.excerpt}</p><small>{r.readingTime} →</small>
+                  <span className="deal-cat">{r.category}</span><h3>{nobr(r.title)}</h3><p>{r.excerpt}</p><small>{r.readingTime} →</small>
                 </Link>
               ))}
             </div>

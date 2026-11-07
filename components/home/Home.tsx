@@ -10,6 +10,7 @@ import { Btn, Doodle, FlipText, Label, Marquee, MaskLines, Reveal, ScrubText, Ti
 import { MagnetName } from "./MagnetName";
 import { LiveClock } from "@/components/fun/Fun";
 import { TestimonialStamp } from "@/components/social/Testimonials";
+import { nobr } from "@/lib/nobr";
 
 /* ─────────────────────────── HERO ─────────────────────────── */
 export function Hero() {
@@ -181,7 +182,7 @@ export function Sides() {
           <button key={c.name} type="button" className={`side-card tone-${colors[i]}`} style={{ ["--i" as string]: i - 3 }} data-cursor="FLIP"
             onPointerEnter={(e) => e.pointerType === "mouse" && setFlipped(i)} onPointerLeave={(e) => e.pointerType === "mouse" && setFlipped(null)} onClick={() => setFlipped(flipped === i ? null : i)} aria-pressed={flipped === i}>
             <motion.span className="side-inner" animate={{ rotateY: flipped === i ? 180 : 0 }} transition={{ type: "spring", stiffness: 160, damping: 17 }}>
-              <span className="side-face side-front"><span className="side-emoji">{c.emoji}</span><b>{c.name}</b><small>0{i + 1} / 07</small></span>
+              <span className="side-face side-front"><span className="side-emoji">{c.emoji}</span><b style={{ fontSize: `min(var(--side-fs), ${(100 / (Math.max(...c.name.split(" ").map((w) => w.length)) * 0.74)).toFixed(1)}cqi)` }}>{c.name}</b><small>0{i + 1} / 07</small></span>
               <span className="side-face side-back"><b>{c.name}</b><p>{c.body}</p></span>
             </motion.span>
           </button>
@@ -271,7 +272,7 @@ export function WritingTeaser({ articles }: { articles: { slug: string; title: s
               transition={{ type: "spring", stiffness: 80, damping: 13, delay: i * 0.12 }} whileHover={{ y: -18, rotate: 0, scale: 1.03 }}>
               <Link href={`/articles/${a.slug}`} className={`deal-card tone-${tones[i]}`} data-cursor="READ">
                 <span className="deal-cat">{a.category}</span>
-                <h3>{a.title}</h3>
+                <h3>{nobr(a.title)}</h3>
                 <p>{a.excerpt}</p>
                 <small>{a.readingTime} →</small>
               </Link>

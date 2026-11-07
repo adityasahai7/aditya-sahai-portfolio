@@ -366,7 +366,8 @@ html.sticker-mode .cursor-ring, html.sticker-mode .cursor-dot { opacity: 0; }
 .hero-photo-wrap { isolation: isolate; }
 
 /* Seven sides: names fit */
-.side-front b { font-size: clamp(15px, 1.25vw, 20px); overflow-wrap: anywhere; hyphens: auto; }
+.side-front { container-type: inline-size; }
+.side-front b { --side-fs: clamp(15px, 1.25vw, 20px); overflow-wrap: normal; word-break: normal; hyphens: manual; }
 .dock-toggle { display: none; }
 @media (max-width: 700px) {
   .pull { display: none; }
@@ -663,3 +664,9 @@ html.cinema .nav { top: calc(7vh + 8px); }
   .ink-stamp--inline { display: block; position: absolute; right: -6px; bottom: -4px; width: 98px; }
 }
 @media (max-width: 380px) { .ink-stamp--inline { width: 84px; right: -8px; bottom: -2px; } }
+@media (max-width: 600px) {
+  .sides-deck { flex-direction: column; align-items: center; gap: 14px; }
+  .side-card { width: min(100%, 360px); height: 168px; rotate: calc(var(--i) * 0.8deg); }
+  .side-front .side-emoji { font-size: 40px; }
+  .side-front b { --side-fs: 21px; }
+}

@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { roulette } from "@/lib/content";
 import { unlock } from "@/components/fun/achievements";
 import { sfx } from "@/components/fun/sound";
+import { nobr } from "@/lib/nobr";
 
 const ROW = 64;
 
@@ -15,7 +16,7 @@ function Reel({ items, value, label }: { items: string[]; value: ReturnType<type
   return (
     <div className="reel" aria-label={label}>
       <motion.div className="reel-strip" style={{ y }}>
-        {strip.map((t, i) => <span key={i}>{t}</span>)}
+        {strip.map((t, i) => <span key={i}>{nobr(t)}</span>)}
       </motion.div>
     </div>
   );
