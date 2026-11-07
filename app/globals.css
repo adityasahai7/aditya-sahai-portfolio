@@ -222,3 +222,12 @@ html.has-cursor input, html.has-cursor textarea { cursor: text; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .scrub-word { opacity: 1; }
 }
+
+/* Menu: calmer sizing, room to breathe */
+.menu ul { gap: clamp(2px, 1vh, 10px); }
+.menu-link { font-size: clamp(26px, min(6.6vw, 6.2vh), 64px); line-height: 1.05; padding: 6px 14px; }
+@media (max-width: 700px) { .menu { justify-content: flex-start; padding-top: 120px; } .menu-socials { margin-top: 26px; } }
+
+/* Footer: GREATNESS. always on its own line, never split */
+.footer-big { font-size: clamp(40px, 9.4vw, 170px); }
+.footer-big .footer-flip { white-space: nowrap; }

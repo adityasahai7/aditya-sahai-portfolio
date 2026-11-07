@@ -90,7 +90,7 @@ export async function sendWelcome(email: string, name: string, token: string | n
     bodyHtml: `<p>Thank you for letting me into your inbox. I'll treat it well.</p>
 <p>Here's the deal. <b>One email, every Sunday:</b></p>
 <ul><li>📖 <b>One story</b> worth knowing</li><li>💡 <b>One idea</b> worth stealing</li><li>🛠️ <b>One thing I'm building</b>, and what broke</li></ul>
-<p>Short enough to read with your chai ☕. No spam, no fake urgency, no "10 AI tools you need".</p>
+<p>Short enough to read with your coffee ☕. No spam, no fake urgency, no "10 AI tools you need".</p>
 <blockquote>Hit reply and tell me one thing you're building right now. I read every reply.</blockquote>
 <p>While you wait for Sunday, come say hi on <a href="https://youtube.com/@adityasahai37">YouTube</a> or <a href="https://instagram.com/adityasahai37">Instagram</a>.</p>`,
   });

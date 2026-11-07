@@ -19,6 +19,8 @@ export function Bookshelf({ books }: { books: Book[] }) {
     setOpening(b);
     window.setTimeout(() => router.push(`/articles/${b.slug}`), 900);
   }
+  // Spines are narrow: keep each title short enough to sit fully inside its book.
+  const spine = (t: string) => { if (t.length <= 42) return t; const cut = t.slice(0, 40); return `${cut.slice(0, cut.lastIndexOf(" "))}…`; };
   return (
     <div className="bookshelf">
       <div className="books">
@@ -33,7 +35,7 @@ export function Bookshelf({ books }: { books: Book[] }) {
               whileHover={{ y: -28, rotateY: -18, transition: { type: "spring", stiffness: 300, damping: 18 } }}
               onPointerEnter={() => setHover(i)} onPointerLeave={() => setHover(null)} onClick={() => open(b)}>
               <span className="book-emoji">{EMOJI[b.category] ?? "✍️"}</span>
-              <span className="book-title">{b.title}</span>
+              <span className="book-title">{spine(b.title)}</span>
               <span className="book-band" />
             </motion.button>
           );

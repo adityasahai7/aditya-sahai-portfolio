@@ -1,4 +1,4 @@
-import { Builds, Hero, HomeRefresh, Operator, Ribbons, ShowTeaser, Sides, Worlds, WritingTeaser, WhatIDo } from "@/components/home/Home";
+import { Builds, Hero, HomeRefresh, Operator, Ribbons, ShowTeaser, Sides, WritingTeaser, WhatIDo } from "@/components/home/Home";
 import { LetterSection, SaySection } from "@/components/home/Blocks";
 import { Desk } from "@/components/home/Desk";
 import { articles } from "@/lib/operator-content";
@@ -14,7 +14,6 @@ export default function HomePage() {
       <WhatIDo />
       <Sides />
       <ShowTeaser />
-      <Worlds />
       <Desk />
       <Builds />
       <WritingTeaser articles={featured} />

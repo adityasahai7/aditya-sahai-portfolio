@@ -7,9 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { beyondDefault, builds, frrost, hero, operator, ribbons, sides, tbc, whatIDo, LINKS } from "@/lib/content";
 import { gsap } from "@/components/motion/core";
 import { Btn, Doodle, FlipText, Label, Marquee, MaskLines, Reveal, ScrubText, Tilt, useRefreshOnLoad } from "@/components/motion/kit";
-import { StickerPile } from "./StickerPile";
 import { MagnetName } from "./MagnetName";
-import { AsciiPhoto } from "@/components/fun/AsciiPhoto";
 import { LiveClock } from "@/components/fun/Fun";
 
 /* ─────────────────────────── HERO ─────────────────────────── */
@@ -26,7 +24,6 @@ export function Hero() {
   return (
     <section className="hero" data-room="paper" onPointerMove={(e) => { mx.set((e.clientX / window.innerWidth) * 2 - 1); my.set((e.clientY / window.innerHeight) * 2 - 1); }}>
       <div className="dot-grid" aria-hidden="true" />
-      <StickerPile items={hero.stickers} />
       <div className="hero-inner wrap">
         <motion.div className="hero-copy" style={{ y: nameY }}>
           <motion.p className="hero-kicker" initial={reduce ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>{hero.kicker}</motion.p>
@@ -49,9 +46,8 @@ export function Hero() {
             <span className="tape tape-a" /><span className="tape tape-b" />
             <span className="photo-frame">
               <Image src="/images/aditya-sahai.webp" alt="Aditya Sahai" width={560} height={560} priority sizes="(max-width: 900px) 78vw, 440px" />
-              <AsciiPhoto src="/images/aditya-sahai.webp" />
             </span>
-            <span className="polaroid-caption">that&apos;s me 👆 (hover / hold me)</span>
+            <span className="polaroid-caption">that&apos;s me 👆</span>
           </motion.div>
           <motion.span className="hero-badge" initial={reduce ? false : { scale: 0 }} animate={{ scale: 1, rotate: [0, 360] }} transition={{ scale: { delay: 1.5, type: "spring" }, rotate: { duration: 14, repeat: Infinity, ease: "linear" } }}>
             <svg viewBox="0 0 120 120"><defs><path id="badge-circle" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" /></defs><text><textPath href="#badge-circle" textLength="272" lengthAdjust="spacing">THINK BEYOND DEFAULT ✦ CREATIVE AI ✦</textPath></text></svg>
@@ -152,7 +148,7 @@ export function WhatIDo() {
             <span className="wid-cta">{c.cta} →</span>
           </Link>
         ))}
-        <div className="wid-end"><Doodle kind="star" color="#F18179" width={5} /><p>…and a lot of chai ☕</p></div>
+        <div className="wid-end"><Doodle kind="star" color="#F18179" width={5} /><p>…and a lot of coffee ☕</p></div>
       </div>
     </section>
   );
@@ -232,41 +228,6 @@ export function ShowTeaser() {
           <Btn href={LINKS.youtube} tone="red" size="lg" cursor="WATCH">▶️ Watch on YouTube</Btn>
           <Btn href="/beyond-default" tone="paper" size="lg">What is Beyond Default? →</Btn>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ───────────────────── THREE WORLDS (doors) ───────────────────── */
-export function Worlds() {
-  const [open, setOpen] = useState<number | null>(null);
-  const doors = [
-    { name: "Beyond Default", emoji: "🎬", tone: "red", peek: beyondDefault.tagline, href: "/beyond-default", label: "THE SHOW" },
-    { name: "Thinking Beyond Club", emoji: "🫂", tone: "yellow", peek: tbc.creed.join(" "), href: "/thinking-beyond-club", label: "THE CLUB" },
-    { name: "FRROST Media", emoji: "📈", tone: "mint", peek: frrost.question.join(" "), href: "/frrost-media", label: "THE COMPANY" },
-  ] as const;
-  return (
-    <section className="worlds" data-room="ink">
-      <div className="wrap">
-        <Label tone="yellow">THREE WORLDS · ONE GUY</Label>
-        <MaskLines lines={["PICK A DOOR.", "ANY DOOR. 🚪"]} className="h-xl worlds-title" accent={1} />
-      </div>
-      <div className="doors wrap">
-        {doors.map((d, i) => (
-          <Reveal key={d.name} delay={i * 0.12} y={80}>
-            <Link href={d.href} className={`door-frame ${open === i ? "is-open" : ""}`} data-cursor="ENTER"
-              onPointerEnter={(e) => e.pointerType === "mouse" && setOpen(i)} onPointerLeave={(e) => e.pointerType === "mouse" && setOpen(null)}
-              onClick={(e) => { if (window.matchMedia("(hover: none)").matches && open !== i) { e.preventDefault(); setOpen(i); } }}>
-              <span className={`door-peek tone-${d.tone}`}><span>{d.emoji}</span><b>{d.peek}</b><small>Tap again to enter →</small></span>
-              <motion.span className={`door tone-${d.tone}`} animate={{ rotateY: open === i ? -72 : 0 }} transition={{ type: "spring", stiffness: 90, damping: 14 }}>
-                <span className="door-label">{d.label}</span>
-                <span className="door-emoji">{d.emoji}</span>
-                <b className="door-name">{d.name}</b>
-                <span className="door-knob" />
-              </motion.span>
-            </Link>
-          </Reveal>
-        ))}
       </div>
     </section>
   );

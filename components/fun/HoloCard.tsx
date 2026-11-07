@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { sfx } from "./sound";
 
-const STATS: [string, number][] = [["Storytelling", 5], ["Curiosity", 5], ["AI building", 4], ["Taste", 5], ["Chai intake", 5], ["Sleep", 2]];
+const STATS: [string, number][] = [["Storytelling", 5], ["Curiosity", 5], ["AI building", 4], ["Taste", 5], ["Coffee intake", 5], ["Sleep", 2]];
 
 /** A rare holographic trading card. Rainbow shine follows the cursor (or phone tilt). Tap to flip. */
 export function HoloCard() {

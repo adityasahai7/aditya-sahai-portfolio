@@ -205,7 +205,8 @@ export function Footer() {
       </div>
       <div className="footer-big" aria-label={footer.big}>
         <FlipText text="FOR GOOD," className="footer-flip" />
-        <FlipText text="TOWARDS GREATNESS." className="footer-flip" />
+        <FlipText text="TOWARDS" className="footer-flip" />
+        <FlipText text="GREATNESS." className="footer-flip" />
       </div>
       <div className="footer-bottom wrap">
         <span>© {new Date().getFullYear()} Aditya Sahai · Creative AI Operator</span>

@@ -10,7 +10,7 @@ section { position: relative; }
 .hero-row { display: block; overflow: hidden; padding: 0.04em 0 0.06em; }
 .hero-row.is-outline .hero-letter { color: transparent; -webkit-text-stroke: clamp(1.6px, 0.22vw, 3px) var(--ink); }
 .hero-row.is-outline .hero-letter:hover { -webkit-text-stroke-color: transparent; }
-.hero-letter { display: inline-block; cursor: default; }
+.hero-letter { display: inline-block; cursor: default; color: #2563c9; }
 .hero-title-wrap { display: inline-block; margin: 18px 0 0; }
 .hero-title { display: inline-block; font-family: var(--display); font-size: clamp(17px, 2.1vw, 30px); background: var(--yellow); border: var(--line); border-radius: 14px; padding: 10px 18px; box-shadow: var(--shadow); outline: 5px solid var(--cream); outline-offset: -9px; }
 .hero-identity { display: flex; flex-wrap: wrap; gap: 10px; font-family: var(--display); text-transform: uppercase; font-size: clamp(18px, 2vw, 28px); margin: 22px 0 6px; }
@@ -601,3 +601,23 @@ html.cinema .nav { top: calc(7vh + 8px); }
 /* Holo: the photo sits above the foil so the face is never tinted */
 .holo-photo { position: relative; z-index: 3; }
 .holo-glare { z-index: 4; }
+
+/* What I do: the pinned section always fits one screen, cards never cut off */
+.wid { height: 100svh; min-height: 0; display: flex; flex-direction: column; padding-top: clamp(78px, 11vh, 120px); }
+.wid-head { margin-bottom: clamp(14px, 2.4vh, 30px); flex: 0 0 auto; }
+.wid-head .h-xl { font-size: clamp(40px, min(7.2vw, 9.5vh), 110px); }
+.wid-track { flex: 1 1 auto; min-height: 0; padding-bottom: clamp(18px, 4vh, 44px); align-items: stretch; }
+.wid-card { min-height: 0; height: 100%; max-height: 520px; }
+.wid-emoji { font-size: clamp(44px, min(7vw, 8vh), 96px); }
+.wid-card h3 { font-size: clamp(26px, min(3.4vw, 4.6vh), 50px); margin: clamp(10px, 2vh, 22px) 0 8px; }
+.wid-card p { font-size: clamp(14px, 1.9vh, 17px); margin-bottom: 12px; }
+@media (max-width: 700px) { .wid-card { width: min(78vw, 320px); } }
+
+/* Book spines: titles stay inside the cover, clear of the band */
+.book { overflow: hidden; }
+.book-title { font-size: 11.5px; line-height: 1.08; max-height: calc(100% - 70px); max-width: 44px; overflow: hidden; letter-spacing: 0.01em; }
+@media (max-width: 700px) { .book-title { font-size: 11px; } }
+
+/* Newsletter envelope: the letter (and the email box) sits above the envelope flap */
+.envelope:not(.is-sent) .env-letter { z-index: 5; margin-bottom: 46px; }
+.envelope:not(.is-sent) .env-front { height: 30%; }

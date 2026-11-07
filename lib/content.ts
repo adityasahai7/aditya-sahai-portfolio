@@ -187,7 +187,7 @@ export const frrost = {
 
 export const builds = {
   label: "05 / THINGS I'VE BUILT",
-  title: ["MADE BY ME.", "(AND A LOT OF AI.) 🤖"],
+  title: ["MADE BY ME."],
   items: [
     { name: "Thinking Beyond Club", kind: "Website + community", emoji: "🫂", body: "The full club site: manifesto, the weekly rhythm, a quiz and applications. Designed and built end to end.", href: LINKS.tbc, tone: "yellow", size: "wide" },
     { name: "FRROST Media", kind: "Company + website", emoji: "📈", body: "Positioning, the Demand System and the website for my growth company.", href: LINKS.frrost, tone: "mint", size: "tall" },
@@ -201,7 +201,7 @@ export const toolkit = ["Claude 🧠", "Next.js ▲", "React ⚛️", "Supabase 
 export const letter = {
   label: "THE THINKING BEYOND LETTER 💌",
   title: ["ONE EMAIL.", "EVERY SUNDAY."],
-  body: "One story worth knowing. One idea worth stealing. One thing I'm building, and what broke. Short enough for chai ☕.",
+  body: "One story worth knowing. One idea worth stealing. One thing I'm building, and what broke. Short enough for one coffee ☕.",
   promises: ["📖 One story", "💡 One idea", "🛠️ One build", "🚫 Zero spam"],
   success: "You're in! 🎉 Check your inbox.",
 };
@@ -216,7 +216,7 @@ export const contact = {
 export const footer = {
   big: "FOR GOOD, TOWARDS GREATNESS.",
   line: "Think Beyond Default.",
-  made: "Made in India 🇮🇳 with too much chai and a lot of AI.",
+  made: "Made in India 🇮🇳 with too much coffee.",
 };
 
 export const about = {

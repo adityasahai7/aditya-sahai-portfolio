@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <>
-      <PageHero label="THE WORK 🛠️" lines={["THINGS", "I BUILT."]} lead="Websites, a company, a show and a club. Built in public, with a lot of AI and even more taste-checking. Click anything to visit it." emoji="🛠️" tone="fuchsia" accent={1} />
+      <PageHero label="THE WORK 🛠️" lines={["THINGS", "I BUILT."]} lead="Websites, a company, a show and a club. Built in public, with a lot of taste-checking. Click anything to visit it." emoji="🛠️" tone="fuchsia" accent={1} />
       <Builds full />
       <SaySection source="work" />
     </>

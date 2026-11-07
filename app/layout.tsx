@@ -2,11 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Archivo_Black, Bricolage_Grotesque, Space_Mono } from "next/font/google";
 import "./globals.css";
 import "./sections.css";
-import { Cursor, EasterEgg, Footer, Nav, ScrollProgress, SmoothScroll } from "@/components/chrome/Chrome";
+import { Cursor, Footer, Nav, ScrollProgress, SmoothScroll } from "@/components/chrome/Chrome";
 import { Portal } from "@/components/chrome/Portal";
 import { LINKS } from "@/lib/content";
-import { FunDock, PullString, Torch } from "@/components/fun/Fun";
-import { TrophyToasts } from "@/components/fun/achievements";
 import { DayNight } from "@/components/fun/Night";
 import { LiveCursors } from "@/components/fun/LiveCursors";
 import { ScrollStretch } from "@/components/fun/ScrollStretch";
@@ -52,11 +50,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main id="main">{children}</main>
         <Footer />
         <Cursor />
-        <EasterEgg />
-        <Torch />
-        <PullString />
-        <FunDock />
-        <TrophyToasts />
         <DayNight />
         <LiveCursors />
         <ScrollStretch />

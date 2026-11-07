@@ -182,7 +182,7 @@ export function FunDock() {
 }
 
 const STATUS: [number, string][] = [
-  [6, "probably asleep 😴"], [9, "on chai number one ☕"], [12, "deep in a build 🛠️"], [14, "writing a script ✍️"],
+  [6, "probably asleep 😴"], [9, "on coffee number one ☕"], [12, "deep in a build 🛠️"], [14, "writing a script ✍️"],
   [17, "editing a video 🎬"], [20, "in a FRROST call 📈"], [22, "reading something weird 📚"], [24, "should be asleep 🌙"],
 ];
 /** "📍 India · 12:07 PM · probably editing a video 🎬", live in IST. */
