@@ -649,21 +649,16 @@ html.cinema .nav { top: calc(7vh + 8px); }
 .tm-consent { display: flex; gap: 10px; align-items: center; font-weight: 700; font-size: 15px; }
 .tm-consent input { width: 20px; height: 20px; accent-color: var(--red); }
 
-/* The postage stamp on the home page */
-.tm-stamp { position: absolute; right: clamp(16px, 5vw, 80px); top: clamp(10px, 3vw, 40px); z-index: 3; display: block; width: clamp(150px, 15vw, 190px); padding: 9px;
-  background: radial-gradient(circle 6px, transparent 96%, var(--cream)) -9px -9px / 18px 18px;
-  transform: rotate(7deg); transition: transform 0.35s cubic-bezier(.2,.9,.3,1.2); filter: drop-shadow(6px 6px 0 var(--ink)); }
-.tm-stamp:hover, .tm-stamp:focus-visible { transform: rotate(0deg) scale(1.06); }
-.tm-stamp-inner { display: grid; justify-items: center; gap: 4px; text-align: center; padding: 14px 8px; border: 3px solid var(--ink); border-radius: 4px; background: var(--fuchsia); color: var(--ink); }
-.tm-stamp-k { font-family: var(--mono); font-weight: 700; font-size: 12px; letter-spacing: 0.16em; }
-.tm-stamp-e { font-size: 44px; line-height: 1.1; }
-.tm-stamp-t { font-family: var(--display); text-transform: uppercase; font-size: 19px; line-height: 1; }
-.tm-stamp-go { font-weight: 800; font-size: 13px; background: var(--cream); border: 2px solid var(--ink); border-radius: 999px; padding: 3px 10px; margin-top: 4px; }
-.builds .wrap { position: relative; }
-@media (max-width: 700px) { .tm-stamp { position: relative; right: auto; top: auto; margin: 0 0 28px auto; width: 150px; } }
-.tm-stamp-go { white-space: nowrap; }
 .tm-leave .h-xl { font-size: clamp(44px, 6vw, 96px); }
-@media (max-width: 700px) {
-  .tm-stamp { width: 132px; margin: 0 10px 30px auto; transform: rotate(5deg); }
-  .tm-stamp-e { font-size: 34px; } .tm-stamp-t { font-size: 16px; } .tm-stamp-k { font-size: 10.5px; } .tm-stamp-go { font-size: 12px; }
+
+/* Red rubber-stamp mark: on the polaroid (desktop), beside the buttons (phone) */
+.ink-stamp { position: absolute; z-index: 6; display: block; aspect-ratio: 1; color: #d7263d; font-family: var(--display); }
+.ink-stamp svg { width: 100%; height: 100%; overflow: visible; transition: transform 0.25s ease; filter: drop-shadow(0 0 0.5px #d7263d); }
+.ink-stamp:hover svg, .ink-stamp:focus-visible svg { transform: scale(1.07); }
+.ink-stamp--photo { left: clamp(-150px, -9vw, -110px); top: 48%; width: clamp(140px, 12vw, 170px); }
+.ink-stamp--inline { display: none; }
+.hero-cta { position: relative; }
+@media (max-width: 900px) {
+  .ink-stamp--photo { display: none; }
+  .ink-stamp--inline { display: block; position: absolute; right: 0; bottom: -6px; width: 118px; }
 }

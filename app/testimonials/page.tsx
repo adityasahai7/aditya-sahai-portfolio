@@ -4,24 +4,24 @@ import { TestimonialForm, TestimonialWall } from "@/components/social/Testimonia
 import { testimonials } from "@/lib/testimonials";
 
 export const metadata: Metadata = {
-  title: "Kind words",
-  description: "What people say about working with Aditya Sahai and about his work. Only real words, checked before they go up.",
+  title: "Testimonials",
+  description: "Testimonials and reviews from people who have worked with Aditya Sahai.",
   alternates: { canonical: "/testimonials" },
 };
 
 export default function TestimonialsPage() {
   return (
     <>
-      <PageHero label="KIND WORDS 💌" lines={["IN THEIR", "WORDS."]} lead="What people say about working with me and about the things I make. Every word here is real, from a real person, and checked before it goes up." emoji="💌" tone="fuchsia" accent={1} />
+      <PageHero label="TESTIMONIALS ⭐" lines={["REVIEWS FROM", "PEOPLE."]} lead="Real reviews from people I've worked with." emoji="⭐" tone="fuchsia" accent={1} />
       <section className="page-section" data-room="paper">
         <div className="wrap"><TestimonialWall items={testimonials} /></div>
       </section>
       <section className="page-section tm-leave" data-room="yellow">
         <div className="wrap tm-leave-grid">
           <div>
-            <p className="label"><span className="label-dot" />LEAVE YOURS</p>
+            <p className="label"><span className="label-dot" />LEAVE A REVIEW</p>
             <h2 className="h-xl">WORKED<br />WITH ME?</h2>
-            <p className="lead">Or watched something of mine that stuck with you? Write a line or two. It comes straight to me, and nothing goes up until I&apos;ve read it.</p>
+            <p className="lead">Leave a review. It comes straight to me, and I add it here.</p>
           </div>
           <TestimonialForm />
         </div>

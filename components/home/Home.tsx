@@ -35,10 +35,12 @@ export function Hero() {
           <motion.div className="hero-cta" initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.6 }}>
             <Btn href={hero.ctaPrimary.href} tone="ink" size="lg" cursor="WATCH">{hero.ctaPrimary.emoji} {hero.ctaPrimary.label}</Btn>
             <Btn href={hero.ctaSecondary.href} tone="yellow" size="lg" cursor="HI!">{hero.ctaSecondary.emoji} {hero.ctaSecondary.label}</Btn>
+            <TestimonialStamp variant="inline" />
           </motion.div>
           <motion.div initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.9 }}><LiveClock /></motion.div>
         </motion.div>
         <motion.div className="hero-photo-wrap" style={{ y: photoY }}>
+          <TestimonialStamp />
           <motion.div className="hero-photo" initial={reduce ? false : { y: -500, rotate: 20 }} animate={{ y: 0, rotate: -4 }} transition={{ type: "spring", stiffness: 70, damping: 11, delay: 0.6 }} whileTap={{ scale: 0.96 }}>
             <span className="tape tape-a" /><span className="tape tape-b" />
             <span className="photo-frame">
@@ -233,7 +235,6 @@ export function Builds({ full = false }: { full?: boolean }) {
   return (
     <section className="builds" data-room="paper">
       <div className="wrap">
-        {!full && <TestimonialStamp />}
         {!full && <Label tone="fuchsia">{builds.label}</Label>}
         {!full && <MaskLines lines={builds.title} className="h-xl" accent={1} />}
         <div className="bento">

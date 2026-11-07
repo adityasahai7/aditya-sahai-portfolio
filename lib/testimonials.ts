@@ -1,7 +1,7 @@
 import type { Tone } from "./content";
 
 // HONESTY RULE: only real words from real people, added after Aditya approves them.
-// To publish one, copy what they sent (from your inbox: topic "💌 Testimonial") into this list.
+// To publish one, copy what they sent (from your inbox: topic "⭐ Testimonial") into this list.
 export type Testimonial = {
   quote: string;
   name: string;
