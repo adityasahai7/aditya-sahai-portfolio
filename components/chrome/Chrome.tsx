@@ -141,7 +141,7 @@ export function Nav() {
     <>
       <motion.header className={`nav ${solid ? "is-solid" : ""}`} animate={{ y: hidden && !open ? "-120%" : "0%" }} transition={{ duration: 0.45, ease }}>
         <Link href="/" className="nav-mark" data-cursor="HOME" aria-label="Aditya Sahai, home">
-          <span className="nav-mark-badge">AS</span>
+          <span className="nav-mark-badge"><img src="/images/aditya-avatar.webp" alt="" width={42} height={42} /></span>
           <span className="nav-mark-name">Aditya Sahai</span>
         </Link>
         <nav className="nav-links" aria-label="Primary">
