@@ -10,16 +10,16 @@ const display = Archivo_Black({ subsets: ["latin"], weight: "400", variable: "--
 const body = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 const mono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-mono", display: "swap" });
 
-const description = "Aditya Sahai is a Creative AI Operator from India. Creator, storyteller and builder behind Beyond Default, Thinking Beyond Club and FRROST Media.";
+const description = "Aditya Sahai is a Creative AI Operator and the founder of FRROST Media. Creator and storyteller from India behind Beyond Default and Thinking Beyond Club.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://adityasahai.com"),
-  title: { default: "Aditya Sahai · Creative AI Operator", template: "%s · Aditya Sahai" },
+  title: { default: "Aditya Sahai · Creative AI Operator & Founder of FRROST Media", template: "%s · Aditya Sahai" },
   description,
-  keywords: ["Aditya Sahai", "Creative AI Operator", "Beyond Default", "Thinking Beyond Club", "FRROST Media", "Thinking Beyond Letter", "AI creator India", "storyteller"],
+  keywords: ["Aditya Sahai", "Creative AI Operator", "Founder of FRROST Media", "Beyond Default", "Thinking Beyond Club", "FRROST Media", "Thinking Beyond Letter", "AI creator India", "storyteller"],
   authors: [{ name: "Aditya Sahai", url: "https://adityasahai.com" }],
-  openGraph: { title: "Aditya Sahai · Creative AI Operator", description, url: "https://adityasahai.com", siteName: "Aditya Sahai", type: "website", locale: "en_IN" },
-  twitter: { card: "summary_large_image", title: "Aditya Sahai · Creative AI Operator", description, creator: "@adityasahai07" },
+  openGraph: { title: "Aditya Sahai · Creative AI Operator & Founder of FRROST Media", description, url: "https://adityasahai.com", siteName: "Aditya Sahai", type: "website", locale: "en_IN" },
+  twitter: { card: "summary_large_image", title: "Aditya Sahai · Creative AI Operator & Founder of FRROST Media", description, creator: "@adityasahai07" },
   alternates: { canonical: "https://adityasahai.com" },
 };
 
@@ -28,7 +28,7 @@ export const viewport: Viewport = { themeColor: "#F7F1E7", width: "device-width"
 const schema = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "Person", "@id": "https://adityasahai.com/#person", name: "Aditya Sahai", url: "https://adityasahai.com", jobTitle: "Creative AI Operator", image: "https://adityasahai.com/images/aditya-sahai.webp", description, sameAs: [LINKS.instagram, LINKS.youtube, LINKS.linkedin, LINKS.x, LINKS.tbc, LINKS.frrost] },
+    { "@type": "Person", "@id": "https://adityasahai.com/#person", name: "Aditya Sahai", url: "https://adityasahai.com", jobTitle: "Creative AI Operator and Founder of FRROST Media", worksFor: { "@type": "Organization", name: "FRROST Media", url: LINKS.frrost }, image: "https://adityasahai.com/images/aditya-sahai.webp", description, sameAs: [LINKS.instagram, LINKS.youtube, LINKS.linkedin, LINKS.x, LINKS.tbc, LINKS.frrost] },
     { "@type": "WebSite", "@id": "https://adityasahai.com/#website", name: "Aditya Sahai", url: "https://adityasahai.com", publisher: { "@id": "https://adityasahai.com/#person" } },
   ],
 };
