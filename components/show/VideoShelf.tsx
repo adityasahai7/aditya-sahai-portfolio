@@ -12,7 +12,7 @@ export function VideoShelf({ videos }: { videos: Video[] }) {
   if (!videos.length) {
     return (
       <div className="shelf-empty">
-        <motion.span animate={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}>🎬</motion.span>
+        <span>🎬</span>
         <p className="h-md">EPISODE ONE IS IN THE EDIT.</p>
         <p className="lead">Subscribe so it lands the second it&apos;s out.</p>
         <Btn href={LINKS.youtube} tone="red" size="lg" cursor="SUBSCRIBE">▶️ Subscribe @adityasahai37</Btn>

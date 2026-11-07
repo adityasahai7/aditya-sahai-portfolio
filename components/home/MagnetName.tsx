@@ -2,14 +2,14 @@
 
 import { motion, useReducedMotion } from "motion/react";
 
-/** The hero name, in blue. Letters rise in once, then stay still. */
+/** The hero name in the site palette: red with an ink shadow, teal with a yellow one. Letters rise in once, then stay still. */
 export function MagnetName({ rows }: { rows: [string, string] }) {
   const reduce = useReducedMotion();
   let n = 0;
   return (
     <h1 className="hero-name" aria-label="Aditya Sahai">
-      {rows.map((word) => (
-        <span key={word} className="hero-row">
+      {rows.map((word, r) => (
+        <span key={word} className={`hero-row hero-row-${r + 1}`}>
           {Array.from(word).map((ch) => {
             const i = n++;
             return (

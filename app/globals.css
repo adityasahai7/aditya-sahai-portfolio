@@ -21,7 +21,7 @@
   --line: 2.5px solid var(--ink);
   --radius: 16px;
   --gutter: clamp(18px, 4vw, 56px);
-  --section: clamp(90px, 12vw, 180px);
+  --section: clamp(120px, 15vw, 230px);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }

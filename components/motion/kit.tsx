@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from "motion/react";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
 import Link from "next/link";
 import { Fragment, useEffect, useRef, useState, type ComponentProps, type CSSProperties, type ReactNode } from "react";
 import type { Tone } from "@/lib/content";
@@ -195,13 +195,10 @@ export function Tilt({ children, className = "", max = 10, ...rest }: { children
 
 /** Infinite marquee that speeds up and skews with scroll velocity. */
 export function Marquee({ items, tone = "ink", reverse = false, tilt = 0, className = "", speed = 40 }: { items: string[]; tone?: Tone; reverse?: boolean; tilt?: number; className?: string; speed?: number }) {
-  const { scrollY } = useScroll();
-  const velocity = useVelocity(scrollY);
-  const skew = useSpring(useTransform(velocity, [-2500, 0, 2500], [-8, 0, 8]), { stiffness: 120, damping: 30 });
   const row = [...items, ...items, ...items, ...items];
   return (
     <div className={`marquee tone-${tone} ${className}`} style={{ rotate: `${tilt}deg` }}>
-      <motion.div className={`marquee-track ${reverse ? "is-reverse" : ""}`} style={{ skewX: skew, animationDuration: `${speed}s` }}>
+      <motion.div className={`marquee-track ${reverse ? "is-reverse" : ""}`} style={{ animationDuration: `${speed}s` }}>
         {row.map((item, index) => <span key={index}>{item}<i aria-hidden="true">✦</i></span>)}
       </motion.div>
     </div>

@@ -1,14 +1,15 @@
 "use client";
 
-import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { beyondDefault, builds, frrost, hero, operator, ribbons, sides, tbc, whatIDo, LINKS } from "@/lib/content";
+import { beyondDefault, builds, hero, operator, ribbons, sides, whatIDo, LINKS } from "@/lib/content";
 import { gsap } from "@/components/motion/core";
 import { Btn, Doodle, FlipText, Label, Marquee, MaskLines, Reveal, ScrubText, Tilt, useRefreshOnLoad } from "@/components/motion/kit";
 import { MagnetName } from "./MagnetName";
 import { LiveClock } from "@/components/fun/Fun";
+import { TestimonialStamp } from "@/components/social/Testimonials";
 
 /* ─────────────────────────── HERO ─────────────────────────── */
 export function Hero() {
@@ -16,13 +17,9 @@ export function Hero() {
   const { scrollY } = useScroll();
   const photoY = useTransform(scrollY, [0, 700], [0, 120]);
   const nameY = useTransform(scrollY, [0, 700], [0, -80]);
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const rotY = useSpring(useTransform(mx, [-1, 1], [-14, 14]), { stiffness: 120, damping: 14 });
-  const rotX = useSpring(useTransform(my, [-1, 1], [10, -10]), { stiffness: 120, damping: 14 });
 
   return (
-    <section className="hero" data-room="paper" onPointerMove={(e) => { mx.set((e.clientX / window.innerWidth) * 2 - 1); my.set((e.clientY / window.innerHeight) * 2 - 1); }}>
+    <section className="hero" data-room="paper">
       <div className="dot-grid" aria-hidden="true" />
       <div className="hero-inner wrap">
         <motion.div className="hero-copy" style={{ y: nameY }}>
@@ -42,14 +39,14 @@ export function Hero() {
           <motion.div initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.9 }}><LiveClock /></motion.div>
         </motion.div>
         <motion.div className="hero-photo-wrap" style={{ y: photoY }}>
-          <motion.div className="hero-photo" style={{ rotateY: rotY, rotateX: rotX }} initial={reduce ? false : { y: -500, rotate: 20 }} animate={{ y: 0, rotate: -4 }} transition={{ type: "spring", stiffness: 70, damping: 11, delay: 0.6 }} whileTap={{ scale: 0.96 }}>
+          <motion.div className="hero-photo" initial={reduce ? false : { y: -500, rotate: 20 }} animate={{ y: 0, rotate: -4 }} transition={{ type: "spring", stiffness: 70, damping: 11, delay: 0.6 }} whileTap={{ scale: 0.96 }}>
             <span className="tape tape-a" /><span className="tape tape-b" />
             <span className="photo-frame">
               <Image src="/images/aditya-sahai.webp" alt="Aditya Sahai" width={560} height={560} priority sizes="(max-width: 900px) 78vw, 440px" />
             </span>
             <span className="polaroid-caption">that&apos;s me 👆</span>
           </motion.div>
-          <motion.span className="hero-badge" initial={reduce ? false : { scale: 0 }} animate={{ scale: 1, rotate: [0, 360] }} transition={{ scale: { delay: 1.5, type: "spring" }, rotate: { duration: 14, repeat: Infinity, ease: "linear" } }}>
+          <motion.span className="hero-badge" initial={reduce ? false : { scale: 0 }} animate={{ scale: 1, rotate: -8 }} transition={{ delay: 1.5, type: "spring" }}>
             <svg viewBox="0 0 120 120"><defs><path id="badge-circle" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" /></defs><text><textPath href="#badge-circle" textLength="272" lengthAdjust="spacing">THINK BEYOND DEFAULT ✦ CREATIVE AI ✦</textPath></text></svg>
             <b>🧠</b>
           </motion.span>
@@ -63,8 +60,7 @@ export function Hero() {
 export function Ribbons() {
   return (
     <section className="ribbons" data-room="ink" aria-label="Beliefs">
-      <Marquee items={ribbons[0]} tone="yellow" tilt={-3} speed={38} />
-      <Marquee items={ribbons[1]} tone="red" tilt={2.5} reverse speed={44} />
+      <Marquee items={ribbons[0]} tone="yellow" speed={70} />
     </section>
   );
 }
@@ -202,7 +198,6 @@ export function ShowTeaser() {
     const ctx = gsap.context(() => {
       gsap.fromTo(el, { backgroundColor: "#9CE8F2" }, { backgroundColor: "#202727", ease: "none", scrollTrigger: { trigger: el, start: "top 60%", end: "center center", scrub: true } });
       gsap.fromTo(".show-title", { color: "#202727" }, { color: "#F7F1E7", ease: "none", scrollTrigger: { trigger: el, start: "top 60%", end: "center center", scrub: true } });
-      gsap.to(".film-strip", { xPercent: -30, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true } });
     }, el);
     return () => ctx.revert();
   }, []);
@@ -238,6 +233,7 @@ export function Builds({ full = false }: { full?: boolean }) {
   return (
     <section className="builds" data-room="paper">
       <div className="wrap">
+        {!full && <TestimonialStamp />}
         {!full && <Label tone="fuchsia">{builds.label}</Label>}
         {!full && <MaskLines lines={builds.title} className="h-xl" accent={1} />}
         <div className="bento">
@@ -246,7 +242,7 @@ export function Builds({ full = false }: { full?: boolean }) {
               <Tilt className={`bento-card tone-${b.tone}`} max={7}>
                 <a href={b.href} target={b.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" data-cursor="VISIT ↗">
                   <span className="bento-kind">{b.kind}</span>
-                  <motion.span className="bento-emoji" animate={{ y: [0, -10, 0], rotate: [0, 6, 0] }} transition={{ duration: 3 + i * 0.4, repeat: Infinity, ease: "easeInOut" }}>{b.emoji}</motion.span>
+                  <span className="bento-emoji">{b.emoji}</span>
                   <h3>{b.name}</h3>
                   <p>{b.body}</p>
                   <span className="bento-visit">Visit ↗</span>

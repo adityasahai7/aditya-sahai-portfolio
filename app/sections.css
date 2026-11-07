@@ -10,7 +10,7 @@ section { position: relative; }
 .hero-row { display: block; overflow: hidden; padding: 0.04em 0 0.06em; }
 .hero-row.is-outline .hero-letter { color: transparent; -webkit-text-stroke: clamp(1.6px, 0.22vw, 3px) var(--ink); }
 .hero-row.is-outline .hero-letter:hover { -webkit-text-stroke-color: transparent; }
-.hero-letter { display: inline-block; cursor: default; color: #2563c9; }
+.hero-letter { display: inline-block; cursor: default; }
 .hero-title-wrap { display: inline-block; margin: 18px 0 0; }
 .hero-title { display: inline-block; font-family: var(--display); font-size: clamp(17px, 2.1vw, 30px); background: var(--yellow); border: var(--line); border-radius: 14px; padding: 10px 18px; box-shadow: var(--shadow); outline: 5px solid var(--cream); outline-offset: -9px; }
 .hero-identity { display: flex; flex-wrap: wrap; gap: 10px; font-family: var(--display); text-transform: uppercase; font-size: clamp(18px, 2vw, 28px); margin: 22px 0 6px; }
@@ -621,3 +621,49 @@ html.cinema .nav { top: calc(7vh + 8px); }
 /* Newsletter envelope: the letter (and the email box) sits above the envelope flap */
 .envelope:not(.is-sent) .env-letter { z-index: 5; margin-bottom: 46px; }
 .envelope:not(.is-sent) .env-front { height: 30%; }
+
+/* Hero name: the loudest thing on the page, straight from the palette */
+.hero-row-1 .hero-letter { color: var(--red); -webkit-text-stroke: clamp(1.5px, 0.2vw, 3px) var(--ink); text-shadow: 0.05em 0.05em 0 var(--ink); }
+.hero-row-2 .hero-letter { color: var(--teal); -webkit-text-stroke: clamp(1.5px, 0.2vw, 3px) var(--ink); text-shadow: 0.05em 0.05em 0 var(--yellow); }
+.hero-name { padding-bottom: 0.06em; }
+
+/* Airier rhythm inside sections */
+.lead { line-height: 1.65; }
+.wrap > .h-xl, .wrap > .mask-lines { margin-bottom: clamp(10px, 1.6vw, 22px); }
+
+/* ── Testimonials ── */
+.tm-grid { columns: 3 320px; column-gap: 26px; }
+.tm-card { break-inside: avoid; margin: 0 0 26px; padding: 30px 28px 24px; border: var(--line); border-radius: 22px; box-shadow: var(--shadow); position: relative; }
+.tm-quote-mark { position: absolute; top: -6px; left: 18px; font-family: var(--display); font-size: 84px; line-height: 1; opacity: 0.35; }
+.tm-card blockquote { margin: 18px 0 18px; font-size: 18px; font-weight: 600; line-height: 1.55; }
+.tm-card figcaption { display: grid; gap: 2px; border-top: 2px dashed currentColor; padding-top: 12px; }
+.tm-card figcaption b { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: 18px; }
+.tm-card figcaption span { font-family: var(--mono); font-size: 13px; font-weight: 700; opacity: 0.75; }
+.tm-empty { max-width: 640px; margin: 0 auto; text-align: center; padding: clamp(30px, 5vw, 60px); background: var(--cream); border: var(--line); border-radius: 26px; box-shadow: var(--shadow); }
+.tm-empty-emoji { font-size: 64px; display: block; }
+.tm-empty h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(28px, 3.4vw, 44px); line-height: 1; margin: 14px 0; }
+.tm-empty p { font-size: 17px; font-weight: 500; line-height: 1.6; margin: 0; }
+.tm-leave { background: var(--yellow); }
+.tm-leave-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(30px, 5vw, 80px); align-items: start; }
+@media (max-width: 860px) { .tm-leave-grid { grid-template-columns: 1fr; } }
+.tm-consent { display: flex; gap: 10px; align-items: center; font-weight: 700; font-size: 15px; }
+.tm-consent input { width: 20px; height: 20px; accent-color: var(--red); }
+
+/* The postage stamp on the home page */
+.tm-stamp { position: absolute; right: clamp(16px, 5vw, 80px); top: clamp(10px, 3vw, 40px); z-index: 3; display: block; width: clamp(150px, 15vw, 190px); padding: 9px;
+  background: radial-gradient(circle 6px, transparent 96%, var(--cream)) -9px -9px / 18px 18px;
+  transform: rotate(7deg); transition: transform 0.35s cubic-bezier(.2,.9,.3,1.2); filter: drop-shadow(6px 6px 0 var(--ink)); }
+.tm-stamp:hover, .tm-stamp:focus-visible { transform: rotate(0deg) scale(1.06); }
+.tm-stamp-inner { display: grid; justify-items: center; gap: 4px; text-align: center; padding: 14px 8px; border: 3px solid var(--ink); border-radius: 4px; background: var(--fuchsia); color: var(--ink); }
+.tm-stamp-k { font-family: var(--mono); font-weight: 700; font-size: 12px; letter-spacing: 0.16em; }
+.tm-stamp-e { font-size: 44px; line-height: 1.1; }
+.tm-stamp-t { font-family: var(--display); text-transform: uppercase; font-size: 19px; line-height: 1; }
+.tm-stamp-go { font-weight: 800; font-size: 13px; background: var(--cream); border: 2px solid var(--ink); border-radius: 999px; padding: 3px 10px; margin-top: 4px; }
+.builds .wrap { position: relative; }
+@media (max-width: 700px) { .tm-stamp { position: relative; right: auto; top: auto; margin: 0 0 28px auto; width: 150px; } }
+.tm-stamp-go { white-space: nowrap; }
+.tm-leave .h-xl { font-size: clamp(44px, 6vw, 96px); }
+@media (max-width: 700px) {
+  .tm-stamp { width: 132px; margin: 0 10px 30px auto; transform: rotate(5deg); }
+  .tm-stamp-e { font-size: 34px; } .tm-stamp-t { font-size: 16px; } .tm-stamp-k { font-size: 10.5px; } .tm-stamp-go { font-size: 12px; }
+}

@@ -11,8 +11,8 @@ export function PageHero({ label, lines, lead, emoji, tone = "paper", accent = -
     <section className={`page-hero tone-${tone}`} data-room={tone}>
       <div className="dot-grid" aria-hidden="true" />
       {emoji && (
-        <motion.span className="page-hero-emoji" aria-hidden="true" initial={reduce ? false : { scale: 0, rotate: -40 }} animate={{ scale: 1, rotate: [0, 10, -6, 0], y: [0, -14, 0] }}
-          transition={{ scale: { type: "spring", stiffness: 180, damping: 10, delay: 0.5 }, rotate: { duration: 5, repeat: Infinity }, y: { duration: 3.4, repeat: Infinity } }}>
+        <motion.span className="page-hero-emoji" aria-hidden="true" initial={reduce ? false : { scale: 0, rotate: -40 }} animate={{ scale: 1, rotate: -6 }}
+          transition={{ type: "spring", stiffness: 180, damping: 12, delay: 0.5 }}>
           {emoji}
         </motion.span>
       )}
@@ -51,7 +51,7 @@ export function ExitDoor({ href, label, note, tone, emoji }: { href: string; lab
   return (
     <section className={`exit-door tone-${tone}`} data-room={tone}>
       <div className="wrap">
-        <motion.div animate={reduce ? undefined : { scale: [1, 1.04, 1] }} transition={{ duration: 1.8, repeat: Infinity }}>
+        <motion.div whileHover={reduce ? undefined : { scale: 1.03 }}>
           <Btn href={href} tone="ink" size="xl" cursor="ENTER ↗">{emoji} {label} →</Btn>
         </motion.div>
         <p>{note}</p>

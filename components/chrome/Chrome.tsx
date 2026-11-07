@@ -193,7 +193,7 @@ export function Footer() {
         <div className="footer-cols">
           <div>
             <p className="footer-h">Explore</p>
-            {[["Home", "/"], ...nav.map((n) => [n.label, n.href]), ["Contact", "/contact"], ["The Wall 📌", "/wall"], ["Links", "/links"]].map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
+            {[["Home", "/"], ...nav.map((n) => [n.label, n.href]), ["Contact", "/contact"], ["Kind words 💌", "/testimonials"], ["The Wall 📌", "/wall"], ["Links", "/links"]].map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
           </div>
           <div>
             <p className="footer-h">Follow</p>

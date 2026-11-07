@@ -2,12 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Archivo_Black, Bricolage_Grotesque, Space_Mono } from "next/font/google";
 import "./globals.css";
 import "./sections.css";
-import { Cursor, Footer, Nav, ScrollProgress, SmoothScroll } from "@/components/chrome/Chrome";
-import { Portal } from "@/components/chrome/Portal";
+import { Footer, Nav, ScrollProgress, SmoothScroll } from "@/components/chrome/Chrome";
 import { LINKS } from "@/lib/content";
 import { DayNight } from "@/components/fun/Night";
-import { LiveCursors } from "@/components/fun/LiveCursors";
-import { ScrollStretch } from "@/components/fun/ScrollStretch";
 
 const display = Archivo_Black({ subsets: ["latin"], weight: "400", variable: "--font-display", display: "swap" });
 const body = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -44,15 +41,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
         <a className="skip" href="#main">Skip to content</a>
         <SmoothScroll />
-        <Portal />
         <ScrollProgress />
         <Nav />
         <main id="main">{children}</main>
         <Footer />
-        <Cursor />
         <DayNight />
-        <LiveCursors />
-        <ScrollStretch />
         <svg className="grain" aria-hidden="true"><filter id="grain-f"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch" /></filter><rect width="100%" height="100%" filter="url(#grain-f)" /></svg>
       </body>
     </html>
