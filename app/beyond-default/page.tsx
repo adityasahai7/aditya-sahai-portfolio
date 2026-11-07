@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { beyondDefault, LINKS } from "@/lib/content";
 import { LetterSection } from "@/components/home/Blocks";
-import { Cinema } from "@/components/show/Cinema";
 import { Roulette } from "@/components/show/Roulette";
 import { VideoShelf } from "@/components/show/VideoShelf";
 import { latestVideos } from "@/lib/server/youtube";
@@ -20,7 +19,6 @@ export default async function BeyondDefaultPage() {
   const videos = await latestVideos(beyondDefault.youtubeChannelId, beyondDefault.youtubeSince);
   return (
     <>
-      <Cinema />
       <PageHero label="THE SHOW 🎬" lines={beyondDefault.title} lead={beyondDefault.tagline} emoji="🎬" tone="cyan" accent={1}>
         <div className="hero-cta" style={{ marginTop: 30 }}>
           <Btn href={LINKS.youtube} tone="red" size="lg" cursor="WATCH">▶️ Watch on YouTube</Btn>

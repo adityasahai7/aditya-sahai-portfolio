@@ -26,7 +26,7 @@ export function SaySection({ source = "website" }: { source?: string }) {
     <section className="say" data-room="yellow" id="contact">
       <div className="wrap">
         <Label>{contact.label}</Label>
-        <h2 className="say-title" aria-label={contact.title}>{Array.from(contact.title).map((c, i) => <span key={i} aria-hidden="true">{c}</span>)}</h2>
+        <h2 className="say-title" aria-label={contact.title}>{Array.from(contact.title).map((c, i) => <span key={i} aria-hidden="true">{c === " " ? "\u00a0" : c}</span>)}</h2>
         <div className="say-grid">
           <div style={{ position: "relative" }}>
             <p className="lead">{contact.body}</p>

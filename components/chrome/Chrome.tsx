@@ -159,15 +159,20 @@ export function Nav() {
       <AnimatePresence>
         {open && (
           <motion.div className="menu" initial={{ clipPath: "circle(0% at 95% 4%)" }} animate={{ clipPath: "circle(150% at 95% 4%)" }} exit={{ clipPath: "circle(0% at 95% 4%)" }} transition={{ duration: 0.7, ease }}>
+            <p className="menu-kicker">WHERE TO? 👀</p>
             <ul>
-              {[{ label: "Home", href: "/", tone: "teal" }, ...nav, { label: "Contact", href: "/contact", tone: "yellow" }].map((item, i) => (
-                <motion.li key={item.href} initial={{ y: 80, opacity: 0, rotate: 6 }} animate={{ y: 0, opacity: 1, rotate: 0 }} transition={{ delay: 0.18 + i * 0.05, type: "spring", stiffness: 140, damping: 15 }}>
-                  <Link href={item.href} className={`menu-link tone-hover-${item.tone}`}>{item.label}</Link>
+              {[{ label: "Home", href: "/", tone: "teal" }, ...nav, { label: "Testimonials", href: "/testimonials", tone: "fuchsia" }, { label: "Contact", href: "/contact", tone: "cyan" }].map((item, i) => (
+                <motion.li key={item.href} initial={{ x: -40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.15 + i * 0.035, duration: 0.35, ease }}>
+                  <Link href={item.href} className={`menu-link tone-${item.tone}`} onClick={() => setOpen(false)}>
+                    <span className="menu-num">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="menu-label">{item.label}</span>
+                    <span className="menu-arrow" aria-hidden="true">→</span>
+                  </Link>
                 </motion.li>
               ))}
             </ul>
             <div className="menu-socials">
-              {socials.map((s) => <a key={s.label} href={s.href} target="_blank" rel="noreferrer">{s.emoji} {s.label}</a>)}
+              {socials.map((s, i) => <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className={`tone-${["yellow", "red", "cyan", "mint"][i % 4]}`}>{s.emoji} {s.label}</a>)}
             </div>
           </motion.div>
         )}
